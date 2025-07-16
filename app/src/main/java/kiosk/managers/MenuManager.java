@@ -22,14 +22,6 @@ public class MenuManager {
         return List.copyOf(menuItems);
     }
 
-    public void addMenuItem(MenuItem item) {
-        menuItems.add(item);
-    }
-
-    public int getMenuSize() {
-        return menuItems.size();
-    }
-
     public List<MenuItem> getMenuItemsByCategory(MenuCategory category) {
         return menuItems.stream()
                 .filter(item -> item.category().equals(category)) // 카테고리로 필터링
