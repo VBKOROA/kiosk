@@ -22,13 +22,6 @@ public class MenuManager {
         return List.copyOf(menuItems);
     }
 
-    public MenuItem getMenuItemFromIdx(int idx) throws IndexOutOfBoundsException {
-        if (idx < 0 || idx >= menuItems.size()) {
-            throw new IndexOutOfBoundsException("잘못된 선택입니다.");
-        }
-        return menuItems.get(idx);
-    }
-
     public void addMenuItem(MenuItem item) {
         menuItems.add(item);
     }
