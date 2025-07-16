@@ -1,6 +1,7 @@
 package kiosk.ui;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
@@ -58,5 +59,18 @@ public class KioskUI {
 
     public void itemAddedToCartUi(MenuItem item) {
         System.out.println("장바구니에 " + item.name() + "이 추가되었습니다.");
+    }
+
+    public int cartCheckBeforeOrderUi(Map<MenuItem, Integer> cartItems, double totalPrice) {
+        System.out.println("아래와 같이 주문하시겠습니까?");
+        System.out.println();
+        System.out.println("[ Orders ]");
+        cartItems.forEach((item, quantity) -> {
+            System.out.println(item.toString() + " | " + quantity + "개");
+        });
+        System.out.println("[ Total ]");
+        System.out.println("W " + totalPrice);
+        System.out.println("1. 주문     2. 돌아가기");
+        return IntScanner.withFilter(sc, x -> x == 1 || x == 2);
     }
 }

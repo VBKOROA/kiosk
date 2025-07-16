@@ -32,7 +32,14 @@ public class Kiosk {
             kioskUI.exitUi();
         }
 
-        menuSelectMenu(categories[choice - 1]);
+        try {
+            menuSelectMenu(categories[choice - 1]);
+        } catch (IndexOutOfBoundsException e) {
+            // OOB 예외가 떴다는 것은
+            // 필터 또한 통과를 했다는 것
+            // 즉 Order 관련 메뉴를 선택했다는 것
+            cartCheckBeforeOrder();
+        }
     }
 
     private void menuSelectMenu(MenuCategory category) {
@@ -59,5 +66,9 @@ public class Kiosk {
         // choice가 0인 경우와 담기가 끝났을 시
         // 메인 메뉴로 돌아가기
         mainMenu();
+    }
+
+    private void cartCheckBeforeOrder() {
+        int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
     }
 }
