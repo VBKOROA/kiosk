@@ -3,6 +3,7 @@ package kiosk.service;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import kiosk.enums.MenuCategory;
 import kiosk.models.MenuItem;
 
 public class Kiosk {
@@ -17,10 +18,10 @@ public class Kiosk {
     public void mainMenu() {
         while (true) {
             System.out.println("[ MAIN MENU ]");
-            var categories = menuManager.getMenuCategories();
+            var categories = MenuCategory.values();
 
-            for (int i = 0; i < categories.size(); i++) {
-                System.out.println((i + 1) + ". " + categories.get(i));
+            for (int i = 0; i < categories.length; i++) {
+                System.out.println((i + 1) + ". " + categories[i].toString());
             }
 
             System.out.println("0. 종료 | 종료");
@@ -39,16 +40,16 @@ public class Kiosk {
                 return;
             }
 
-            if (choice < 1 || choice > categories.size()) {
+            if (choice < 1 || choice > categories.length) {
                 System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
                 continue;
             }
 
-            menuSelectMenu(categories.get(choice - 1));
+            menuSelectMenu(categories[choice - 1]);
         }
     }
 
-    private void menuSelectMenu(String category) {
+    private void menuSelectMenu(MenuCategory category) {
         var items = menuManager.getMenuItemsByCategory(category);
         while (true) {
             System.out.println("[ SHAKESHACK MENU ]");
