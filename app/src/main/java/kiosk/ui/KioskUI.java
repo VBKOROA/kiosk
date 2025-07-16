@@ -94,6 +94,6 @@ public class KioskUI {
     public void completeOrderUi(BigDecimal totalPrice) {
         System.out.println("주문이 완료되었습니다.");
         System.out.println("총 결제 금액: W " + totalPrice);
-        sc.next();
+        sc.nextLine();
     }
 }
