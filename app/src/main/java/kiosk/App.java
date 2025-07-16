@@ -3,7 +3,6 @@
  */
 package kiosk;
 
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,8 +20,7 @@ public class App {
                 new MenuItem("Hamburger", 5.4, "비프패티를 기반으로 야채가 들어간 기본버거")
         );
 
-        Kiosk kiosk = new Kiosk(menuItems);
-        kiosk.setScanner(sc);
+        Kiosk kiosk = new Kiosk(menuItems, sc);
         kiosk.start();
     }
 }

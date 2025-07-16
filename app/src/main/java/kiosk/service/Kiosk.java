@@ -9,14 +9,11 @@ import kiosk.models.MenuItem;
 
 public class Kiosk {
     private final List<MenuItem> menuItems = new ArrayList<>();
-    private Scanner sc;
+    private final Scanner sc;
 
-    public void setScanner(Scanner scanner) {
-        this.sc = scanner;
-    }
-
-    public Kiosk(List<MenuItem> menuItems) {
+    public Kiosk(List<MenuItem> menuItems, Scanner sc) {
         this.menuItems.addAll(menuItems);
+        this.sc = sc;
     }
 
     public void start() {
