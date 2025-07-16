@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import kiosk.models.MenuItem;
 import kiosk.service.Kiosk;
+import kiosk.service.MenuManager;
 
 public class App {
     public static void main(String[] args) {
@@ -31,7 +32,9 @@ public class App {
             new MenuItem("Onion Rings", 3.5, "바삭한 양파링", "사이드")
         );
 
-        Kiosk kiosk = new Kiosk(menuItems, sc);
+        MenuManager menuManager = new MenuManager(menuItems);
+
+        Kiosk kiosk = new Kiosk(menuManager, sc);
         kiosk.start();
     }
 }
