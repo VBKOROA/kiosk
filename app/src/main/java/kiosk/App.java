@@ -16,8 +16,6 @@ import kiosk.ui.KioskUI;
 
 public class App {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
         List<MenuItem> menuItems = List.of(
             // 버거 메뉴
             new MenuItem("ShackBurger", BigDecimal.valueOf(6.9), "토마토, 양상추, 쉑소스가 토핑된 치즈버거", MenuCategory.BUGER),
@@ -39,7 +37,7 @@ public class App {
         MenuManager menuManager = new MenuManager(menuItems);
         KioskUI kioskUI = new KioskUI();
         CartManager cartManager = new CartManager();
-        Kiosk kiosk = new Kiosk(menuManager, sc, kioskUI, cartManager);
+        Kiosk kiosk = new Kiosk(menuManager, kioskUI, cartManager);
         kiosk.mainMenu();
     }
 }
