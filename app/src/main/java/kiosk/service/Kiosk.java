@@ -20,6 +20,9 @@ public class Kiosk {
         this.cartManager = cartManager;
     }
 
+    /**
+     * 메인 메뉴를 표시하고 사용자의 선택을 처리한다.
+     */
     public void mainMenu() {
         var categories = MenuCategory.values();
         boolean canOrder = !cartManager.isEmpty();
@@ -42,6 +45,9 @@ public class Kiosk {
         }
     }
 
+    /**
+     * 장바구니에 담긴 아이템을 취소하는 메뉴를 표시하고 사용자의 선택을 처리한다.
+     */
     private void cancelItems() {
         var cartItems = cartManager.getCartItems();
         int choice = kioskUI.cancelItemsUi(cartItems);
@@ -62,6 +68,10 @@ public class Kiosk {
         }
     }
 
+    /**
+     * 카테고리에 해당하는 메뉴 아이템을 선택하고 장바구니에 추가하는 메뉴를 표시한다.
+     * @param category 선택한 카테고리
+     */
     private void menuSelectMenu(MenuCategory category) {
         var items = menuManager.getMenuItemsByCategory(category);
         int choice = kioskUI.menuSelectUi(items,  x -> x >= 0 && x <= items.size());
@@ -74,6 +84,10 @@ public class Kiosk {
         addItemToCartMenu(selectedItem);
     }
 
+    /**
+     * 장바구니에 아이템을 추가할 것인지 묻는 메뉴를 표시한다.
+     * @param item 선택한 메뉴 아이템
+     */
     private void addItemToCartMenu(MenuItem item) {
         int choice = kioskUI.addItemToCartUi(item, x -> x == 0 || x == 1);
 
@@ -88,6 +102,9 @@ public class Kiosk {
         mainMenu();
     }
 
+    /**
+     * 장바구니에 담긴 아이템을 취소하기 전 확인하는 메뉴를 표시한다.
+     */
     private void cartCheckBeforeOrder() {
         int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
 
@@ -98,6 +115,9 @@ public class Kiosk {
         }
     }
 
+    /**
+     * 할인 메뉴를 표시하고 사용자의 선택을 처리한다.
+     */
     private void discountMenu() {
         var saleCategories = SaleCategory.values();
         int choice = kioskUI.discountMenuUi(saleCategories);
@@ -108,6 +128,10 @@ public class Kiosk {
         }
     }
 
+    /**
+     * 주문을 처리하는 메서드
+     * @param saleCategory 선택한 할인 카테고리
+     */
     private void processingOrder(SaleCategory saleCategory) {
         BigDecimal totalPrice = cartManager.getTotalPrice();
         BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
