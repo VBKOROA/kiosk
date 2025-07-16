@@ -96,6 +96,8 @@ public class KioskUI {
     public void completeOrderUi(BigDecimal totalPrice) {
         System.out.println("주문이 완료되었습니다.");
         System.out.println("총 결제 금액: W " + totalPrice);
+        // 이전 숫자 입력시 생긴 \n 버퍼 삭제
+        sc.nextLine();
         sc.nextLine();
     }
 
