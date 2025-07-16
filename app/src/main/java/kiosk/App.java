@@ -17,20 +17,70 @@ public class App {
     public static void main(String[] args) {
         List<MenuItem> menuItems = List.of(
             // 버거 메뉴
-            new MenuItem("ShackBurger", BigDecimal.valueOf(6.9), "토마토, 양상추, 쉑소스가 토핑된 치즈버거", MenuCategory.BUGER),
-            new MenuItem("SmokeShack", BigDecimal.valueOf(8.9), "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거", MenuCategory.BUGER),
-            new MenuItem("Cheeseburger", BigDecimal.valueOf(6.9), "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거", MenuCategory.BUGER),
-            new MenuItem("Hamburger", BigDecimal.valueOf(5.4), "비프패티를 기반으로 야채가 들어간 기본버거", MenuCategory.BUGER),
+            new MenuItem.Builder()
+                .setName("shackBurger")
+                .setPrice(BigDecimal.valueOf(6.9))
+                .setDescription("토마토, 양상추, 쉑소스가 토핑된 치즈버거")
+                .setCategory(MenuCategory.BUGER)
+                .build(),
+            new MenuItem.Builder()
+                .setName("SmokeShack")
+                .setPrice(BigDecimal.valueOf(8.9))
+                .setDescription("베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거")
+                .setCategory(MenuCategory.BUGER)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Cheeseburger")
+                .setPrice(BigDecimal.valueOf(6.9))
+                .setDescription("포테이토 번과 비프패티, 치즈가 토핑된 치즈버거")
+                .setCategory(MenuCategory.BUGER)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Hamburger")
+                .setPrice(BigDecimal.valueOf(5.4))
+                .setDescription("비프패티를 기반으로 야채가 들어간 기본버거")
+                .setCategory(MenuCategory.BUGER)
+                .build(),
 
             // 음료 메뉴
-            new MenuItem("Shack Shake", BigDecimal.valueOf(2.5), "바닐라 아이스크림과 우유로 만든 쉐이크", MenuCategory.DRINK),
-            new MenuItem("Chocolate Shake", BigDecimal.valueOf(3.1), "초콜릿 아이스크림과 우유로 만든 쉐이크", MenuCategory.DRINK),
-            new MenuItem("Strawberry Shake", BigDecimal.valueOf(3.7), "딸기 아이스크림과 우유로 만든 쉐이크", MenuCategory.DRINK),
+            new MenuItem.Builder()
+                .setName("Shack Shake")
+                .setPrice(BigDecimal.valueOf(2.5))
+                .setDescription("바닐라 아이스크림과 우유로 만든 쉐이크")
+                .setCategory(MenuCategory.DRINK)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Chocolate Shake")
+                .setPrice(BigDecimal.valueOf(3.1))
+                .setDescription("초콜릿 아이스크림과 우유로 만든 쉐이크")
+                .setCategory(MenuCategory.DRINK)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Strawberry Shake")
+                .setPrice(BigDecimal.valueOf(3.7))
+                .setDescription("딸기 아이스크림과 우유로 만든 쉐이크")
+                .setCategory(MenuCategory.DRINK)
+                .build(),
 
             // 사이드 메뉴
-            new MenuItem("French Fries", BigDecimal.valueOf(2.8), "바삭한 감자튀김", MenuCategory.SIDE),
-            new MenuItem("Cheese Fries", BigDecimal.valueOf(3.1), "치즈가 듬뿍 얹어진 감자튀김", MenuCategory.SIDE),
-            new MenuItem("Onion Rings", BigDecimal.valueOf(4.0), "바삭한 양파링", MenuCategory.SIDE)
+            new MenuItem.Builder()
+                .setName("French Fries")
+                .setPrice(BigDecimal.valueOf(2.8))
+                .setDescription("바삭한 감자튀김")
+                .setCategory(MenuCategory.SIDE)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Cheese Fries")
+                .setPrice(BigDecimal.valueOf(3.1))
+                .setDescription("치즈가 듬뿍 얹어진 감자튀김")
+                .setCategory(MenuCategory.SIDE)
+                .build(),
+            new MenuItem.Builder()
+                .setName("Onion Rings")
+                .setPrice(BigDecimal.valueOf(4.0))
+                .setDescription("바삭한 양파링")
+                .setCategory(MenuCategory.SIDE)
+                .build()
         );
 
         MenuManager menuManager = new MenuManager(menuItems);

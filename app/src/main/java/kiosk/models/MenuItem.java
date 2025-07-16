@@ -24,4 +24,35 @@ public record MenuItem(
     public void selected() {
         System.out.println(name + "를 선택하셨습니다.");
     }
+
+    public static class Builder {
+        private String name;
+        private BigDecimal price;
+        private String description;
+        private MenuCategory category;
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setPrice(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setCategory(MenuCategory category) {
+            this.category = category;
+            return this;
+        }
+
+        public MenuItem build() {
+            return new MenuItem(name, price, description, category);
+        }
+    }
 }
