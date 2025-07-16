@@ -25,15 +25,8 @@ public class Kiosk {
             }
 
             System.out.println("0. 종료 | 종료");
-            int choice;
 
-            try {
-                choice = sc.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-                sc.next(); // 잘못 입력된 버퍼를 청소
-                continue;
-            }
+            int choice  = intScanner(sc);
 
             if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
@@ -60,16 +53,7 @@ public class Kiosk {
 
             System.out.println("0. 종료 | 종료");
 
-            int choice;
-
-            try {
-                choice = sc.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-                // 잘못 입력된 버퍼를 청소
-                sc.next();
-                continue;
-            }
+            int choice = intScanner(sc);
 
             if (choice == 0) {
                 System.out.println("메뉴 선택을 종료합니다.");
@@ -83,6 +67,16 @@ public class Kiosk {
 
             MenuItem selectedItem = items.get(choice - 1);
             selectedItem.selected();
+        }
+    }
+
+    private int intScanner(Scanner sc) {
+        try {
+            return sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
+            sc.next(); // 잘못 입력된 버퍼를 청소
+            return intScanner(sc); // 재귀 호출
         }
     }
 }
