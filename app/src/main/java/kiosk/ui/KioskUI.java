@@ -40,6 +40,6 @@ public class KioskUI {
     }
 
     public void menuSelectedUi(MenuItem selectedItem) {
-        selectedItem.selected();
+        System.out.println("선택한 메뉴: " + selectedItem.toString());
     }  
 }
