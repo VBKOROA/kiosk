@@ -1,9 +1,11 @@
 package kiosk.ui;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
+import kiosk.models.MenuItem;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
@@ -22,6 +24,22 @@ public class KioskUI {
 
         System.out.println("0. 종료 | 종료");
         return intScanner(sc, x -> x >= 0 && x <= categories.length);
+    }
+
+    public int menuSelectUi(List<MenuItem> items, ValidationFilter filter) {
+        System.out.println("[ SHAKESHACK MENU ]");
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(i + 1 + ". " + items.get(i));
+        }
+
+        System.out.println("0. 종료 | 종료");
+
+        return intScanner(sc, filter);
+    }
+
+    public void menuSelectedUi(MenuItem selectedItem) {
+        selectedItem.selected();
     }
 
     private int intScanner(Scanner sc, ValidationFilter filter) {
