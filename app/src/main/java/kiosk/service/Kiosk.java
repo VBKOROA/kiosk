@@ -1,7 +1,6 @@
 package kiosk.service;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 import kiosk.models.MenuItem;
@@ -15,11 +14,7 @@ public class Kiosk {
         this.sc = sc;
     }
 
-    public void start() {
-
-    }
-
-    private void mainMenu() {
+    public void mainMenu() {
         while (true) {
             System.out.println("[ MAIN MENU ]");
             var categories = menuManager.getMenuCategories();
@@ -41,7 +36,7 @@ public class Kiosk {
 
             if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
-                break;
+                return;
             }
 
             if (choice < 1 || choice > categories.size()) {
@@ -76,8 +71,8 @@ public class Kiosk {
             }
 
             if (choice == 0) {
-                System.out.println("프로그램을 종료합니다.");
-                break;
+                System.out.println("메뉴 선택을 종료합니다.");
+                return;
             }
 
             if (choice < 1 || choice > items.size()) {
