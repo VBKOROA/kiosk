@@ -32,4 +32,8 @@ public class MenuManager {
     public void addMenuItem(MenuItem item) {
         menuItems.add(item);
     }
+
+    public int getMenuSize() {
+        return menuItems.size();
+    }
 }
