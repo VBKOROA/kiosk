@@ -37,13 +37,6 @@ public class MenuManager {
         return menuItems.size();
     }
 
-    public List<String> getMenuCategories() {
-        return menuItems.stream()
-                .map(MenuItem::category) // 카테고리 추출 후
-                .distinct() // 중복을 제거해서
-                .toList(); // 리스트로 변환 (불변 리스트)
-    }
-
     public List<MenuItem> getMenuItemsByCategory(String category) {
         return menuItems.stream()
                 .filter(item -> item.category().equalsIgnoreCase(category)) // 카테고리로 필터링
