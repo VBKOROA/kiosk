@@ -109,9 +109,10 @@ public class Kiosk {
     }
 
     private void processingOrder(SaleCategory saleCategory) {
-        BigDecimal totalPrice = cartManager.getTotalPrice().multiply(saleCategory.getDiscountRate());
+        BigDecimal totalPrice = cartManager.getTotalPrice();
+        BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
         cartManager.clearCart();
-        kioskUI.completeOrderUi(totalPrice);
+        kioskUI.completeOrderUi(finalPrice);
         mainMenu();
     }
 }
