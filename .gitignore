@@ -1,0 +1,27 @@
+# Gradle build output
+/build/
+/.gradle/
+
+# Local configuration file (contains system-specific paths, etc)
+gradle.properties
+
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA files
+*.iml
+.idea/
+
+# VS Code files
+.vscode/
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Log files
+*.log
