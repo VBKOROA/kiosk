@@ -1,13 +1,13 @@
 package kiosk.managers;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import kiosk.models.MenuItem;
 
 public class CartManager {
-    private final Map<MenuItem, Integer> cartItems = new HashMap<>();
+    private final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
 
     public void addItem(MenuItem item, int quantity){
         cartItems.merge(item, quantity, Integer::sum); // 메서드 참조를 사용
@@ -23,6 +23,10 @@ public class CartManager {
 
     public Map<MenuItem, Integer> getCartItems() {
         return Map.copyOf(cartItems); // 불변 맵을 반환
+    }
+
+    public MenuItem getKeyFromIdx(int idx) {
+        return (MenuItem) cartItems.keySet().toArray()[idx];
     }
 
     public void clearCart() {
