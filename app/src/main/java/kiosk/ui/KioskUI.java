@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
 import kiosk.models.MenuItem;
+import kiosk.utils.IntScanner;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
@@ -23,10 +24,10 @@ public class KioskUI {
         }
 
         System.out.println("0. 종료 | 종료");
-        return intScanner(sc, x -> x >= 0 && x <= categories.length);
+        return IntScanner.withFilter(sc, x -> x >= 0 && x <= categories.length);
     }
 
-    public int menuSelectUi(List<MenuItem> items, ValidationFilter filter) {
+    public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {
         System.out.println("[ SHAKESHACK MENU ]");
 
         for (int i = 0; i < items.size(); i++) {
@@ -35,29 +36,10 @@ public class KioskUI {
 
         System.out.println("0. 종료 | 종료");
 
-        return intScanner(sc, filter);
+        return IntScanner.withFilter(sc, filter);
     }
 
     public void menuSelectedUi(MenuItem selectedItem) {
         selectedItem.selected();
-    }
-
-    private int intScanner(Scanner sc, ValidationFilter filter) {
-        try {
-            int input = sc.nextInt();
-            if (filter.validate(input)) {
-                return input;
-            }
-            System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
-        } catch (InputMismatchException e) {
-            System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
-            sc.next(); // 잘못 입력된 버퍼를 청소
-        }
-        return intScanner(sc, filter); // 재귀 호출
-    }
-
-    @FunctionalInterface
-    public interface ValidationFilter {
-        boolean validate(int input);
-    }
+    }  
 }
