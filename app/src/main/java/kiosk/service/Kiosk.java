@@ -79,4 +79,9 @@ public class Kiosk {
             return intScanner(sc); // 재귀 호출
         }
     }
+
+    @FunctionalInterface
+    public interface ValidationFilter {
+        boolean validate(int input);
+    }
 }
