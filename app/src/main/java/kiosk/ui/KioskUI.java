@@ -15,11 +15,13 @@ public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
 
     public void exitUi() {
+        System.out.println();
         System.out.println("프로그램을 종료합니다.");
         System.exit(0);
     }
 
     public int mainMenuUi(MenuCategory[] categories, boolean canOrder) {
+        System.out.println();
         System.out.println("[ MAIN MENU ]");
 
         for (int i = 0; i < categories.length; i++) {
@@ -43,6 +45,7 @@ public class KioskUI {
     }
 
     public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {
+        System.out.println();
         System.out.println("[ SHAKESHACK MENU ]");
 
         for (int i = 0; i < items.size(); i++) {
@@ -55,16 +58,19 @@ public class KioskUI {
     }
 
     public int addItemToCartUi(MenuItem item, IntScanner.ValidationFilter filter) {
+        System.out.println();
         System.out.println("선택한 메뉴: " + item);
         System.out.println("장바구니에 추가하시겠습니까? (1: 예, 0: 아니오)");
         return IntScanner.withFilter(sc, filter);
     }
 
     public void itemAddedToCartUi(MenuItem item) {
+        System.out.println();
         System.out.println("장바구니에 " + item.name() + "이 추가되었습니다.");
     }
 
     public int cartCheckBeforeOrderUi(Map<MenuItem, Integer> cartItems, BigDecimal totalPrice) {
+        System.out.println();
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println();
         System.out.println("[ Orders ]");
@@ -85,6 +91,7 @@ public class KioskUI {
     }
     
     public int discountMenuUi(SaleCategory[] saleCategories) {
+        System.out.println();
         System.out.println("할인 정보를 입력해주세요.");
         for (int i = 0; i < saleCategories.length; i++) {
             System.out.println((i + 1) + ". " + saleCategories[i]);
@@ -94,6 +101,7 @@ public class KioskUI {
     }
 
     public void completeOrderUi(BigDecimal totalPrice) {
+        System.out.println();
         System.out.println("주문이 완료되었습니다.");
         System.out.println("총 결제 금액: W " + totalPrice);
         // 이전 숫자 입력시 생긴 \n 버퍼 삭제
@@ -102,6 +110,7 @@ public class KioskUI {
     }
 
     public int cancelItemsUi(Map<MenuItem, Integer> cartItems) {
+        System.out.println();
         System.out.println("[ Cancel ]");
         displayCartItems(cartItems);
         System.out.println(cartItems.size()+1 + ". 전체 취소");
