@@ -15,15 +15,27 @@ public class KioskUI {
         System.exit(0);
     }
 
-    public int mainMenuUi(MenuCategory[] categories) {
+    public int mainMenuUi(MenuCategory[] categories, boolean canOrder) {
         System.out.println("[ MAIN MENU ]");
 
         for (int i = 0; i < categories.length; i++) {
             System.out.println((i + 1) + ". " + categories[i].toString());
         }
 
+        int lastIndex = categories.length;
+
+        if (canOrder) {
+            System.out.println();
+            System.out.println("[ ORDER MENU ]");
+            System.out.println(lastIndex + 1 + ". Orders");
+            System.out.println(lastIndex + 2 + ". Cancel");
+            lastIndex += 2;
+        }
+
         System.out.println("0. 종료");
-        return IntScanner.withFilter(sc, x -> x >= 0 && x <= categories.length);
+        // 람다는 final 혹은 effectively final값만 사용할 수 있음
+        final int lastIndexFinal = lastIndex;
+        return IntScanner.withFilter(sc, x -> x >= 0 && x <= lastIndexFinal);
     }
 
     public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {

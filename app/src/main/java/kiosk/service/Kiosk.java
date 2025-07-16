@@ -23,8 +23,9 @@ public class Kiosk {
 
     public void mainMenu() {
         var categories = MenuCategory.values();
+        boolean canOrder = !cartManager.isEmpty();
 
-        int choice = kioskUI.mainMenuUi(categories);
+        int choice = kioskUI.mainMenuUi(categories, canOrder);
 
         if (choice == 0) {
             // 프로그램 종료
