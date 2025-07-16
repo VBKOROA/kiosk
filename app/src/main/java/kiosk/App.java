@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
+import kiosk.managers.CartManager;
 import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
 import kiosk.service.Kiosk;
@@ -36,7 +37,8 @@ public class App {
 
         MenuManager menuManager = new MenuManager(menuItems);
         KioskUI kioskUI = new KioskUI();
-        Kiosk kiosk = new Kiosk(menuManager, sc, kioskUI);
+        CartManager cartManager = new CartManager();
+        Kiosk kiosk = new Kiosk(menuManager, sc, kioskUI, cartManager);
         kiosk.mainMenu();
     }
 }

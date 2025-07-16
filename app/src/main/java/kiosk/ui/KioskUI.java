@@ -1,6 +1,5 @@
 package kiosk.ui;
 
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +38,13 @@ public class KioskUI {
         return IntScanner.withFilter(sc, filter);
     }
 
-    public void menuSelectedUi(MenuItem selectedItem) {
-        System.out.println("선택한 메뉴: " + selectedItem.toString());
-    }  
+    public int addItemToCartUi(MenuItem item, IntScanner.ValidationFilter filter) {
+        System.out.println("선택한 메뉴: " + item.toString());
+        System.out.println("장바구니에 추가하시겠습니까? (1: 예, 0: 아니오)");
+        return IntScanner.withFilter(sc, filter);
+    }
+
+    public void itemAddedToCartUi(MenuItem item) {
+        System.out.println("장바구니에 " + item.name() + "이 추가되었습니다.");
+    }
 }
