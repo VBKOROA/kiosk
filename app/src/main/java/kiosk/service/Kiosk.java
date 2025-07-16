@@ -26,16 +26,11 @@ public class Kiosk {
 
             System.out.println("0. 종료 | 종료");
 
-            int choice  = intScanner(sc);
+            int choice  = intScanner(sc, x -> x >= 0 && x <= categories.length);
 
             if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
                 return;
-            }
-
-            if (choice < 1 || choice > categories.length) {
-                System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
-                continue;
             }
 
             menuSelectMenu(categories[choice - 1]);
@@ -53,16 +48,11 @@ public class Kiosk {
 
             System.out.println("0. 종료 | 종료");
 
-            int choice = intScanner(sc);
+            int choice = intScanner(sc, x -> x >= 0 && x <= items.size());
 
             if (choice == 0) {
                 System.out.println("메뉴 선택을 종료합니다.");
                 return;
-            }
-
-            if (choice < 1 || choice > items.size()) {
-                System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
-                continue;
             }
 
             MenuItem selectedItem = items.get(choice - 1);
