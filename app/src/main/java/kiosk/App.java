@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
+import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
 import kiosk.service.Kiosk;
-import kiosk.service.MenuManager;
 
 public class App {
     public static void main(String[] args) {

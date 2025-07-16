@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
+import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
 
 public class Kiosk {
