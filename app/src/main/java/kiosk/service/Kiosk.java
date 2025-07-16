@@ -37,7 +37,28 @@ public class Kiosk {
             // OOB 예외가 떴다는 것은
             // 필터 또한 통과를 했다는 것
             // 즉 Order 관련 메뉴를 선택했다는 것
-            cartCheckBeforeOrder();
+            if(choice == 4) cartCheckBeforeOrder();
+            else cancelItems();
+        }
+    }
+
+    private void cancelItems() {
+        var cartItems = cartManager.getCartItems();
+        int choice = kioskUI.cancelItemsUi(cartItems);
+
+        if (choice == 0) {
+            mainMenu();
+        } else if (choice == cartItems.size() + 1) {
+            cartManager.clearCart();
+            mainMenu();
+        } else {
+            cartManager.removeItem(cartManager.getKeyFromIdx(choice - 1));
+            if(cartManager.isEmpty()) {
+                mainMenu();
+            } else {
+                cancelItems();
+            }
+            
         }
     }
 

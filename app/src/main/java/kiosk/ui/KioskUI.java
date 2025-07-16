@@ -1,6 +1,7 @@
 package kiosk.ui;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -77,11 +78,12 @@ public class KioskUI {
     }
 
     private void displayCartItems(Map<MenuItem, Integer> cartItems) {
-        cartItems.forEach((item, quantity) -> {
-            System.out.println(item + " | " + quantity + "개");
-        });
+        int idx = 1;
+        for (var entry : cartItems.entrySet()) {
+            System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
+        }
     }
-
+    
     public int discountMenuUi(SaleCategory[] saleCategories) {
         System.out.println("할인 정보를 입력해주세요.");
         for (int i = 0; i < saleCategories.length; i++) {
@@ -95,5 +97,14 @@ public class KioskUI {
         System.out.println("주문이 완료되었습니다.");
         System.out.println("총 결제 금액: W " + totalPrice);
         sc.nextLine();
+    }
+
+    public int cancelItemsUi(Map<MenuItem, Integer> cartItems) {
+        System.out.println("[ Cancel ]");
+        displayCartItems(cartItems);
+        System.out.println(cartItems.size()+1 + ". 전체 취소");
+        System.out.println("0. 돌아가기");
+        System.out.println();
+        return IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size()+1);
     }
 }
