@@ -1,6 +1,7 @@
 package kiosk.service;
 
 import kiosk.enums.MenuCategory;
+import kiosk.enums.SaleCategory;
 import kiosk.managers.CartManager;
 import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
@@ -67,6 +68,24 @@ public class Kiosk {
     private void cartCheckBeforeOrder() {
         int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
 
-        mainMenu();
+        if(choice == 1) {
+            discountMenu();
+        } else {
+            mainMenu();
+        }
+    }
+
+    private void discountMenu() {
+        var saleCategories = SaleCategory.values();
+        int choice = kioskUI.discountMenuUi(saleCategories);
+        if(choice == 0) {
+            mainMenu();
+        } else {
+            processingOrder(saleCategories[choice - 1]);
+        }
+    }
+
+    private void processingOrder(SaleCategory saleCategory) {
+        
     }
 }

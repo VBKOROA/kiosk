@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
+import kiosk.enums.SaleCategory;
 import kiosk.models.MenuItem;
 import kiosk.utils.IntScanner;
 
@@ -79,5 +80,14 @@ public class KioskUI {
         cartItems.forEach((item, quantity) -> {
             System.out.println(item + " | " + quantity + "개");
         });
+    }
+
+    public int discountMenuUi(SaleCategory[] saleCategories) {
+        System.out.println("할인 정보를 입력해주세요.");
+        for (int i = 0; i < saleCategories.length; i++) {
+            System.out.println((i + 1) + ". " + saleCategories[i]);
+        }
+        System.out.println("0. 돌아가기");
+        return IntScanner.withFilter(sc, x -> x >= 0 && x <= saleCategories.length);
     }
 }
