@@ -3,7 +3,8 @@ package kiosk.models;
 public record MenuItem(
         String name, // 이름
         double price, // 가격
-        String description // 설명
+        String description, // 설명
+        String category // 카테고리
 ) {
     @Override
     public String toString() {
