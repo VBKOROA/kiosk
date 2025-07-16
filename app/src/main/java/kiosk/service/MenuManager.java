@@ -36,4 +36,11 @@ public class MenuManager {
     public int getMenuSize() {
         return menuItems.size();
     }
+
+    public List<String> getMenuCategories() {
+        return menuItems.stream()
+                .map(MenuItem::category) // 카테고리 추출 후
+                .distinct() // 중복을 제거해서
+                .toList(); // 리스트로 변환 (불변 리스트)
+    }
 }
