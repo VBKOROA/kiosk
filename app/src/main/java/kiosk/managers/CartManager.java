@@ -31,4 +31,8 @@ public class CartManager {
     public boolean isEmpty() {
         return cartItems.isEmpty();
     }
+
+    public void removeItem(MenuItem item) {
+        cartItems.remove(item);
+    }
 }
