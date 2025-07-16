@@ -70,14 +70,19 @@ public class Kiosk {
         }
     }
 
-    private int intScanner(Scanner sc) {
+    private int intScanner(Scanner sc, ValidationFilter filter) {
         try {
-            return sc.nextInt();
+            int input = sc.nextInt();
+            if(filter.validate(input)) {
+                return input;
+            } else {
+                System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
+            }
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
             sc.next(); // 잘못 입력된 버퍼를 청소
-            return intScanner(sc); // 재귀 호출
         }
+        return intScanner(sc, filter); // 재귀 호출
     }
 
     @FunctionalInterface
