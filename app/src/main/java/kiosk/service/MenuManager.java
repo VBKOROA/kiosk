@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import kiosk.enums.MenuCategory;
 import kiosk.models.MenuItem;
 
 public class MenuManager {
@@ -37,9 +38,9 @@ public class MenuManager {
         return menuItems.size();
     }
 
-    public List<MenuItem> getMenuItemsByCategory(String category) {
+    public List<MenuItem> getMenuItemsByCategory(MenuCategory category) {
         return menuItems.stream()
-                .filter(item -> item.category().equalsIgnoreCase(category)) // 카테고리로 필터링
+                .filter(item -> item.category().equals(category)) // 카테고리로 필터링
                 .toList(); // 리스트로 변환 (불변 리스트)
     }
 }
