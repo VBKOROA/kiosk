@@ -6,32 +6,28 @@ import java.util.Scanner;
 import kiosk.enums.MenuCategory;
 import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
+import kiosk.ui.KioskUI;
 
 public class Kiosk {
     private final MenuManager menuManager;
     private final Scanner sc;
+    private final KioskUI kioskUI;
 
-    public Kiosk(MenuManager menuManager, Scanner sc) {
+    public Kiosk(MenuManager menuManager, Scanner sc, KioskUI kioskUI) {
         this.menuManager = menuManager;
         this.sc = sc;
+        this.kioskUI = kioskUI;
     }
 
     public void mainMenu() {
         while (true) {
-            System.out.println("[ MAIN MENU ]");
             var categories = MenuCategory.values();
 
-            for (int i = 0; i < categories.length; i++) {
-                System.out.println((i + 1) + ". " + categories[i].toString());
-            }
-
-            System.out.println("0. 종료 | 종료");
-
-            int choice = intScanner(sc, x -> x >= 0 && x <= categories.length);
+            int choice = kioskUI.mainMenuUi(categories);
 
             if (choice == 0) {
-                System.out.println("프로그램을 종료합니다.");
-                return;
+                // 프로그램 종료
+                kioskUI.exitUi();
             }
 
             menuSelectMenu(categories[choice - 1]);

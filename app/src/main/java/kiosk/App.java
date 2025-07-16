@@ -10,6 +10,7 @@ import kiosk.enums.MenuCategory;
 import kiosk.managers.MenuManager;
 import kiosk.models.MenuItem;
 import kiosk.service.Kiosk;
+import kiosk.ui.KioskUI;
 
 public class App {
     public static void main(String[] args) {
@@ -34,8 +35,8 @@ public class App {
         );
 
         MenuManager menuManager = new MenuManager(menuItems);
-
-        Kiosk kiosk = new Kiosk(menuManager, sc);
+        KioskUI kioskUI = new KioskUI();
+        Kiosk kiosk = new Kiosk(menuManager, sc, kioskUI);
         kiosk.mainMenu();
     }
 }
