@@ -1,7 +1,6 @@
 package kiosk.managers;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import kiosk.enums.MenuCategory;
