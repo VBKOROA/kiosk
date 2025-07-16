@@ -1,5 +1,7 @@
 package kiosk.service;
 
+import java.math.BigDecimal;
+
 import kiosk.enums.MenuCategory;
 import kiosk.enums.SaleCategory;
 import kiosk.managers.CartManager;
@@ -86,6 +88,9 @@ public class Kiosk {
     }
 
     private void processingOrder(SaleCategory saleCategory) {
-        
+        BigDecimal totalPrice = cartManager.getTotalPrice().multiply(saleCategory.getDiscountRate());
+        cartManager.clearCart();
+        kioskUI.completeOrderUi(totalPrice);
+        mainMenu();
     }
 }
