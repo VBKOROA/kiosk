@@ -43,6 +43,7 @@ public class Kiosk {
             }
 
             if (choice < 1 || choice > menuItems.size()) {
+                // 잘못된 선택에 대한 처리
                 System.out.println("잘못된 선택입니다.");
                 continue;
             }
