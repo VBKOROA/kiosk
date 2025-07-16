@@ -22,7 +22,7 @@ public class KioskUI {
             System.out.println((i + 1) + ". " + categories[i].toString());
         }
 
-        System.out.println("0. 종료 | 종료");
+        System.out.println("0. 종료");
         return IntScanner.withFilter(sc, x -> x >= 0 && x <= categories.length);
     }
 
