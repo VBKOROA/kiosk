@@ -16,7 +16,6 @@ public class KioskUI {
     public void exitUi() {
         System.out.println();
         System.out.println("프로그램을 종료합니다.");
-        System.exit(0);
     }
 
     public int mainMenuUi(MenuCategory[] categories, boolean canOrder) {

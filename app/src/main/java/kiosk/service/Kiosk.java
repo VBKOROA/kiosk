@@ -32,6 +32,7 @@ public class Kiosk {
         if (choice == 0) {
             // 프로그램 종료
             kioskUI.exitUi();
+            System.exit(0);
         }
 
         try {
