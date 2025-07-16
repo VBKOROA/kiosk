@@ -65,9 +65,8 @@ public class Kiosk {
             int input = sc.nextInt();
             if(filter.validate(input)) {
                 return input;
-            } else {
-                System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
             }
+            System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
         } catch (InputMismatchException e) {
             System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
             sc.next(); // 잘못 입력된 버퍼를 청소
