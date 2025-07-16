@@ -12,4 +12,11 @@ public class CartManager {
         cartItems.merge(item, quantity, Integer::sum); // 메서드 참조를 사용
             // (oldValue, newValue) -> oldValue + newValue랑 같은 의미
     }
+
+    public int getTotalPrice() {
+        // entrySet 또한 stream이 가능함. 처음 알았음.
+        return cartItems.entrySet().stream()
+                .mapToInt(entry -> (int) (entry.getKey().price() * entry.getValue()))
+                .sum();
+    }
 }
