@@ -35,6 +35,6 @@ public class App {
         MenuManager menuManager = new MenuManager(menuItems);
 
         Kiosk kiosk = new Kiosk(menuManager, sc);
-        kiosk.start();
+        kiosk.mainMenu();
     }
 }
