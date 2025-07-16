@@ -66,14 +66,18 @@ public class KioskUI {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println();
         System.out.println("[ Orders ]");
-        cartItems.forEach((item, quantity) -> {
-            System.out.println(item + " | " + quantity + "개");
-        });
+        displayCartItems(cartItems);
         System.out.println();
         System.out.println("[ Total ]");
         System.out.println("W " + totalPrice);
         System.out.println();
         System.out.println("1. 주문     2. 돌아가기");
         return IntScanner.withFilter(sc, x -> x == 1 || x == 2);
+    }
+
+    private void displayCartItems(Map<MenuItem, Integer> cartItems) {
+        cartItems.forEach((item, quantity) -> {
+            System.out.println(item + " | " + quantity + "개");
+        });
     }
 }
