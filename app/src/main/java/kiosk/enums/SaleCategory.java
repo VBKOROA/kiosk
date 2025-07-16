@@ -19,4 +19,8 @@ public enum SaleCategory {
     public String toString() {
         return name;
     }
+
+    public BigDecimal getDiscountRate() {
+        return discountRate;
+    }
 }
