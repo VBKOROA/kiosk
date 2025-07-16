@@ -19,4 +19,8 @@ public class CartManager {
                 .mapToInt(entry -> (int) (entry.getKey().price() * entry.getValue()))
                 .sum();
     }
+
+    public Map<MenuItem, Integer> getCartItems() {
+        return Map.copyOf(cartItems); // 불변 맵을 반환
+    }
 }
