@@ -51,7 +51,7 @@ public class App {
             }
             
             MenuItem selectedItem = menuItems.get(choice - 1);
-            System.out.println(selectedItem.name() + "를 선택하셨습니다.");
+            selectedItem.selected();
         }
     }
 }
