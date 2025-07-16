@@ -26,7 +26,7 @@ public class Kiosk {
 
             System.out.println("0. 종료 | 종료");
 
-            int choice  = intScanner(sc, x -> x >= 0 && x <= categories.length);
+            int choice = intScanner(sc, x -> x >= 0 && x <= categories.length);
 
             if (choice == 0) {
                 System.out.println("프로그램을 종료합니다.");
@@ -63,7 +63,7 @@ public class Kiosk {
     private int intScanner(Scanner sc, ValidationFilter filter) {
         try {
             int input = sc.nextInt();
-            if(filter.validate(input)) {
+            if (filter.validate(input)) {
                 return input;
             }
             System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
