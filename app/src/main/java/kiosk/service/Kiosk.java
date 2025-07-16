@@ -1,7 +1,5 @@
 package kiosk.service;
 
-import java.util.Scanner;
-
 import kiosk.enums.MenuCategory;
 import kiosk.managers.CartManager;
 import kiosk.managers.MenuManager;
@@ -10,13 +8,11 @@ import kiosk.ui.KioskUI;
 
 public class Kiosk {
     private final MenuManager menuManager;
-    private final Scanner sc;
     private final KioskUI kioskUI;
     private final CartManager cartManager;
 
-    public Kiosk(MenuManager menuManager, Scanner sc, KioskUI kioskUI, CartManager cartManager) {
+    public Kiosk(MenuManager menuManager, KioskUI kioskUI, CartManager cartManager) {
         this.menuManager = menuManager;
-        this.sc = sc;
         this.kioskUI = kioskUI;
         this.cartManager = cartManager;
     }
