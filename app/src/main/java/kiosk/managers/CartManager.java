@@ -23,4 +23,8 @@ public class CartManager {
     public Map<MenuItem, Integer> getCartItems() {
         return Map.copyOf(cartItems); // 불변 맵을 반환
     }
+
+    public void clearCart() {
+        cartItems.clear();
+    }
 }
