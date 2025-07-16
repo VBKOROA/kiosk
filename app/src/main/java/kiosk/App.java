@@ -5,7 +5,6 @@ package kiosk;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
 import kiosk.managers.CartManager;
