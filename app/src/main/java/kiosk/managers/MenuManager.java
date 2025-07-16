@@ -20,7 +20,7 @@ public class MenuManager {
 
     public List<MenuItem> getMenuItems() {
         // 수정 불가능한 리스트를 반환
-        return Collections.unmodifiableList(menuItems);
+        return List.copyOf(menuItems);
     }
 
     public MenuItem getMenuItemFromIdx(int idx) throws IndexOutOfBoundsException {
