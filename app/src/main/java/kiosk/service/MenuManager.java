@@ -43,4 +43,10 @@ public class MenuManager {
                 .distinct() // 중복을 제거해서
                 .toList(); // 리스트로 변환 (불변 리스트)
     }
+
+    public List<MenuItem> getMenuItemsByCategory(String category) {
+        return menuItems.stream()
+                .filter(item -> item.category().equalsIgnoreCase(category)) // 카테고리로 필터링
+                .toList(); // 리스트로 변환 (불변 리스트)
+    }
 }
