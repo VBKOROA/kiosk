@@ -8,11 +8,11 @@ import java.util.Scanner;
 import kiosk.models.MenuItem;
 
 public class Kiosk {
-    private final List<MenuItem> menuItems = new ArrayList<>();
+    private final MenuManager menuManager;
     private final Scanner sc;
 
-    public Kiosk(List<MenuItem> menuItems, Scanner sc) {
-        this.menuItems.addAll(menuItems);
+    public Kiosk(MenuManager menuManager, Scanner sc) {
+        this.menuManager = menuManager;
         this.sc = sc;
     }
 
@@ -20,8 +20,8 @@ public class Kiosk {
         while (true) {
             System.out.println("[ SHAKESHACK MENU ]");
 
-            for (int i = 0; i < menuItems.size(); i++) {
-                System.out.println(i + 1 + ". " + menuItems.get(i));
+            for (int i = 0; i < menuManager.getMenuSize(); i++) {
+                System.out.println(i + 1 + ". " + menuManager.getMenuItemFromIdx(i));
             }
 
             System.out.println("0. 종료 | 종료");
@@ -42,13 +42,14 @@ public class Kiosk {
                 break;
             }
 
-            if (choice < 1 || choice > menuItems.size()) {
-                // 잘못된 선택에 대한 처리
-                System.out.println("잘못된 선택입니다.");
+            try {
+                menuManager.getMenuItemFromIdx(choice - 1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
                 continue;
             }
 
-            MenuItem selectedItem = menuItems.get(choice - 1);
+            MenuItem selectedItem = menuManager.getMenuItemFromIdx(choice - 1);
             selectedItem.selected();
         }
     }
