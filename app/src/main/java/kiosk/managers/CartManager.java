@@ -1,5 +1,6 @@
 package kiosk.managers;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,11 +14,11 @@ public class CartManager {
             // (oldValue, newValue) -> oldValue + newValue랑 같은 의미
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         // entrySet 또한 stream이 가능함. 처음 알았음.
         return cartItems.entrySet().stream()
-                .mapToInt(entry -> (int) (entry.getKey().price() * entry.getValue()))
-                .sum();
+                .map(entry -> entry.getKey().price().multiply(BigDecimal.valueOf(entry.getValue())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add); // reduce(초기값 부터 메서드를 통해 누적)
     }
 
     public Map<MenuItem, Integer> getCartItems() {

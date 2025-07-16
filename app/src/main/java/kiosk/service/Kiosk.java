@@ -70,5 +70,7 @@ public class Kiosk {
 
     private void cartCheckBeforeOrder() {
         int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
+
+        mainMenu();
     }
 }
