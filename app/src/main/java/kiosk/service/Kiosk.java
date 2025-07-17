@@ -66,12 +66,20 @@ public class Kiosk {
         } else if (choice == cartItems.size() + 1) {
             clearCart();
         } else {
-            cartManager.removeItem(cartManager.getKeyFromIdx(choice - 1));
-            if(cartManager.isEmpty()) {
-                mainMenu();
-            } else {
-                cancelItems();
-            }
+            removeItemFromCart(cartManager.getKeyFromIdx(choice - 1));
+        }
+    }
+
+    /**
+     * 장바구니에서 아이템을 제거하고 메인 메뉴 혹은 취소 메뉴로 돌아간다.
+     * @param item 제거할 메뉴 아이템
+     */
+    private void removeItemFromCart(MenuItem item) {
+        cartManager.removeItem(item);
+        if(cartManager.isEmpty()) {
+            mainMenu();
+        } else {
+            cancelItems();
         }
     }
 
