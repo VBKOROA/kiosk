@@ -21,10 +21,6 @@ public record MenuItem(
             return sb.toString();
     }
 
-    public void selected() {
-        System.out.println(name + "를 선택하셨습니다.");
-    }
-
     public static class Builder {
         private String name;
         private BigDecimal price;
