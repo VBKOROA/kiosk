@@ -87,6 +87,6 @@ public class App {
         KioskUI kioskUI = new KioskUI();
         CartManager cartManager = new CartManager();
         Kiosk kiosk = new Kiosk(menuManager, kioskUI, cartManager);
-        kiosk.mainMenu();
+        kiosk.run();
     }
 }

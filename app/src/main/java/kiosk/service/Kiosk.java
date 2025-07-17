@@ -6,6 +6,7 @@ import kiosk.enums.MenuCategory;
 import kiosk.enums.SaleCategory;
 import kiosk.managers.CartManager;
 import kiosk.managers.MenuManager;
+import kiosk.models.KioskAction;
 import kiosk.models.MenuItem;
 import kiosk.ui.KioskUI;
 
@@ -21,13 +22,38 @@ public class Kiosk {
     }
 
     public void run() {
-        // 시작점
+        KioskAction curAction = new KioskAction.MainMenu();
+        while (true) {
+            // switch 문을 사용하는 또 다른 방법
+            // sealed interface를 사용하여 각 액션을 처리
+            // 각 액션에 대한 처리를 switch 문으로 분기
+            switch (curAction) {
+                case KioskAction.MainMenu mainMenu -> 
+                    curAction = mainMenu();
+                case KioskAction.ProgramExit programExit -> 
+                    programExit();
+                case KioskAction.CancelItems cancelItems -> 
+                    curAction = cancelItems();
+                case KioskAction.MenuSelectMenu menuSelectMenu -> 
+                    curAction = menuSelectMenu(menuSelectMenu.category());
+                case KioskAction.AddItemToCartMenu addItemToCartMenu ->
+                    curAction = addItemToCartMenu(addItemToCartMenu.item());
+                case KioskAction.CartCheckBeforeOrder cartCheckBeforeOrder -> 
+                    curAction = cartCheckBeforeOrder();
+                case KioskAction.DiscountMenu discountMenu -> 
+                    curAction = discountMenu();
+                case KioskAction.ProcessingOrder processingOrder ->
+                    curAction = processingOrder(processingOrder.category());
+            }
+        }
     }
 
     /**
      * 메인 메뉴를 표시하고 사용자의 선택을 처리한다.
+     * 
+     * @return KioskAction 객체
      */
-    private void mainMenu() {
+    private KioskAction mainMenu() {
         var categories = MenuCategory.values();
         boolean canOrder = !cartManager.isEmpty();
 
@@ -35,16 +61,16 @@ public class Kiosk {
 
         if (choice == 0) {
             // 프로그램 종료
-            programExit();
+            return new KioskAction.ProgramExit();
         }
 
         if (choice - 1 < categories.length) {
-            menuSelectMenu(categories[choice - 1]);
+            return new KioskAction.MenuSelectMenu(categories[choice - 1]);
         } else {
             // choice가 categories.length을 넘은 경우
             // categories.length + 1은 주문 메뉴
             // categories.length + 2는 취소 메뉴
-            processOrderDecision(choice == categories.length + 1);
+            return processOrderDecision(choice == categories.length + 1);
         }
     }
 
@@ -52,12 +78,13 @@ public class Kiosk {
      * 주문 결정을 처리한다.
      * 
      * @param isCartCheck 주문 결정 여부
+     * @return KioskAction 객체
      */
-    private void processOrderDecision(boolean isCartCheck) {
+    private KioskAction processOrderDecision(boolean isCartCheck) {
         if (isCartCheck)
-            cartCheckBeforeOrder();
+            return new KioskAction.CartCheckBeforeOrder();
         else
-            cancelItems();
+            return new KioskAction.CancelItems();
     }
 
     /**
@@ -71,17 +98,19 @@ public class Kiosk {
 
     /**
      * 장바구니에 담긴 아이템을 취소하는 메뉴를 표시하고 사용자의 선택을 처리한다.
+     * 
+     * @return KioskAction 객체
      */
-    private void cancelItems() {
+    private KioskAction cancelItems() {
         var cartItems = cartManager.getCartItemAsList();
         int choice = kioskUI.cancelItemsUi(cartItems);
 
         if (choice == 0) {
-            mainMenu();
+            return new KioskAction.MainMenu();
         } else if (choice == cartItems.size() + 1) {
-            clearCart();
+            return clearCart();
         } else {
-            removeItemFromCart(cartItems.get(choice - 1).getKey());
+            return removeItemFromCart(cartItems.get(choice - 1).getKey());
         }
     }
 
@@ -89,47 +118,52 @@ public class Kiosk {
      * 장바구니에서 아이템을 제거하고 메인 메뉴 혹은 취소 메뉴로 돌아간다.
      * 
      * @param item 제거할 메뉴 아이템
+     * @return KioskAction 객체
      */
-    private void removeItemFromCart(MenuItem item) {
+    private KioskAction removeItemFromCart(MenuItem item) {
         cartManager.removeItem(item);
         if (cartManager.isEmpty()) {
-            mainMenu();
+            return new KioskAction.MainMenu();
         } else {
-            cancelItems();
+            return new KioskAction.CancelItems();
         }
     }
 
     /**
      * 장바구니를 비우고 메인 메뉴로 돌아간다.
+     * 
+     * @return KioskAction 객체
      */
-    private void clearCart() {
+    private KioskAction clearCart() {
         cartManager.clearCart();
-        mainMenu();
+        return new KioskAction.MainMenu();
     }
 
     /**
      * 카테고리에 해당하는 메뉴 아이템을 선택하고 장바구니에 추가하는 메뉴를 표시한다.
      * 
      * @param category 선택한 카테고리
+     * @return KioskAction 객체
      */
-    private void menuSelectMenu(MenuCategory category) {
+    private KioskAction menuSelectMenu(MenuCategory category) {
         var items = menuManager.getMenuItemsByCategory(category);
         int choice = kioskUI.menuSelectUi(items, x -> x >= 0 && x <= items.size());
 
         if (choice == 0) {
-            mainMenu();
+            return new KioskAction.MainMenu();
         }
 
         MenuItem selectedItem = items.get(choice - 1);
-        addItemToCartMenu(selectedItem);
+        return new KioskAction.AddItemToCartMenu(selectedItem);
     }
 
     /**
      * 장바구니에 아이템을 추가할 것인지 묻는 메뉴를 표시한다.
      * 
      * @param item 선택한 메뉴 아이템
+     * @return KioskAction 객체
      */
-    private void addItemToCartMenu(MenuItem item) {
+    private KioskAction addItemToCartMenu(MenuItem item) {
         int choice = kioskUI.addItemToCartUi(item, x -> x == 0 || x == 1);
 
         if (choice == 1) {
@@ -139,7 +173,7 @@ public class Kiosk {
 
         // choice가 0인 경우와 담기가 끝났을 시
         // 메인 메뉴로 돌아가기
-        mainMenu();
+        return new KioskAction.MainMenu();
     }
 
     /**
@@ -154,27 +188,31 @@ public class Kiosk {
 
     /**
      * 장바구니에 담긴 아이템을 주문하기 전 확인하는 메뉴를 표시한다.
+     * 
+     * @return KioskAction 객체
      */
-    private void cartCheckBeforeOrder() {
+    private KioskAction cartCheckBeforeOrder() {
         int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
 
         if (choice == 1) {
-            discountMenu();
+            return new KioskAction.DiscountMenu();
         } else {
-            mainMenu();
+            return new KioskAction.MainMenu();
         }
     }
 
     /**
      * 할인 메뉴를 표시하고 사용자의 선택을 처리한다.
+     * 
+     * @return KioskAction 객체
      */
-    private void discountMenu() {
+    private KioskAction discountMenu() {
         var saleCategories = SaleCategory.values();
         int choice = kioskUI.discountMenuUi(saleCategories);
         if (choice == 0) {
-            mainMenu();
+            return new KioskAction.MainMenu();
         } else {
-            processingOrder(saleCategories[choice - 1]);
+            return new KioskAction.ProcessingOrder(saleCategories[choice - 1]);
         }
     }
 
@@ -182,12 +220,13 @@ public class Kiosk {
      * 주문을 처리하는 메서드
      * 
      * @param saleCategory 선택한 할인 카테고리
+     * @return KioskAction 객체
      */
-    private void processingOrder(SaleCategory saleCategory) {
+    private KioskAction processingOrder(SaleCategory saleCategory) {
         BigDecimal totalPrice = cartManager.getTotalPrice();
         BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
         cartManager.clearCart();
         kioskUI.completeOrderUi(finalPrice);
-        mainMenu();
+        return new KioskAction.MainMenu();
     }
 }
