@@ -29,10 +29,7 @@ public class KioskUI {
         int lastIndex = categories.length;
 
         if (canOrder) {
-            System.out.println();
-            System.out.println("[ ORDER MENU ]");
-            System.out.println(lastIndex + 1 + ". Orders");
-            System.out.println(lastIndex + 2 + ". Cancel");
+            orderMenuUi(lastIndex);
             lastIndex += 2;
         }
 
@@ -40,6 +37,13 @@ public class KioskUI {
         // 람다는 final 혹은 effectively final값만 사용할 수 있음
         final int lastIndexFinal = lastIndex;
         return IntScanner.withFilter(sc, x -> x >= 0 && x <= lastIndexFinal);
+    }
+
+    private void orderMenuUi(int lastIndex) {
+        System.out.println();
+        System.out.println("[ ORDER MENU ]");
+        System.out.println(lastIndex + 1 + ". Orders");
+        System.out.println(lastIndex + 2 + ". Cancel");
     }
 
     public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {
@@ -87,7 +91,7 @@ public class KioskUI {
             System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
         }
     }
-    
+
     public int discountMenuUi(SaleCategory[] saleCategories) {
         System.out.println();
         System.out.println("할인 정보를 입력해주세요.");
@@ -111,9 +115,9 @@ public class KioskUI {
         System.out.println();
         System.out.println("[ Cancel ]");
         displayCartItems(cartItems);
-        System.out.println(cartItems.size()+1 + ". 전체 취소");
+        System.out.println(cartItems.size() + 1 + ". 전체 취소");
         System.out.println("0. 돌아가기");
         System.out.println();
-        return IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size()+1);
+        return IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size() + 1);
     }
 }
