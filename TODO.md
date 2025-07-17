@@ -1,7 +1,7 @@
 # 리팩토링 TODO
 
 MainMenu() [x]
-ProgramExit() [ ]
+ProgramExit() [x]
 CancelItems() [ ]
 MenuSelectMenu(MenuCategory category) [ ]
 AddItemToCartMenu(MenuItem item) [ ]
