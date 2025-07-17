@@ -3,6 +3,7 @@ package kiosk.ui;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
@@ -67,7 +68,7 @@ public class KioskUI {
         System.out.println("장바구니에 " + item.name() + "이 추가되었습니다.");
     }
 
-    public int cartCheckBeforeOrderUi(Map<MenuItem, Integer> cartItems, BigDecimal totalPrice) {
+    public int cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
         System.out.println();
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println();
@@ -81,9 +82,9 @@ public class KioskUI {
         return IntScanner.withFilter(sc, x -> x == 1 || x == 2);
     }
 
-    private void displayCartItems(Map<MenuItem, Integer> cartItems) {
+    private void displayCartItems(List<Map.Entry<MenuItem, Integer>> cartItems) {
         int idx = 1;
-        for (var entry : cartItems.entrySet()) {
+        for (var entry : cartItems) {
             System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
         }
     }
@@ -107,7 +108,7 @@ public class KioskUI {
         sc.nextLine();
     }
 
-    public int cancelItemsUi(Map<MenuItem, Integer> cartItems) {
+    public int cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
         System.out.println();
         System.out.println("[ Cancel ]");
         displayCartItems(cartItems);

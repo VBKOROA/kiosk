@@ -69,7 +69,7 @@ public class Kiosk {
      * 장바구니에 담긴 아이템을 취소하는 메뉴를 표시하고 사용자의 선택을 처리한다.
      */
     private void cancelItems() {
-        var cartItems = cartManager.getCartItems();
+        var cartItems = cartManager.getCartItemAsList();
         int choice = kioskUI.cancelItemsUi(cartItems);
 
         if (choice == 0) {
@@ -77,7 +77,7 @@ public class Kiosk {
         } else if (choice == cartItems.size() + 1) {
             clearCart();
         } else {
-            removeItemFromCart(cartManager.getKeyFromIdx(choice - 1));
+            removeItemFromCart(cartItems.get(choice - 1).getKey());
         }
     }
 
@@ -149,10 +149,10 @@ public class Kiosk {
     }
 
     /**
-     * 장바구니에 담긴 아이템을 취소하기 전 확인하는 메뉴를 표시한다.
+     * 장바구니에 담긴 아이템을 주문하기 전 확인하는 메뉴를 표시한다.
      */
     private void cartCheckBeforeOrder() {
-        int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
+        int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
 
         if (choice == 1) {
             discountMenu();
