@@ -19,6 +19,14 @@ public class IntScanner {
         }
     }
 
+    /**
+     * 정수 입력을 받고, 필터를 적용하여 유효성을 검사한다.
+     * @param sc Scanner 객체
+     * @param filter 필터 함수
+     * @return 유효한 정수
+     * @throws InvalidInputException 잘못된 입력이 들어온 경우
+     * @throws InputMismatchException 입력이 정수가 아닌 경우
+     */
     private static int readIntWithFilter(Scanner sc, ValidationFilter filter) throws InvalidInputException, InputMismatchException {
         int input = sc.nextInt();
         if (filter.validate(input)) {
