@@ -1,7 +1,9 @@
 package kiosk.managers;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import kiosk.models.MenuItem;
@@ -36,6 +38,14 @@ public class CartManager {
      */
     public Map<MenuItem, Integer> getCartItems() {
         return Map.copyOf(cartItems); // 불변 맵을 반환
+    }
+
+    /**
+     * 장바구니에 있는 아이템들을 리스트로 반환한다.
+     * @return 장바구니 아이템 리스트
+     */
+    public List<MenuItem> getCartItemAsList() {
+        return new ArrayList<>(cartItems.keySet());
     }
 
     /**
