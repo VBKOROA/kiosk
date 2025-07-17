@@ -50,3 +50,13 @@ tasks.withType(JavaExec).configureEach {
     // Enable proper console input handling for terminal apps
     standardInput = System.in
 }
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Main-Class': application.mainClass.get()
+        )
+    }
+}
