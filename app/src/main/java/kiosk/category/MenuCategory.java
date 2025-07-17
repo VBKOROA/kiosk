@@ -1,4 +1,4 @@
-package kiosk.enums;
+package kiosk.category;
 
 public enum MenuCategory {
     BUGER("버거"),

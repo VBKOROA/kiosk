@@ -2,12 +2,12 @@ package kiosk.service;
 
 import java.math.BigDecimal;
 
-import kiosk.enums.MenuCategory;
-import kiosk.enums.SaleCategory;
-import kiosk.managers.CartManager;
-import kiosk.managers.MenuManager;
-import kiosk.models.KioskAction;
-import kiosk.models.MenuItem;
+import kiosk.category.MenuCategory;
+import kiosk.category.SaleCategory;
+import kiosk.manager.CartManager;
+import kiosk.manager.MenuManager;
+import kiosk.model.KioskAction;
+import kiosk.model.MenuItem;
 import kiosk.ui.KioskUI;
 
 public class Kiosk {

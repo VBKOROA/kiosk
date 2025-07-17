@@ -1,4 +1,4 @@
-package kiosk.enums;
+package kiosk.category;
 
 import java.math.BigDecimal;
 

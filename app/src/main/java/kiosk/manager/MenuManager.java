@@ -1,10 +1,10 @@
-package kiosk.managers;
+package kiosk.manager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kiosk.enums.MenuCategory;
-import kiosk.models.MenuItem;
+import kiosk.category.MenuCategory;
+import kiosk.model.MenuItem;
 
 public class MenuManager {
     private final List<MenuItem> menuItems = new ArrayList<>();

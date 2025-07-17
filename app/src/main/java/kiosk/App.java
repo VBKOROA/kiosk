@@ -6,10 +6,10 @@ package kiosk;
 import java.math.BigDecimal;
 import java.util.List;
 
-import kiosk.enums.MenuCategory;
-import kiosk.managers.CartManager;
-import kiosk.managers.MenuManager;
-import kiosk.models.MenuItem;
+import kiosk.category.MenuCategory;
+import kiosk.manager.CartManager;
+import kiosk.manager.MenuManager;
+import kiosk.model.MenuItem;
 import kiosk.service.Kiosk;
 import kiosk.ui.KioskUI;
 
