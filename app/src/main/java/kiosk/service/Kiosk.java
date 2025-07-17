@@ -34,13 +34,13 @@ public class Kiosk {
             programExit();
         }
 
-        try {
+        if (choice - 1 < categories.length) {
             menuSelectMenu(categories[choice - 1]);
-        } catch (IndexOutOfBoundsException e) {
-            // OOB 예외가 떴다는 것은
-            // 필터 또한 통과를 했다는 것
-            // 즉 Order 관련 메뉴를 선택했다는 것
-            processOrderDecision(choice == 4);
+        } else {
+            // choice가 categories.length을 넘은 경우
+            // categories.length + 1은 주문 메뉴
+            // categories.length + 2는 취소 메뉴
+            processOrderDecision(choice == categories.length + 1);
         }
     }
 
