@@ -40,11 +40,20 @@ public class Kiosk {
             // OOB 예외가 떴다는 것은
             // 필터 또한 통과를 했다는 것
             // 즉 Order 관련 메뉴를 선택했다는 것
-            if (choice == 4)
-                cartCheckBeforeOrder();
-            else
-                cancelItems();
+            processOrderDecision(choice == 4);
         }
+    }
+
+    /**
+     * 주문 결정을 처리한다.
+     * 
+     * @param isCartCheck 주문 결정 여부
+     */
+    private void processOrderDecision(boolean isCartCheck) {
+        if (isCartCheck)
+            cartCheckBeforeOrder();
+        else
+            cancelItems();
     }
 
     /**
