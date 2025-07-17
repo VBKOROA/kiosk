@@ -20,10 +20,14 @@ public class Kiosk {
         this.cartManager = cartManager;
     }
 
+    public void run() {
+        // 시작점
+    }
+
     /**
      * 메인 메뉴를 표시하고 사용자의 선택을 처리한다.
      */
-    public void mainMenu() {
+    private void mainMenu() {
         var categories = MenuCategory.values();
         boolean canOrder = !cartManager.isEmpty();
 
