@@ -64,8 +64,7 @@ public class Kiosk {
         if (choice == 0) {
             mainMenu();
         } else if (choice == cartItems.size() + 1) {
-            cartManager.clearCart();
-            mainMenu();
+            clearCart();
         } else {
             cartManager.removeItem(cartManager.getKeyFromIdx(choice - 1));
             if(cartManager.isEmpty()) {
@@ -75,6 +74,14 @@ public class Kiosk {
             }
             
         }
+    }
+
+    /**
+     * 장바구니를 비우고 메인 메뉴로 돌아간다.
+     */
+    private void clearCart() {
+        cartManager.clearCart();
+        mainMenu();
     }
 
     /**
