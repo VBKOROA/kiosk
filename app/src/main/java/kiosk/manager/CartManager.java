@@ -1,4 +1,4 @@
-package kiosk.managers;
+package kiosk.manager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import kiosk.models.MenuItem;
+import kiosk.model.MenuItem;
 
 public class CartManager {
     private final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();

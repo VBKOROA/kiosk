@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import kiosk.enums.MenuCategory;
-import kiosk.enums.SaleCategory;
-import kiosk.models.MenuItem;
-import kiosk.utils.IntScanner;
+import kiosk.category.MenuCategory;
+import kiosk.category.SaleCategory;
+import kiosk.model.MenuItem;
+import kiosk.util.IntScanner;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);

@@ -1,9 +1,9 @@
-package kiosk.utils;
+package kiosk.util;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import kiosk.exceptions.InvalidInputException;
+import kiosk.exception.InvalidInputException;
 
 public class IntScanner {
     /**

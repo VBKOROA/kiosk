@@ -1,8 +1,8 @@
-package kiosk.models;
+package kiosk.model;
 
 import java.math.BigDecimal;
 
-import kiosk.enums.MenuCategory;
+import kiosk.category.MenuCategory;
 
 public record MenuItem(
         String name, // 이름
