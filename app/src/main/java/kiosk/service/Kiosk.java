@@ -27,24 +27,28 @@ public class Kiosk {
             // switch 문을 사용하는 또 다른 방법
             // sealed interface를 사용하여 각 액션을 처리
             // 각 액션에 대한 처리를 switch 문으로 분기
-            switch (curAction) {
+            curAction = switch (curAction) {
                 case KioskAction.MainMenu mainMenu -> 
-                    curAction = mainMenu();
-                case KioskAction.ProgramExit programExit -> 
+                    mainMenu();
+                case KioskAction.ProgramExit programExit -> {
+                    // 프로그램 종료한 후
                     programExit();
+                    // 어쨋든 KioskAction을 반환하기
+                    yield new KioskAction.ProgramExit();
+                }
                 case KioskAction.CancelItems cancelItems -> 
-                    curAction = cancelItems();
+                    cancelItems();
                 case KioskAction.MenuSelectMenu menuSelectMenu -> 
-                    curAction = menuSelectMenu(menuSelectMenu.category());
+                    menuSelectMenu(menuSelectMenu.category());
                 case KioskAction.AddItemToCartMenu addItemToCartMenu ->
-                    curAction = addItemToCartMenu(addItemToCartMenu.item());
+                    addItemToCartMenu(addItemToCartMenu.item());
                 case KioskAction.CartCheckBeforeOrder cartCheckBeforeOrder -> 
-                    curAction = cartCheckBeforeOrder();
+                    cartCheckBeforeOrder();
                 case KioskAction.DiscountMenu discountMenu -> 
-                    curAction = discountMenu();
+                    discountMenu();
                 case KioskAction.ProcessingOrder processingOrder ->
-                    curAction = processingOrder(processingOrder.category());
-            }
+                    processingOrder(processingOrder.category());
+            };
         }
     }
 
