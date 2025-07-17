@@ -72,7 +72,6 @@ public class Kiosk {
             } else {
                 cancelItems();
             }
-            
         }
     }
 
