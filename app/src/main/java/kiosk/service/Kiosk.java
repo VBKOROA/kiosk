@@ -31,8 +31,7 @@ public class Kiosk {
 
         if (choice == 0) {
             // 프로그램 종료
-            kioskUI.exitUi();
-            System.exit(0);
+            programExit();
         }
 
         try {
@@ -44,6 +43,15 @@ public class Kiosk {
             if(choice == 4) cartCheckBeforeOrder();
             else cancelItems();
         }
+    }
+
+    /**
+     * 프로그램을 종료한다.
+     */
+    private void programExit() {
+        // 프로그램 종료
+        kioskUI.exitUi();
+        System.exit(0);
     }
 
     /**
