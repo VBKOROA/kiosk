@@ -41,11 +41,11 @@ public class CartManager {
     }
 
     /**
-     * 장바구니에 있는 아이템들을 리스트로 반환한다.
+     * 장바구니에 있는 아이템과 개수를 리스트로 반환한다.
      * @return 장바구니 아이템 리스트
      */
-    public List<MenuItem> getCartItemAsList() {
-        return new ArrayList<>(cartItems.keySet());
+    public List<Map.Entry<MenuItem, Integer>> getCartItemAsList() {
+        return new ArrayList<>(cartItems.entrySet());
     }
 
     /**
