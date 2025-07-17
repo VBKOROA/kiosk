@@ -33,14 +33,6 @@ public class CartManager {
     }
 
     /**
-     * 장바구니에 있는 아이템들을 반환한다.
-     * @return 장바구니 아이템 맵
-     */
-    public Map<MenuItem, Integer> getCartItems() {
-        return Map.copyOf(cartItems); // 불변 맵을 반환
-    }
-
-    /**
      * 장바구니에 있는 아이템과 개수를 리스트로 반환한다.
      * @return 장바구니 아이템 리스트
      */
