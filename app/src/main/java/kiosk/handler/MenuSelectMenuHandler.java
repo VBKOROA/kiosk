@@ -25,10 +25,9 @@ public class MenuSelectMenuHandler implements ActionHandler {
      */
     public static MenuSelectMenuHandler withParameter(ParameterDto parameter) {
         return new MenuSelectMenuHandler(
-            parameter.menuManager(),
-            parameter.kioskUI(),
-            parameter.category()
-        );
+                parameter.menuManager(),
+                parameter.kioskUI(),
+                parameter.category());
     }
 
     /**
@@ -53,12 +52,12 @@ public class MenuSelectMenuHandler implements ActionHandler {
      * MenuSelectMenuHandler의 파라미터 DTO 클래스.
      * 
      * @param menuManager 메뉴 매니저
-     * @param kioskUI Kiosk UI
-     * @param category 선택한 카테고리
+     * @param kioskUI     Kiosk UI
+     * @param category    선택한 카테고리
      */
     public static record ParameterDto(
-        MenuManager menuManager,
-        KioskUI kioskUI,
-        MenuCategory category
-    ) {}
+            MenuManager menuManager,
+            KioskUI kioskUI,
+            MenuCategory category) {
+    }
 }
