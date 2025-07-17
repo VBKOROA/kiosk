@@ -41,15 +41,6 @@ public class CartManager {
     }
 
     /**
-     * 장바구니에 있는 아이템을 반환한다.
-     * @param idx 아이템의 인덱스
-     * @return 아이템
-     */
-    public MenuItem getKeyFromIdx(int idx) {
-        return (MenuItem) cartItems.keySet().toArray()[idx];
-    }
-
-    /**
      * 장바구니를 비운다.
      */
     public void clearCart() {
