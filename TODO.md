@@ -3,7 +3,7 @@
 MainMenu() [x]
 ProgramExit() [x]
 CancelItems() [x]
-MenuSelectMenu(MenuCategory category) [ ]
+MenuSelectMenu(MenuCategory category) [x]
 AddItemToCartMenu(MenuItem item) [ ]
 CartCheckBeforeOrder() [ ]
 DiscountMenu() [ ]
