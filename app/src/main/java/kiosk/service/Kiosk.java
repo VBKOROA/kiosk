@@ -40,8 +40,10 @@ public class Kiosk {
             // OOB 예외가 떴다는 것은
             // 필터 또한 통과를 했다는 것
             // 즉 Order 관련 메뉴를 선택했다는 것
-            if(choice == 4) cartCheckBeforeOrder();
-            else cancelItems();
+            if (choice == 4)
+                cartCheckBeforeOrder();
+            else
+                cancelItems();
         }
     }
 
@@ -72,11 +74,12 @@ public class Kiosk {
 
     /**
      * 장바구니에서 아이템을 제거하고 메인 메뉴 혹은 취소 메뉴로 돌아간다.
+     * 
      * @param item 제거할 메뉴 아이템
      */
     private void removeItemFromCart(MenuItem item) {
         cartManager.removeItem(item);
-        if(cartManager.isEmpty()) {
+        if (cartManager.isEmpty()) {
             mainMenu();
         } else {
             cancelItems();
@@ -93,11 +96,12 @@ public class Kiosk {
 
     /**
      * 카테고리에 해당하는 메뉴 아이템을 선택하고 장바구니에 추가하는 메뉴를 표시한다.
+     * 
      * @param category 선택한 카테고리
      */
     private void menuSelectMenu(MenuCategory category) {
         var items = menuManager.getMenuItemsByCategory(category);
-        int choice = kioskUI.menuSelectUi(items,  x -> x >= 0 && x <= items.size());
+        int choice = kioskUI.menuSelectUi(items, x -> x >= 0 && x <= items.size());
 
         if (choice == 0) {
             mainMenu();
@@ -109,6 +113,7 @@ public class Kiosk {
 
     /**
      * 장바구니에 아이템을 추가할 것인지 묻는 메뉴를 표시한다.
+     * 
      * @param item 선택한 메뉴 아이템
      */
     private void addItemToCartMenu(MenuItem item) {
@@ -116,8 +121,7 @@ public class Kiosk {
 
         if (choice == 1) {
             // 장바구니에 담기
-            cartManager.addItem(item, 1);
-            kioskUI.itemAddedToCartUi(item);
+            addToCart(item);
         }
 
         // choice가 0인 경우와 담기가 끝났을 시
@@ -126,12 +130,22 @@ public class Kiosk {
     }
 
     /**
+     * 장바구니에 아이템을 추가하고 UI에 알린다.
+     * 
+     * @param item 추가할 메뉴 아이템
+     */
+    private void addToCart(MenuItem item) {
+        cartManager.addItem(item, 1);
+        kioskUI.itemAddedToCartUi(item);
+    }
+
+    /**
      * 장바구니에 담긴 아이템을 취소하기 전 확인하는 메뉴를 표시한다.
      */
     private void cartCheckBeforeOrder() {
         int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItems(), cartManager.getTotalPrice());
 
-        if(choice == 1) {
+        if (choice == 1) {
             discountMenu();
         } else {
             mainMenu();
@@ -144,7 +158,7 @@ public class Kiosk {
     private void discountMenu() {
         var saleCategories = SaleCategory.values();
         int choice = kioskUI.discountMenuUi(saleCategories);
-        if(choice == 0) {
+        if (choice == 0) {
             mainMenu();
         } else {
             processingOrder(saleCategories[choice - 1]);
@@ -153,6 +167,7 @@ public class Kiosk {
 
     /**
      * 주문을 처리하는 메서드
+     * 
      * @param saleCategory 선택한 할인 카테고리
      */
     private void processingOrder(SaleCategory saleCategory) {
