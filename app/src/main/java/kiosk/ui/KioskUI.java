@@ -3,7 +3,6 @@ package kiosk.ui;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 import kiosk.enums.MenuCategory;
