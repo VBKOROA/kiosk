@@ -3,19 +3,28 @@ package kiosk.utils;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import kiosk.exceptions.InvalidInputException;
+
 public class IntScanner {
     public static int withFilter(Scanner sc, ValidationFilter filter) {
         while (true) {
             try {
-                int input = sc.nextInt();
-                if (filter.validate(input)) {
-                    return input;
-                }
+                return readIntWithFilter(sc, filter);
+            } catch (InvalidInputException e) {
                 System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 숫자를 입력해주세요.");
                 sc.next(); // 잘못 입력된 버퍼를 청소
             }
+        }
+    }
+
+    private static int readIntWithFilter(Scanner sc, ValidationFilter filter) throws InvalidInputException, InputMismatchException {
+        int input = sc.nextInt();
+        if (filter.validate(input)) {
+            return input;
+        } else {
+            throw new InvalidInputException();
         }
     }
 
