@@ -4,7 +4,7 @@
 - [x] `mainMenuUi()`
 - [x] `menuSelectUi()`
 - [x] `addItemToCartUi()`
-- [ ] `itemAddedToCartUi()`
+- [x] `itemAddedToCartUi()`
 - [ ] `cartCheckBeforeOrderUi()`
 - [ ] `discountMenuUi()`
 - [ ] `completeOrderUi()`
