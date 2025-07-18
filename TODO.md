@@ -8,4 +8,4 @@
 - [x] CartCheckBeforeOrder()
 - [x] DiscountMenu()
 - [x] ProcessingOrder(SaleCategory category)
-- [ ] 리팩토링 관련 Notion 작성 
+- [x] 리팩토링 관련 Notion 작성 
