@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import kiosk.category.MenuCategory;
+import kiosk.handler.HandlerFactory;
 import kiosk.manager.CartManager;
 import kiosk.manager.MenuManager;
 import kiosk.model.MenuItem;
@@ -86,7 +87,9 @@ public class App {
         MenuManager menuManager = new MenuManager(menuItems);
         KioskUI kioskUI = new KioskUI();
         CartManager cartManager = new CartManager();
-        Kiosk kiosk = new Kiosk(menuManager, kioskUI, cartManager);
+        var params = new HandlerFactory.ParameterDto(kioskUI, cartManager, menuManager);
+        HandlerFactory handlerFactory = HandlerFactory.withParameter(params);
+        Kiosk kiosk = new Kiosk(handlerFactory);
         kiosk.run();
     }
 }
