@@ -52,18 +52,39 @@
 
 ---
 
-## 🛠️ 기술 스택 및 아키텍처
+## 🛠️ 기술 스택
 
-이 프로젝트는 현대적이고 깔끔하며 유지보수 가능한 코드를 지향합니다.
+| 구분 | 기술 | 설명 |
+|---|---|---|
+| **언어** | Java 17 | `sealed interface`, `record` 등 모던 Java 기능을 활용하여 안정성과 표현력을 높였습니다. |
+| **빌드 도구** | Gradle | 의존성 관리 및 프로젝트 빌드를 자동화합니다. |
+| **핵심 API** | Stream API, BigDecimal | 함수형 스타일의 데이터 처리와 정확한 소수점 연산을 위해 사용됩니다. |
 
-| 카테고리 | 기술 / 패턴 |
-|---|---|
-| **언어** | ![Java](https://img.shields.io/badge/Java%2017-ED8B00?style=flat&logo=openjdk) |
-| **빌드 도구**| ![Gradle](https://img.shields.io/badge/Gradle-02303A?style=flat&logo=gradle) |
-| **핵심 Java** | `records` (불변 데이터 모델), `Stream API` (데이터 처리), `BigDecimal` (정확한 금융 계산) |
-| **디자인** | **빌더 패턴** (`MenuItem`의 유연한 객체 생성) |
-| **구조** | **관심사 분리**: 로직을 `UI`, `Service`, `Managers`, `Models`로 분리하여 응집도 향상 |
-| **입력 처리** | **함수형 인터페이스** (`ValidationFilter`)를 통한 재사용 가능한 선언적 입력 검증 |
+## 🏛️ 아키텍처 및 디자인 패턴
+
+이 프로젝트는 역할과 책임에 따라 코드를 분리하고, 디자인 패턴을 적용하여 유연하고 확장 가능한 구조를 지향합니다.
+
+### 1. 아키텍처 개요
+
+애플리케이션은 명확한 관심사 분리(Separation of Concerns) 원칙에 따라 여러 계층으로 구성됩니다.
+
+-   **`service.Kiosk`**: 애플리케이션의 메인 로직을 관장하는 중앙 컨트롤러입니다. 사용자의 상태(`KioskAction`)를 기반으로 적절한 `Handler`를 호출하며, 전체 흐름을 관리하는 **상태 머신(State Machine)** 역할을 합니다.
+-   **`handler` 패키지**: 사용자의 각기 다른 액션(메인 메뉴, 주문, 취소 등)을 처리하는 구체적인 로직을 캡슐화합니다. **(Strategy Pattern)**
+-   **`ui` 패키지**: 사용자 인터페이스(CLI)를 담당하며, 사용자에게 정보를 표시하고 입력을 받습니다. `KioskUI`는 UI 관련 복잡성을 숨기는 **파사드(Facade)** 역할을 합니다.
+-   **`manager` 패키지**: `MenuManager`, `CartManager` 등 핵심 데이터(메뉴, 장바구니)와 관련된 상태 및 비즈니스 로직을 관리합니다.
+-   **`model` 패키지**: `MenuItem`, `KioskAction` 등 애플리케이션의 핵심 데이터 구조를 정의합니다.
+
+### 2. 주요 디자인 패턴
+
+| 패턴 | 적용 클래스/인터페이스 | 설명 |
+|---|---|---|
+| **전략 (Strategy)** | `ActionHandler` 및 구현체 | 각 사용자 액션을 독립적인 `Handler` 객체로 캡슐화하여, `Kiosk` 서비스가 동적으로 액션을 선택하고 실행할 수 있게 합니다. |
+| **상태 (State)** | `KioskAction` (Sealed Interface) | 애플리케이션의 현재 상태를 객체로 표현하고, 상태에 따라 행동이 결정되도록 하여 복잡한 흐름을 체계적으로 관리합니다. |
+| **팩토리 메서드 (Factory Method)** | `*.withParameter(...)` | 객체 생성 로직을 별도의 정적 메서드로 캡슐화하여, 생성자의 복잡성을 숨기고 일관된 방식으로 객체를 생성합니다. |
+| **빌더 (Builder)** | `MenuItem.Builder` | `MenuItem`처럼 여러 속성��� 가진 복잡한 객체를 단계적으로 생성하여 가독성과 유연성을 높입니다. |
+| **파사드 (Facade)** | `KioskUI` | 다양한 UI 컴포넌트들을 감싸고 단순화된 인터페이스를 제공하여, 서비스 계층과의 결합도를 낮춥니다. |
+| **DTO (Data Transfer Object)** | `*ParameterDto` (Records) | 계층 간 데이터 전송을 위해 `record`를 사용하여 불변의 데이터 객체를 정의하고, 파라미터를 체계적으로 관리합니다. |
+| **템플릿 메서드 (Template Method)** | `AbstractChoiceable` | UI 로직의 공통적인 흐름(템플릿)은 슈퍼클래스에 정의하고, 구체적인 내용만 서브클래스에서 구현하도록 하여 코드 중복을 줄입니다. |
 
 ---
 
