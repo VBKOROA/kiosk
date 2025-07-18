@@ -7,5 +7,5 @@
 - [x] `itemAddedToCartUi()`
 - [x] `cartCheckBeforeOrderUi()`
 - [x] `discountMenuUi()`
-- [ ] `completeOrderUi()`
+- [x] `completeOrderUi()`
 - [ ] `cancelItemsUi()`
