@@ -16,13 +16,13 @@ public class DiscountMenuUI extends AbstractChoiceable {
     /**
      * DiscountMenuUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param parameter
+     * @param sc
+     * @param saleCategories 할인 카테고리 목록
      * @return DiscountMenuUI 인스턴스
      */
-    public static DiscountMenuUI withParameter(ParameterDto parameter) {
-        return new DiscountMenuUI(
-                parameter.sc(),
-                parameter.saleCategories());
+    public static DiscountMenuUI withParameter(Scanner sc,
+            SaleCategory[] saleCategories) {
+        return new DiscountMenuUI(sc, saleCategories);
     }
 
     /**
@@ -37,16 +37,5 @@ public class DiscountMenuUI extends AbstractChoiceable {
         }
         System.out.println("0. 돌아가기");
         choice = IntScanner.withFilter(sc, x -> x >= 0 && x <= saleCategories.length);
-    }
-
-    /**
-     * DiscountMenuUI의 파라미터 DTO 클래스.
-     * 
-     * @param sc
-     * @param saleCategories 할인 종류 배열
-     */
-    public static record ParameterDto(
-            Scanner sc,
-            SaleCategory[] saleCategories) {
     }
 }
