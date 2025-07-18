@@ -17,13 +17,13 @@ public class CompleteOrderUI implements Displayable {
     /**
      * CompleteOrderUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param parameter
+     * @param sc
+     * @param totalPrice 최종 결제 금액
      * @return CompleteOrderUI 인스턴스
      */
-    public static CompleteOrderUI withParameter(ParameterDto parameter) {
-        return new CompleteOrderUI(
-                parameter.sc(),
-                parameter.totalPrice());
+    public static CompleteOrderUI withParameter(Scanner sc,
+            BigDecimal totalPrice) {
+        return new CompleteOrderUI(sc, totalPrice);
     }
 
     /**
@@ -37,16 +37,5 @@ public class CompleteOrderUI implements Displayable {
         // 이전 숫자 입력시 생긴 \n 버퍼 삭제
         sc.nextLine();
         sc.nextLine();
-    }
-
-    /**
-     * CompleteOrderUI의 파라미터 DTO 클래스.
-     * 
-     * @param sc
-     * @param totalPrice 최종 결제 금액
-     */
-    public static record ParameterDto(
-            Scanner sc,
-            BigDecimal totalPrice) {
     }
 }
