@@ -16,7 +16,8 @@ public class AddItemToCartUI extends AbstractChoiceable {
     /**
      * AddItemToCartUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param parameter
+     * @param sc
+     * @param item 선택한 메뉴 아이템
      * @return AddItemToCartUI 인스턴스
      */
     public static AddItemToCartUI withParameter(Scanner sc, MenuItem item) {
