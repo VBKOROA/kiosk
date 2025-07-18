@@ -8,116 +8,68 @@ import java.util.Scanner;
 import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
 import kiosk.model.MenuItem;
+import kiosk.ui.choice.AddItemToCartUI;
+import kiosk.ui.choice.CancelItemsUI;
+import kiosk.ui.choice.CartCheckBeforeOrderUI;
+import kiosk.ui.choice.DiscountMenuUI;
+import kiosk.ui.choice.MainMenuUI;
+import kiosk.ui.choice.MenuSelectUI;
+import kiosk.ui.display.CompleteOrderUI;
+import kiosk.ui.display.ExitUI;
+import kiosk.ui.display.ItemAddedToCartUI;
 import kiosk.util.IntScanner;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
 
     public void exitUi() {
-        System.out.println();
-        System.out.println("프로그램을 종료합니다.");
+        new ExitUI().display();
     }
 
     public int mainMenuUi(MenuCategory[] categories, boolean canOrder) {
-        System.out.println();
-        System.out.println("[ MAIN MENU ]");
-
-        for (int i = 0; i < categories.length; i++) {
-            System.out.println((i + 1) + ". " + categories[i]);
-        }
-
-        int lastIndex = categories.length;
-
-        if (canOrder) {
-            orderMenuUi(lastIndex);
-            lastIndex += 2;
-        }
-
-        System.out.println("0. 종료");
-        // 람다는 final 혹은 effectively final값만 사용할 수 있음
-        final int lastIndexFinal = lastIndex;
-        return IntScanner.withFilter(sc, x -> x >= 0 && x <= lastIndexFinal);
-    }
-
-    private void orderMenuUi(int lastIndex) {
-        System.out.println();
-        System.out.println("[ ORDER MENU ]");
-        System.out.println(lastIndex + 1 + ". Orders");
-        System.out.println(lastIndex + 2 + ". Cancel");
+        var params = new MainMenuUI.ParameterDto(sc, categories, canOrder);
+        var ui = MainMenuUI.withParameter(params);
+        ui.display();
+        return ui.getChoice();
     }
 
     public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {
-        System.out.println();
-        System.out.println("[ SHAKESHACK MENU ]");
-
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println(i + 1 + ". " + items.get(i));
-        }
-
-        System.out.println("0. 종료 | 종료");
-
-        return IntScanner.withFilter(sc, filter);
+        var params = new MenuSelectUI.ParameterDto(items, filter, sc);
+        var ui = MenuSelectUI.withParameter(params);
+        ui.display();
+        return ui.getChoice();
     }
 
     public int addItemToCartUi(MenuItem item, IntScanner.ValidationFilter filter) {
-        System.out.println();
-        System.out.println("선택한 메뉴: " + item);
-        System.out.println("장바구니에 추가하시겠습니까? (1: 예, 0: 아니오)");
-        return IntScanner.withFilter(sc, filter);
+        var ui = AddItemToCartUI.withParameter(sc, item);
+        ui.display();
+        return ui.getChoice();
     }
 
     public void itemAddedToCartUi(MenuItem item) {
-        System.out.println();
-        System.out.println("장바구니에 " + item.name() + "이 추가되었습니다.");
+        ItemAddedToCartUI.withParameter(item).display();
     }
 
     public int cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
-        System.out.println();
-        System.out.println("아래와 같이 주문하시겠습니까?");
-        System.out.println();
-        System.out.println("[ Orders ]");
-        displayCartItems(cartItems);
-        System.out.println();
-        System.out.println("[ Total ]");
-        System.out.println("W " + totalPrice);
-        System.out.println();
-        System.out.println("1. 주문     2. 돌아가기");
-        return IntScanner.withFilter(sc, x -> x == 1 || x == 2);
-    }
-
-    private void displayCartItems(List<Map.Entry<MenuItem, Integer>> cartItems) {
-        int idx = 1;
-        for (var entry : cartItems) {
-            System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
-        }
+        var params = new CartCheckBeforeOrderUI.ParameterDto(sc, cartItems, totalPrice);
+        var ui = CartCheckBeforeOrderUI.withParameter(params);
+        ui.display();
+        return ui.getChoice();
     }
 
     public int discountMenuUi(SaleCategory[] saleCategories) {
-        System.out.println();
-        System.out.println("할인 정보를 입력해주세요.");
-        for (int i = 0; i < saleCategories.length; i++) {
-            System.out.println((i + 1) + ". " + saleCategories[i]);
-        }
-        System.out.println("0. 돌아가기");
-        return IntScanner.withFilter(sc, x -> x >= 0 && x <= saleCategories.length);
+        var ui = DiscountMenuUI.withParameter(sc, saleCategories);
+        ui.display();
+        return ui.getChoice();
     }
 
     public void completeOrderUi(BigDecimal totalPrice) {
-        System.out.println();
-        System.out.println("주문이 완료되었습니다.");
-        System.out.println("총 결제 금액: W " + totalPrice);
-        // 이전 숫자 입력시 생긴 \n 버퍼 삭제
-        sc.nextLine();
-        sc.nextLine();
+        CompleteOrderUI.withParameter(sc, totalPrice).display();
     }
 
     public int cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
-        System.out.println();
-        System.out.println("[ Cancel ]");
-        displayCartItems(cartItems);
-        System.out.println(cartItems.size() + 1 + ". 전체 취소");
-        System.out.println("0. 돌아가기");
-        System.out.println();
-        return IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size() + 1);
+        var ui = CancelItemsUI.withParameter(sc, cartItems);
+        ui.display();
+        return ui.getChoice();
     }
 }

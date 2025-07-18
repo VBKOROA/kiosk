@@ -1,11 +1,11 @@
-# 리팩토링 TODO
+# KioskUI 리팩토링 TODO
 
-- [x] MainMenu()
-- [x] ProgramExit()
-- [x] CancelItems()
-- [x] MenuSelectMenu(MenuCategory category)
-- [x] AddItemToCartMenu(MenuItem item)
-- [x] CartCheckBeforeOrder()
-- [x] DiscountMenu()
-- [x] ProcessingOrder(SaleCategory category)
-- [x] 리팩토링 관련 Notion 작성 
+- [x] `exitUi()`
+- [x] `mainMenuUi()`
+- [x] `menuSelectUi()`
+- [x] `addItemToCartUi()`
+- [x] `itemAddedToCartUi()`
+- [x] `cartCheckBeforeOrderUi()`
+- [x] `discountMenuUi()`
+- [x] `completeOrderUi()`
+- [x] `cancelItemsUi()`
