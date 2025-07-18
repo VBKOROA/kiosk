@@ -69,15 +69,21 @@
 
 ## 📂 프로젝트 구조
 
-코드베이스는 탐색과 확장이 용이하도록 논리적으로 구성되었습니다.
+코드베이스는 역할과 책임에 따라 명확하게 분리되어 있어, 탐색과 확장이 용이하도록 설계되었습니다.
 
 ```
 kiosk/
 ├── App.java                # 🏁 애플리케이션의 메인 진입점
-├── enums/                  # 🏷️ 카테고리 Enum (Menu, Sale)
-├── managers/               # 🧠 핵심 데이터 관리자 (Cart, Menu)
-├── models/                 # 📦 데이터 모델 (MenuItem as a Record)
-├── service/                # ⚙️ 메인 비즈니스 로직 (Kiosk service)
-├── ui/                     # 🖥️ 사용자 인터페이스 처리 (KioskUI)
-└── utils/                  # 🛠️ 유틸리티 클래스 (IntScanner)
+├── category/               # 🏷️ 메뉴 및 할인 카테고리 Enum
+├── exception/              # ❗ 사용자 정의 예외 클래스
+├── handler/                # 🔄 각 사용자 액션을 처리하는 핸들러 클래스
+├── manager/                # 🧠 핵심 데이터 관리자 (CartManager, MenuManager)
+├── model/                  # 📦 데이터 모델 (MenuItem, KioskAction)
+├── service/                # ⚙️ 메인 비즈니스 로직 (Kiosk 서비스)
+├── ui/                     # 🖥️ 사용자 인터페이스 (UI) 관련 클래스
+│   ├── choice/             #   - ⌨️ 사용자에게 선택지를 제공하고 입력을 받는 UI
+│   ├── common/             #   - 📜 공통 UI 인터페이스 (Displayable, Choiceable)
+│   ├── display/            #   - 📢 단순 정보를 화면에 출력하는 UI
+│   └── KioskUI.java        #   - 🎭 UI 컴포넌트들을 모아 외부에 단일 창구를 제공하는 파사드(Facade)
+└── util/                   # 🛠️ 유틸리티 클래스 (IntScanner)
 ```
