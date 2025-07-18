@@ -8,4 +8,4 @@
 - [x] `cartCheckBeforeOrderUi()`
 - [x] `discountMenuUi()`
 - [x] `completeOrderUi()`
-- [ ] `cancelItemsUi()`
+- [x] `cancelItemsUi()`
