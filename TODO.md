@@ -1,7 +1,7 @@
 # KioskUI 리팩토링 TODO
 
 - [x] `exitUi()`
-- [ ] `mainMenuUi()`
+- [x] `mainMenuUi()`
 - [ ] `menuSelectUi()`
 - [ ] `addItemToCartUi()`
 - [ ] `itemAddedToCartUi()`
