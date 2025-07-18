@@ -36,7 +36,7 @@ public class CancelItemsUI extends AbstractChoiceable {
         System.out.println();
         System.out.println("[ Cancel ]");
         CartItemsUI
-                .withParameter(new CartItemsUI.ParameterDto(cartItems))
+                .withParameter(cartItems)
                 .display();
         System.out.println(cartItems.size() + 1 + ". 전체 취소");
         System.out.println("0. 돌아가기");

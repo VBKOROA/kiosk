@@ -42,7 +42,7 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         System.out.println();
         System.out.println("[ Orders ]");
         CartItemsUI
-            .withParameter(new CartItemsUI.ParameterDto(cartItems))
+            .withParameter(cartItems)
             .display();
         System.out.println();
         System.out.println("[ Total ]");

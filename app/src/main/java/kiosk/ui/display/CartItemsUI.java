@@ -14,13 +14,13 @@ public class CartItemsUI implements Displayable {
     }
 
     /**
-     * CartItemsDisplayer의 인스턴스를 생성하는 팩토리 메서드.
+     * CartItemsUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param parameter
-     * @return CartItemsDisplayer 인스턴스
+     * @param cartItems 장바구니 아이템 목록
+     * @return CartItemsUI 인스턴스
      */
-    public static CartItemsUI withParameter(ParameterDto parameter) {
-        return new CartItemsUI(parameter.cartItems());
+    public static CartItemsUI withParameter(List<Map.Entry<MenuItem, Integer>> cartItems) {
+        return new CartItemsUI(cartItems);
     }
 
     /**
@@ -32,14 +32,5 @@ public class CartItemsUI implements Displayable {
         for (var entry : cartItems) {
             System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
         }
-    }
-
-    /**
-     * CartItemsDisplayer의 파라미터 DTO 클래스.
-     * 
-     * @param cartItems 장바구니 아이템 목록
-     */
-    public static record ParameterDto(
-            List<Map.Entry<MenuItem, Integer>> cartItems) {
     }
 }
