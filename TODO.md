@@ -3,7 +3,7 @@
 - [x] `exitUi()`
 - [x] `mainMenuUi()`
 - [x] `menuSelectUi()`
-- [ ] `addItemToCartUi()`
+- [x] `addItemToCartUi()`
 - [ ] `itemAddedToCartUi()`
 - [ ] `cartCheckBeforeOrderUi()`
 - [ ] `discountMenuUi()`
