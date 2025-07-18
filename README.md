@@ -81,7 +81,7 @@
 | **전략 (Strategy)** | `ActionHandler` 및 구현체 | 각 사용자 액션을 독립적인 `Handler` 객체로 캡슐화하여, `Kiosk` 서비스가 동적으로 액션을 선택하고 실행할 수 있게 합니다. |
 | **상태 (State)** | `KioskAction` (Sealed Interface) | 애플리케이션의 현재 상태를 객체로 표현하고, 상태에 따라 행동이 결정되도록 하여 복잡한 흐름을 체계적으로 관리합니다. |
 | **팩토리 메서드 (Factory Method)** | `*.withParameter(...)` | 객체 생성 로직을 별도의 정적 메서드로 캡슐화하여, 생성자의 복잡성을 숨기고 일관된 방식으로 객체를 생성합니다. |
-| **빌더 (Builder)** | `MenuItem.Builder` | `MenuItem`처럼 여러 속성��� 가진 복잡한 객체를 단계적으로 생성하여 가독성과 유연성을 높입니다. |
+| **빌더 (Builder)** | `MenuItem.Builder` | `MenuItem`처럼 여러 속성을 가진 복잡한 객체를 단계적으로 생성하여 가독성과 유연성을 높입니다. |
 | **파사드 (Facade)** | `KioskUI` | 다양한 UI 컴포넌트들을 감싸고 단순화된 인터페이스를 제공하여, 서비스 계층과의 결합도를 낮춥니다. |
 | **DTO (Data Transfer Object)** | `*ParameterDto` (Records) | 계층 간 데이터 전송을 위해 `record`를 사용하여 불변의 데이터 객체를 정의하고, 파라미터를 체계적으로 관리합니다. |
 | **템플릿 메서드 (Template Method)** | `AbstractChoiceable` | UI 로직의 공통적인 흐름(템플릿)은 슈퍼클래스에 정의하고, 구체적인 내용만 서브클래스에서 구현하도록 하여 코드 중복을 줄입니다. |
