@@ -19,13 +19,13 @@ public class CancelItemsUI extends AbstractChoiceable {
     /**
      * CancelItemsUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param parameter
+     * @param sc
+     * @param cartItems 장바구니 아이템 목록
      * @return CancelItemsUI 인스턴스
      */
-    public static CancelItemsUI withParameter(ParameterDto parameter) {
-        return new CancelItemsUI(
-                parameter.sc(),
-                parameter.cartItems());
+    public static CancelItemsUI withParameter(Scanner sc,
+            List<Map.Entry<MenuItem, Integer>> cartItems) {
+        return new CancelItemsUI(sc, cartItems);
     }
 
     /**
@@ -36,22 +36,11 @@ public class CancelItemsUI extends AbstractChoiceable {
         System.out.println();
         System.out.println("[ Cancel ]");
         CartItemsUI
-            .withParameter(new CartItemsUI.ParameterDto(cartItems))
+                .withParameter(new CartItemsUI.ParameterDto(cartItems))
                 .display();
         System.out.println(cartItems.size() + 1 + ". 전체 취소");
         System.out.println("0. 돌아가기");
         System.out.println();
         choice = IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size() + 1);
-    }
-
-    /**
-     * CancelItemsUI의 파라미터 DTO 클래스.
-     * 
-     * @param sc
-     * @param cartItems 장바구니 아이템 목록
-     */
-    public static record ParameterDto(
-            Scanner sc,
-            List<Map.Entry<MenuItem, Integer>> cartItems) {
     }
 }
