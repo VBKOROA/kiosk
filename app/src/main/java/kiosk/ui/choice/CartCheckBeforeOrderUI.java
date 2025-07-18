@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
 
 public class CartCheckBeforeOrderUI extends AbstractChoiceable {
@@ -40,20 +41,15 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println();
         System.out.println("[ Orders ]");
-        displayCartItems(cartItems);
+        CartItemsUI
+            .withParameter(new CartItemsUI.ParameterDto(cartItems))
+            .display();
         System.out.println();
         System.out.println("[ Total ]");
         System.out.println("W " + totalPrice);
         System.out.println();
         System.out.println("1. 주문     2. 돌아가기");
         choice = IntScanner.withFilter(sc, x -> x == 1 || x == 2);
-    }
-
-    private void displayCartItems(List<Map.Entry<MenuItem, Integer>> cartItems) {
-        int idx = 1;
-        for (var entry : cartItems) {
-            System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
-        }
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
 
 public class CancelItemsUI extends AbstractChoiceable {
@@ -34,18 +35,13 @@ public class CancelItemsUI extends AbstractChoiceable {
     public void display() {
         System.out.println();
         System.out.println("[ Cancel ]");
-        displayCartItems(cartItems);
+        CartItemsUI
+            .withParameter(new CartItemsUI.ParameterDto(cartItems))
+                .display();
         System.out.println(cartItems.size() + 1 + ". 전체 취소");
         System.out.println("0. 돌아가기");
         System.out.println();
         choice = IntScanner.withFilter(sc, x -> x >= 0 && x <= cartItems.size() + 1);
-    }
-
-    private void displayCartItems(List<Map.Entry<MenuItem, Integer>> cartItems) {
-        int idx = 1;
-        for (var entry : cartItems) {
-            System.out.println(idx++ + ". " + entry.getKey() + " | " + entry.getValue() + "개");
-        }
     }
 
     /**
