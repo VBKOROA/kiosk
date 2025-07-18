@@ -19,10 +19,8 @@ public class AddItemToCartUI extends AbstractChoiceable {
      * @param parameter
      * @return AddItemToCartUI 인스턴스
      */
-    public static AddItemToCartUI withParameter(ParameterDto parameter) {
-        return new AddItemToCartUI(
-                parameter.sc(),
-                parameter.item());
+    public static AddItemToCartUI withParameter(Scanner sc, MenuItem item) {
+        return new AddItemToCartUI(sc, item);
     }
 
     /**
@@ -34,16 +32,5 @@ public class AddItemToCartUI extends AbstractChoiceable {
         System.out.println("선택한 메뉴: " + item);
         System.out.println("장바구니에 추가하시겠습니까? (1: 예, 0: 아니오)");
         choice = IntScanner.withFilter(sc, x -> x == 0 || x == 1);
-    }
-
-    /**
-     * AddItemToCartUI의 파라미터 DTO 클래스.
-     * 
-     * @param sc
-     * @param item 선택된 메뉴 아이템
-     */
-    public static record ParameterDto(
-            Scanner sc,
-            MenuItem item) {
     }
 }
