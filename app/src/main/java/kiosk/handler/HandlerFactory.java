@@ -43,10 +43,11 @@ public class HandlerFactory {
     }
 
     /**
-     * HandlerFactory를 사용하여 KioskAction에 대한 ActionHandler를 생성한다.
+     * KioskAction에 따라 적절한 ActionHandler를 생성하여 반환.
+     * 애플리케이션의 모든 분기 로직이 이 메서드에 중앙 집중화되어 있음.
      * 
-     * @param action
-     * @return ActionHandler 인스턴스
+     * @param action 현재 키오스크의 상태를 나타내는 액션 객체
+     * @return action에 매핑되는 ActionHandler 인스턴스
      */
     public ActionHandler createHandler(KioskAction action) {
         // switch 문을 사용하는 또 다른 방법
