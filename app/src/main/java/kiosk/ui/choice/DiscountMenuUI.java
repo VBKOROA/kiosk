@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import kiosk.category.SaleCategory;
 import kiosk.util.IntScanner;
+import kiosk.util.validator.ValidationFilter;
+import kiosk.util.validator.XToYFilter;
 
 public class DiscountMenuUI extends AbstractChoiceable {
     private final SaleCategory[] saleCategories;
@@ -36,6 +38,7 @@ public class DiscountMenuUI extends AbstractChoiceable {
             System.out.println((i + 1) + ". " + saleCategories[i]);
         }
         System.out.println("0. 돌아가기");
-        choice = IntScanner.withFilter(sc, x -> x >= 0 && x <= saleCategories.length);
+        ValidationFilter filter = XToYFilter.range(0, saleCategories.length);
+        choice = IntScanner.withFilter(sc, filter);
     }
 }
