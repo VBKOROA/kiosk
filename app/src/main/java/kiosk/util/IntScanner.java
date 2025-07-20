@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import kiosk.exception.InvalidInputException;
+import kiosk.util.validator.ValidationFilter;
 
 public class IntScanner {
     /**
@@ -32,10 +33,5 @@ public class IntScanner {
         } else {
             throw new InvalidInputException();
         }
-    }
-
-    @FunctionalInterface
-    public interface ValidationFilter {
-        boolean validate(int input);
     }
 }
