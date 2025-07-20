@@ -34,7 +34,7 @@ public class KioskUI {
     }
 
     public int menuSelectUi(List<MenuItem> items) {
-        var params = new MenuSelectUI.ParameterDto(items, filter, sc);
+        var params = new MenuSelectUI.ParameterDto(items, sc);
         var ui = MenuSelectUI.withParameter(params);
         ui.display();
         return ui.getChoice();

@@ -49,11 +49,9 @@ public class MenuSelectUI extends AbstractChoiceable {
      * MenuSelectUI의 파라미터 DTO 클래스.
      * 
      * @param items  메뉴 아이템 목록
-     * @param filter 입력 필터
      * @param sc
      */
     public static record ParameterDto(
             List<MenuItem> items,
-            ValidationFilter filter,
             Scanner sc) {}
 }
