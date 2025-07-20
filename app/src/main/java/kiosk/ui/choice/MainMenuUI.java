@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 import kiosk.category.MenuCategory;
 import kiosk.util.IntScanner;
+import kiosk.util.validator.ValidationFilter;
+import kiosk.util.validator.XToYFilter;
 
 public class MainMenuUI extends AbstractChoiceable {
     private final MenuCategory[] categories;
@@ -48,9 +50,8 @@ public class MainMenuUI extends AbstractChoiceable {
         }
 
         System.out.println("0. 종료");
-        // 람다는 final 혹은 effectively final값만 사용할 수 있음
-        final int lastIndexFinal = lastIndex;
-        choice = IntScanner.withFilter(sc, x -> x >= 0 && x <= lastIndexFinal);
+        ValidationFilter filter = XToYFilter.range(0, lastIndex);
+        choice = IntScanner.withFilter(sc, filter);
     }
 
     private void orderMenuUi(int lastIndex) {
