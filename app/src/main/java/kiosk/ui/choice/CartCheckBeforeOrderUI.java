@@ -8,6 +8,7 @@ import java.util.Scanner;
 import kiosk.model.MenuItem;
 import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
+import kiosk.util.validator.OneOrTwoFilter;
 
 public class CartCheckBeforeOrderUI extends AbstractChoiceable {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
@@ -49,7 +50,7 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         System.out.println("W " + totalPrice);
         System.out.println();
         System.out.println("1. 주문     2. 돌아가기");
-        choice = IntScanner.withFilter(sc, x -> x == 1 || x == 2);
+        choice = IntScanner.withFilter(sc, new OneOrTwoFilter());
     }
 
     /**
