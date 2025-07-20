@@ -33,7 +33,7 @@ public class KioskUI {
         return ui.getChoice();
     }
 
-    public int menuSelectUi(List<MenuItem> items, IntScanner.ValidationFilter filter) {
+    public int menuSelectUi(List<MenuItem> items) {
         var params = new MenuSelectUI.ParameterDto(items, filter, sc);
         var ui = MenuSelectUI.withParameter(params);
         ui.display();

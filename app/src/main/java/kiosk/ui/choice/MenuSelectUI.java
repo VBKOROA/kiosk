@@ -5,16 +5,15 @@ import java.util.Scanner;
 
 import kiosk.model.MenuItem;
 import kiosk.util.IntScanner;
-import kiosk.util.IntScanner.ValidationFilter;
+import kiosk.util.validator.ValidationFilter;
+import kiosk.util.validator.XToYFilter;
 
 public class MenuSelectUI extends AbstractChoiceable {
     private final List<MenuItem> items;
-    private final ValidationFilter filter;
 
-    private MenuSelectUI(List<MenuItem> items, ValidationFilter filter, Scanner sc) {
+    private MenuSelectUI(List<MenuItem> items, Scanner sc) {
         super(sc);
         this.items = items;
-        this.filter = filter;
     }
 
     /**
@@ -26,7 +25,6 @@ public class MenuSelectUI extends AbstractChoiceable {
     public static MenuSelectUI withParameter(ParameterDto parameter) {
         return new MenuSelectUI(
                 parameter.items(),
-                parameter.filter(),
                 parameter.sc());
     }
 
@@ -43,7 +41,7 @@ public class MenuSelectUI extends AbstractChoiceable {
         }
 
         System.out.println("0. 종료 | 종료");
-
+        ValidationFilter filter = XToYFilter.range(0, items.size());
         choice = IntScanner.withFilter(sc, filter);
     }
 

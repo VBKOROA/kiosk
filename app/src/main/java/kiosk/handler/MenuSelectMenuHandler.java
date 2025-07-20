@@ -38,7 +38,7 @@ public class MenuSelectMenuHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var items = menuManager.getMenuItemsByCategory(category);
-        int choice = kioskUI.menuSelectUi(items, x -> x >= 0 && x <= items.size());
+        int choice = kioskUI.menuSelectUi(items);
 
         if (choice == 0) {
             return new KioskAction.MainMenu();
