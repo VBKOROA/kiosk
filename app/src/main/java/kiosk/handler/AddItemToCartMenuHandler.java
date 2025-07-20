@@ -36,14 +36,14 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     @Override
     public KioskAction handle() {
-        int choice = kioskUI.addItemToCartUi(item, x -> x == 0 || x == 1);
+        int choice = kioskUI.addItemToCartUi(item);
 
         if (choice == 1) {
             // 장바구니에 담기
             addToCart();
         }
 
-        // choice가 0인 경우와 담기가 끝났을 시
+        // choice가 2인 경우와 담기가 끝났을 시
         // 메인 메뉴로 돌아가기
         return new KioskAction.MainMenu();
     }

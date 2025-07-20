@@ -40,7 +40,7 @@ public class KioskUI {
         return ui.getChoice();
     }
 
-    public int addItemToCartUi(MenuItem item, IntScanner.ValidationFilter filter) {
+    public int addItemToCartUi(MenuItem item) {
         var ui = AddItemToCartUI.withParameter(sc, item);
         ui.display();
         return ui.getChoice();

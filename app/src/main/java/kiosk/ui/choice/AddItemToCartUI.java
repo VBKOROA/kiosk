@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import kiosk.model.MenuItem;
 import kiosk.util.IntScanner;
+import kiosk.util.validator.OneOrTwoFilter;
 
 public class AddItemToCartUI extends AbstractChoiceable {
     private final MenuItem item;
@@ -31,7 +32,7 @@ public class AddItemToCartUI extends AbstractChoiceable {
     public void display() {
         System.out.println();
         System.out.println("선택한 메뉴: " + item);
-        System.out.println("장바구니에 추가하시겠습니까? (1: 예, 0: 아니오)");
-        choice = IntScanner.withFilter(sc, x -> x == 0 || x == 1);
+        System.out.println("장바구니에 추가하시겠습니까? (1: 예, 2: 아니오)");
+        choice = IntScanner.withFilter(sc, new OneOrTwoFilter());
     }
 }
