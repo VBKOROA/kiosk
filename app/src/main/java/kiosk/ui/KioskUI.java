@@ -17,7 +17,6 @@ import kiosk.ui.choice.MenuSelectUI;
 import kiosk.ui.display.CompleteOrderUI;
 import kiosk.ui.display.ExitUI;
 import kiosk.ui.display.ItemAddedToCartUI;
-import kiosk.util.IntScanner;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
