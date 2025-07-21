@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.OneOrTwoFilter;
@@ -50,7 +51,16 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         System.out.println("W " + totalPrice);
         System.out.println();
         System.out.println("1. 주문     2. 돌아가기");
-        choice = IntScanner.withFilter(sc, new OneOrTwoFilter());
+        int index = IntScanner.withFilter(sc, new OneOrTwoFilter());
+        switch (index) {
+            case 1:
+                choice = new CartCheckBeforeOrderChoice.Order();
+                break;
+            case 2:
+            default:
+                choice = new CartCheckBeforeOrderChoice.GoBack();
+                break;
+        }
     }
 
     /**

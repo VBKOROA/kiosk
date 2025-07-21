@@ -10,6 +10,7 @@ import kiosk.category.SaleCategory;
 import kiosk.model.MenuItem;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.model.choice.CancelItemsChoice;
+import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.model.choice.Choice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
@@ -52,11 +53,11 @@ public class KioskUI {
         ItemAddedToCartUI.withParameter(item).display();
     }
 
-    public int cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
+    public CartCheckBeforeOrderChoice cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
         var params = new CartCheckBeforeOrderUI.ParameterDto(sc, cartItems, totalPrice);
         var ui = CartCheckBeforeOrderUI.withParameter(params);
         ui.display();
-        return ui.getChoice();
+        return (CartCheckBeforeOrderChoice) ui.getChoice();
     }
 
     public int discountMenuUi(SaleCategory[] saleCategories) {

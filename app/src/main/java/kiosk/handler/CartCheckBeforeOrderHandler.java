@@ -2,6 +2,7 @@ package kiosk.handler;
 
 import kiosk.manager.CartManager;
 import kiosk.model.KioskAction;
+import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.KioskUI;
 
 public class CartCheckBeforeOrderHandler implements ActionHandler {
@@ -31,12 +32,12 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
      */
     @Override
     public KioskAction handle() {
-        int choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
+        CartCheckBeforeOrderChoice choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(),
+                cartManager.getTotalPrice());
 
-        if (choice == 1) {
-            return new KioskAction.DiscountMenu();
-        } else {
-            return new KioskAction.MainMenu();
-        }
+        return switch (choice) {
+            case CartCheckBeforeOrderChoice.Order() -> new KioskAction.DiscountMenu();
+            case CartCheckBeforeOrderChoice.GoBack() -> new KioskAction.MainMenu();
+        };
     }
 }
