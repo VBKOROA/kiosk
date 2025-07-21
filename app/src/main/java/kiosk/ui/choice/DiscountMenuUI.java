@@ -3,6 +3,7 @@ package kiosk.ui.choice;
 import java.util.Scanner;
 
 import kiosk.category.SaleCategory;
+import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
@@ -34,11 +35,18 @@ public class DiscountMenuUI extends AbstractChoiceable {
     public void display() {
         System.out.println();
         System.out.println("할인 정보를 입력해주세요.");
-        for (int i = 0; i < saleCategories.length; i++) {
-            System.out.println((i + 1) + ". " + saleCategories[i]);
+        final int saleCategoriesStartIndex = 1;
+        for (int i = saleCategoriesStartIndex; i <= saleCategories.length; i++) {
+            System.out.println(i + ". " + saleCategories[i]);
         }
         System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, saleCategories.length);
-        choice = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(sc, filter);
+
+        if(index == 0) {
+            choice = new DiscountMenuChoice.GoBack();
+        } else {
+            choice = new DiscountMenuChoice.DiscountWithThis(saleCategories[index - saleCategoriesStartIndex]);
+        }
     }
 }

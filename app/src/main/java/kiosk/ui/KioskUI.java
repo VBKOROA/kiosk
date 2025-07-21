@@ -12,6 +12,7 @@ import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.model.choice.CancelItemsChoice;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.model.choice.Choice;
+import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
 import kiosk.ui.choice.CartCheckBeforeOrderUI;
@@ -60,10 +61,10 @@ public class KioskUI {
         return (CartCheckBeforeOrderChoice) ui.getChoice();
     }
 
-    public int discountMenuUi(SaleCategory[] saleCategories) {
+    public DiscountMenuChoice discountMenuUi(SaleCategory[] saleCategories) {
         var ui = DiscountMenuUI.withParameter(sc, saleCategories);
         ui.display();
-        return ui.getChoice();
+        return (DiscountMenuChoice) ui.getChoice();
     }
 
     public void completeOrderUi(BigDecimal totalPrice) {

@@ -2,6 +2,7 @@ package kiosk.handler;
 
 import kiosk.category.SaleCategory;
 import kiosk.model.KioskAction;
+import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.KioskUI;
 
 public class DiscountMenuHandler implements ActionHandler {
@@ -29,11 +30,12 @@ public class DiscountMenuHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var saleCategories = SaleCategory.values();
-        int choice = kioskUI.discountMenuUi(saleCategories);
-        if (choice == 0) {
-            return new KioskAction.MainMenu();
-        } else {
-            return new KioskAction.ProcessingOrder(saleCategories[choice - 1]);
-        }
+        DiscountMenuChoice choice = kioskUI.discountMenuUi(saleCategories);
+
+        return switch(choice) {
+            case DiscountMenuChoice.GoBack() -> new KioskAction.MainMenu();
+            case DiscountMenuChoice.DiscountWithThis discountWithThis 
+                -> new KioskAction.ProcessingOrder(discountWithThis.category());
+        };
     }
 }
