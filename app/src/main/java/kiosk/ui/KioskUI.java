@@ -11,7 +11,6 @@ import kiosk.model.MenuItem;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.model.choice.CancelItemsChoice;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
-import kiosk.model.choice.Choice;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.model.choice.MenuSelectChoice;
