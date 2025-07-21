@@ -34,8 +34,8 @@ public class DiscountMenuHandler implements ActionHandler {
 
         return switch(choice) {
             case DiscountMenuChoice.GoBack() -> new KioskAction.MainMenu();
-            case DiscountMenuChoice.DiscountWithThis discountWithThis 
-                -> new KioskAction.ProcessingOrder(discountWithThis.category());
+            case DiscountMenuChoice.DiscountWithThis(SaleCategory category) 
+                -> new KioskAction.ProcessingOrder(category);
         };
     }
 }

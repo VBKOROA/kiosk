@@ -39,7 +39,7 @@ public class MainMenuHandler implements ActionHandler {
 
         return switch(choice) {
             case MainMenuChoice.Exit() -> new KioskAction.ProgramExit();
-            case MainMenuChoice.GoToCategory goToCategory -> new KioskAction.MenuSelectMenu(goToCategory.category());
+            case MainMenuChoice.GoToCategory(MenuCategory category) -> new KioskAction.MenuSelectMenu(category);
             case MainMenuChoice.Order() -> new KioskAction.CartCheckBeforeOrder();
             case MainMenuChoice.CancelCartItems() -> new KioskAction.CancelItems();
         };
