@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.model.choice.MenuSelectChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
@@ -43,9 +44,17 @@ public class MenuSelectUI extends AbstractChoiceable {
             System.out.println(i + ". " + items.get(i - menuItemStartIndex));
         }
 
-        System.out.println("0. 종료 | 종료");
+        System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(sc, filter);
+        if (index == 0) {
+            choice = new MenuSelectChoice.GoBack();
+        } else if (index >= menuItemStartIndex && index <= lastIndex) {
+            choice = new MenuSelectChoice.SelectThis(items.get(index - menuItemStartIndex));
+        } else {
+            // TODO: 비정상적인 입력 (filter에서 처리 되지 않은 비정상적인 상황)
+            choice = new MenuSelectChoice.GoBack();
+        }
     }
 
     /**

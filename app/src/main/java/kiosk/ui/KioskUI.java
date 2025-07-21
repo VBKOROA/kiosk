@@ -14,6 +14,7 @@ import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.model.choice.Choice;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.model.choice.MainMenuChoice;
+import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
 import kiosk.ui.choice.CartCheckBeforeOrderUI;
@@ -38,11 +39,11 @@ public class KioskUI {
         return (MainMenuChoice) ui.getChoice();
     }
 
-    public int menuSelectUi(List<MenuItem> items) {
+    public MenuSelectChoice menuSelectUi(List<MenuItem> items) {
         var params = new MenuSelectUI.ParameterDto(items, sc);
         var ui = MenuSelectUI.withParameter(params);
         ui.display();
-        return ui.getChoice();
+        return (MenuSelectChoice) ui.getChoice();
     }
 
     public AddItemToCartChoice addItemToCartUi(MenuItem item) {

@@ -4,6 +4,7 @@ import kiosk.category.MenuCategory;
 import kiosk.manager.MenuManager;
 import kiosk.model.KioskAction;
 import kiosk.model.MenuItem;
+import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.KioskUI;
 
 public class MenuSelectMenuHandler implements ActionHandler {
@@ -38,14 +39,12 @@ public class MenuSelectMenuHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var items = menuManager.getMenuItemsByCategory(category);
-        int choice = kioskUI.menuSelectUi(items);
+        MenuSelectChoice choice = kioskUI.menuSelectUi(items);
 
-        if (choice == 0) {
-            return new KioskAction.MainMenu();
-        }
-
-        MenuItem selectedItem = items.get(choice - 1);
-        return new KioskAction.AddItemToCartMenu(selectedItem);
+        return switch(choice) {
+            case MenuSelectChoice.GoBack() -> new KioskAction.MainMenu();
+            case MenuSelectChoice.SelectThis(MenuItem item) -> new KioskAction.AddItemToCartMenu(item);
+        };
     }
 
     /**
