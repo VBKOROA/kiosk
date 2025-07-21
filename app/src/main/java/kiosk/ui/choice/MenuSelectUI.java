@@ -33,16 +33,19 @@ public class MenuSelectUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int menuItemStartIndex = 1;
+        final int lastIndex = items.size();
+
         System.out.println();
         System.out.println("[ SHAKESHACK MENU ]");
 
-        for (int i = 0; i < items.size(); i++) {
-            System.out.println(i + 1 + ". " + items.get(i));
+        for (int i = menuItemStartIndex; i <= items.size(); i++) {
+            System.out.println(i + ". " + items.get(i - menuItemStartIndex));
         }
 
         System.out.println("0. 종료 | 종료");
-        ValidationFilter filter = XToYFilter.range(0, items.size());
-        choice = IntScanner.withFilter(sc, filter);
+        ValidationFilter filter = XToYFilter.range(0, lastIndex);
+        int index = IntScanner.withFilter(sc, filter);
     }
 
     /**
