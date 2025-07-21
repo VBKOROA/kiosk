@@ -8,6 +8,8 @@ import java.util.Scanner;
 import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
 import kiosk.model.MenuItem;
+import kiosk.model.choice.AddItemToCartChoice;
+import kiosk.model.choice.Choice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
 import kiosk.ui.choice.CartCheckBeforeOrderUI;
@@ -39,10 +41,10 @@ public class KioskUI {
         return ui.getChoice();
     }
 
-    public int addItemToCartUi(MenuItem item) {
+    public AddItemToCartChoice addItemToCartUi(MenuItem item) {
         var ui = AddItemToCartUI.withParameter(sc, item);
         ui.display();
-        return ui.getChoice();
+        return (AddItemToCartChoice) ui.getChoice();
     }
 
     public void itemAddedToCartUi(MenuItem item) {

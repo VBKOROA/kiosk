@@ -3,6 +3,7 @@ package kiosk.ui.choice;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.OneOrTwoFilter;
 
@@ -33,6 +34,11 @@ public class AddItemToCartUI extends AbstractChoiceable {
         System.out.println();
         System.out.println("선택한 메뉴: " + item);
         System.out.println("장바구니에 추가하시겠습니까? (1: 예, 2: 아니오)");
-        choice = IntScanner.withFilter(sc, new OneOrTwoFilter());
+        int index = IntScanner.withFilter(sc, new OneOrTwoFilter());
+        if(index == 1) {
+            choice = new AddItemToCartChoice.Yes(); 
+        } else {
+            choice = new AddItemToCartChoice.No();
+        }
     }
 }

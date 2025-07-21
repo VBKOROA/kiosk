@@ -3,6 +3,7 @@ package kiosk.handler;
 import kiosk.manager.CartManager;
 import kiosk.model.KioskAction;
 import kiosk.model.MenuItem;
+import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.ui.KioskUI;
 
 public class AddItemToCartMenuHandler implements ActionHandler {
@@ -36,14 +37,15 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     @Override
     public KioskAction handle() {
-        int choice = kioskUI.addItemToCartUi(item);
+        AddItemToCartChoice choice = kioskUI.addItemToCartUi(item);
 
-        if (choice == 1) {
-            // 장바구니에 담기
-            addToCart();
+        switch(choice) {
+            case AddItemToCartChoice.Yes() -> {
+                addToCart();
+            }
+            case AddItemToCartChoice.No() -> {}
         }
 
-        // choice가 2인 경우와 담기가 끝났을 시
         // 메인 메뉴로 돌아가기
         return new KioskAction.MainMenu();
     }
