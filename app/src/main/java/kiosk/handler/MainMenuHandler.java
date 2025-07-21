@@ -3,6 +3,7 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.manager.CartManager;
 import kiosk.model.KioskAction;
+import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.KioskUI;
 
 public class MainMenuHandler implements ActionHandler {
@@ -34,34 +35,13 @@ public class MainMenuHandler implements ActionHandler {
         var categories = MenuCategory.values();
         boolean canOrder = !cartManager.isEmpty();
 
-        int choice = kioskUI.mainMenuUi(categories, canOrder);
+        MainMenuChoice choice = kioskUI.mainMenuUi(categories, canOrder);
 
-        if (choice == 0) {
-            // 프로그램 종료
-            return new KioskAction.ProgramExit();
-        }
-
-        if (choice - 1 < categories.length) {
-            return new KioskAction.MenuSelectMenu(categories[choice - 1]);
-        } else {
-            // choice가 categories.length을 넘은 경우
-            // categories.length + 1은 주문 메뉴
-            // categories.length + 2는 취소 메뉴
-            return processOrderDecision(choice == categories.length + 1);
-        }
+        return switch(choice) {
+            case MainMenuChoice.Exit() -> new KioskAction.ProgramExit();
+            case MainMenuChoice.GoToCategory goToCategory -> new KioskAction.MenuSelectMenu(goToCategory.category());
+            case MainMenuChoice.Order() -> new KioskAction.CartCheckBeforeOrder();
+            case MainMenuChoice.CancelCartItems() -> new KioskAction.CancelItems();
+        };
     }
-
-    /**
-     * 주문 결정을 처리한다.
-     * 
-     * @param isCartCheck 주문 결정 여부
-     * @return KioskAction 객체
-     */
-    private KioskAction processOrderDecision(boolean isCartCheck) {
-        if (isCartCheck)
-            return new KioskAction.CartCheckBeforeOrder();
-        else
-            return new KioskAction.CancelItems();
-    }
-
 }

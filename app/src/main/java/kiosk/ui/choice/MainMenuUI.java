@@ -3,6 +3,7 @@ package kiosk.ui.choice;
 import java.util.Scanner;
 
 import kiosk.category.MenuCategory;
+import kiosk.model.choice.MainMenuChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
@@ -35,30 +36,51 @@ public class MainMenuUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int menuCategoriesStartIndex = 1;
+        final int orderIndex = categories.length+1;
+        final int cancelIndex = categories.length+2;
+
         System.out.println();
         System.out.println("[ MAIN MENU ]");
 
-        for (int i = 0; i < categories.length; i++) {
-            System.out.println((i + 1) + ". " + categories[i]);
+        for (int i = menuCategoriesStartIndex; i <= categories.length; i++) {
+            System.out.println(i + ". " + categories[i]);
         }
 
         int lastIndex = categories.length;
 
         if (canOrder) {
-            orderMenuUi(lastIndex);
+            orderMenuUi(orderIndex, cancelIndex);
             lastIndex += 2;
         }
 
         System.out.println("0. 종료");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
-        choice = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(sc, filter);
+        if (index == 0) {
+            choice = new MainMenuChoice.Exit();
+        }
+        else if (index <= categories.length) {
+            choice = new MainMenuChoice.GoToCategory(categories[index - menuCategoriesStartIndex]);
+        }
+        else if(index == orderIndex) {
+            // Order를 선택했다면
+            choice = new MainMenuChoice.Order();
+        } else if(index == cancelIndex) {
+            // Cancel을 선택했다면
+            choice = new MainMenuChoice.CancelCartItems();
+        } else {
+            // 비정상적인 상황임
+            // TODO: 올바른 예외처리 추가
+            choice = new MainMenuChoice.Exit();
+        }
     }
 
-    private void orderMenuUi(int lastIndex) {
+    private void orderMenuUi(int orderIndex, int cancelIndex) {
         System.out.println();
         System.out.println("[ ORDER MENU ]");
-        System.out.println(lastIndex + 1 + ". Orders");
-        System.out.println(lastIndex + 2 + ". Cancel");
+        System.out.println(orderIndex + ". Order");
+        System.out.println(cancelIndex + ". Cancel");
     }
 
     /**

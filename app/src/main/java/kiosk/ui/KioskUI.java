@@ -13,6 +13,7 @@ import kiosk.model.choice.CancelItemsChoice;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.model.choice.Choice;
 import kiosk.model.choice.DiscountMenuChoice;
+import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
 import kiosk.ui.choice.CartCheckBeforeOrderUI;
@@ -30,11 +31,11 @@ public class KioskUI {
         new ExitUI().display();
     }
 
-    public int mainMenuUi(MenuCategory[] categories, boolean canOrder) {
+    public MainMenuChoice mainMenuUi(MenuCategory[] categories, boolean canOrder) {
         var params = new MainMenuUI.ParameterDto(sc, categories, canOrder);
         var ui = MainMenuUI.withParameter(params);
         ui.display();
-        return ui.getChoice();
+        return (MainMenuChoice) ui.getChoice();
     }
 
     public int menuSelectUi(List<MenuItem> items) {
