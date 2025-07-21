@@ -9,6 +9,7 @@ import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
 import kiosk.model.MenuItem;
 import kiosk.model.choice.AddItemToCartChoice;
+import kiosk.model.choice.CancelItemsChoice;
 import kiosk.model.choice.Choice;
 import kiosk.ui.choice.AddItemToCartUI;
 import kiosk.ui.choice.CancelItemsUI;
@@ -68,9 +69,9 @@ public class KioskUI {
         CompleteOrderUI.withParameter(sc, totalPrice).display();
     }
 
-    public int cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
+    public CancelItemsChoice cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
         var ui = CancelItemsUI.withParameter(sc, cartItems);
         ui.display();
-        return ui.getChoice();
+        return (CancelItemsChoice) ui.getChoice();
     }
 }

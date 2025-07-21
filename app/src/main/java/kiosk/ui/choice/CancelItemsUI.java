@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import kiosk.model.MenuItem;
+import kiosk.model.choice.CancelItemsChoice;
 import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
@@ -35,15 +36,24 @@ public class CancelItemsUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int cartItemsStartIndex = 1;
         System.out.println();
         System.out.println("[ Cancel ]");
         CartItemsUI
                 .withParameter(cartItems)
                 .display();
-        System.out.println(cartItems.size() + 1 + ". 전체 취소");
+        int allCancelIndex = cartItems.size() + 1;
+        System.out.println(allCancelIndex + ". 전체 취소");
         System.out.println("0. 돌아가기");
         System.out.println();
         ValidationFilter filter = XToYFilter.range(0, cartItems.size() + 1);
-        choice = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(sc, filter);
+        if (index == 0) {
+            choice = new CancelItemsChoice.GoBack();
+        } else if (index == allCancelIndex) {
+            choice = new CancelItemsChoice.CancelAll();
+        } else {
+            choice = new CancelItemsChoice.CancelThis(cartItems.get(index - cartItemsStartIndex).getKey());
+        }
     }
 }

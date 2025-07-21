@@ -3,6 +3,7 @@ package kiosk.handler;
 import kiosk.manager.CartManager;
 import kiosk.model.KioskAction;
 import kiosk.model.MenuItem;
+import kiosk.model.choice.CancelItemsChoice;
 import kiosk.ui.KioskUI;
 
 public class CancelItemsHandler implements ActionHandler {
@@ -33,15 +34,16 @@ public class CancelItemsHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var cartItems = cartManager.getCartItemAsList();
-        int choice = kioskUI.cancelItemsUi(cartItems);
+        CancelItemsChoice choice = kioskUI.cancelItemsUi(cartItems);
 
-        if (choice == 0) {
-            return new KioskAction.MainMenu();
-        } else if (choice == cartItems.size() + 1) {
-            return clearCart();
-        } else {
-            return removeItemFromCart(cartItems.get(choice - 1).getKey());
-        }
+        return switch (choice) {
+            case CancelItemsChoice.CancelAll() 
+                -> clearCart();
+            case CancelItemsChoice.GoBack() 
+                -> new KioskAction.MainMenu();
+            case CancelItemsChoice.CancelThis cancelThis 
+                -> removeItemFromCart(cancelThis.item());
+        };
     }
 
     /**
