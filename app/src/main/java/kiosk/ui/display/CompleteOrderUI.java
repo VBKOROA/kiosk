@@ -34,6 +34,7 @@ public class CompleteOrderUI implements Displayable {
         System.out.println();
         System.out.println("주문이 완료되었습니다.");
         System.out.println("총 결제 금액: W " + totalPrice);
+        System.out.println("\n[계속을 위해 Enter]");
         // 이전 숫자 입력시 생긴 \n 버퍼 삭제
         sc.nextLine();
         sc.nextLine();
