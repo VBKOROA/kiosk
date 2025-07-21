@@ -40,7 +40,7 @@ public class DiscountMenuUI extends AbstractChoiceable {
         System.out.println("할인 정보를 입력해주세요.");
         
         for (int i = saleCategoriesStartIndex; i <= saleCategories.length; i++) {
-            System.out.println(i + ". " + saleCategories[i]);
+            System.out.println(i + ". " + saleCategories[i - saleCategoriesStartIndex]);
         }
         System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);

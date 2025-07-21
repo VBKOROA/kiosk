@@ -44,7 +44,7 @@ public class MainMenuUI extends AbstractChoiceable {
         System.out.println("[ MAIN MENU ]");
 
         for (int i = menuCategoriesStartIndex; i <= categories.length; i++) {
-            System.out.println(i + ". " + categories[i]);
+            System.out.println(i + ". " + categories[i - menuCategoriesStartIndex]);
         }
 
         int lastIndex = categories.length;
