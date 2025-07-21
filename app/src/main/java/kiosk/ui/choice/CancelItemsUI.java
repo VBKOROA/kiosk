@@ -37,16 +37,18 @@ public class CancelItemsUI extends AbstractChoiceable {
     @Override
     public void display() {
         final int cartItemsStartIndex = 1;
+        final int allCancelIndex = cartItems.size() + 1;
+        final int lastIndex = allCancelIndex;
+
         System.out.println();
         System.out.println("[ Cancel ]");
         CartItemsUI
                 .withParameter(cartItems)
                 .display();
-        int allCancelIndex = cartItems.size() + 1;
         System.out.println(allCancelIndex + ". 전체 취소");
         System.out.println("0. 돌아가기");
         System.out.println();
-        ValidationFilter filter = XToYFilter.range(0, cartItems.size() + 1);
+        ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(sc, filter);
         if (index == 0) {
             choice = new CancelItemsChoice.GoBack();
