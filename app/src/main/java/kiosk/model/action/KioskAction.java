@@ -2,8 +2,7 @@ package kiosk.model.action;
 import kiosk.handler.ActionHandler;
 import kiosk.handler.HandlerDependencies;
 
-public sealed interface KioskAction permits MainMenuAction, ProgramExitAction {
-    // record ProgramExit() implements KioskAction {}
+public sealed interface KioskAction permits MainMenuAction, ProgramExitAction, CancelItemsAction {
     // record CancelItems() implements KioskAction {}
     // record MenuSelectMenu(MenuCategory category) implements KioskAction {}
     // record AddItemToCartMenu(MenuItem item) implements KioskAction {}
