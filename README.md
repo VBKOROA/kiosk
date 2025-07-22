@@ -94,17 +94,26 @@
 
 ```
 kiosk/
-├── App.java                # 🏁 애플리케이션의 메인 진입점
-├── category/               # 🏷️ 메뉴 및 할인 카테고리 Enum
-├── exception/              # ❗ 사용자 정의 예외 클래스
-├── handler/                # 🔄 각 사용자 액션을 처리하는 핸들러 클래스
-├── manager/                # 🧠 핵심 데이터 관리자 (CartManager, MenuManager)
-├── model/                  # 📦 데이터 모델 (MenuItem, KioskAction)
-├── service/                # ⚙️ 메인 비즈니스 로직 (Kiosk 서비스)
-├── ui/                     # 🖥️ 사용자 인터페이스 (UI) 관련 클래스
-│   ├── choice/             #   - ⌨️ 사용자에게 선택지를 제공하고 입력을 받는 UI
-│   ├── common/             #   - 📜 공통 UI 인터페이스 (Displayable, Choiceable)
-│   ├── display/            #   - 📢 단순 정보를 화면에 출력하는 UI
-│   └── KioskUI.java        #   - 🎭 UI 컴포넌트들을 모아 외부에 단일 창구를 제공하는 파사드(Facade)
-└── util/                   # 🛠️ 유틸리티 클래스 (IntScanner)
+├── App.java                # 🏁 애플리케이션의 메인 진입점. 의존성 설정 및 주입 담당.
+├── category/               # 🏷️ 메뉴(MenuCategory) 및 할인(SaleCategory) 종류를 정의하는 Enum.
+├── exception/              # ❗ 사용자 정의 예외 클래스 (InvalidInputException, RidiculousException).
+├── handler/                # 🔄 각 사용자 액션(상태)을 처리하는 핸들러 클래스. (Strategy Pattern)
+│   └── HandlerFactory.java #   - KioskAction에 따라 적절한 핸들러를 생성하는 팩토리.
+├── manager/                # 🧠 핵심 데이터와 비즈니스 로직을 관리하는 클래스.
+│   ├── CartManager.java    #   - 장바구니 상태 관리 (추가, 삭제, 총액 계산).
+│   └── MenuManager.java    #   - 전체 메뉴 아이템 관리.
+├── model/                  # 📦 애플리케이션의 데이터 모델.
+│   ├── KioskAction.java    #   - 시스템의 모든 상태를 정의하는 sealed interface. (State Pattern)
+│   ├── MenuItem.java       #   - 메뉴 아이템을 정의하는 record. (Builder Pattern)
+│   └── choice/             #   - 각 UI에서 사용자의 선택 결과를 나타내는 sealed interface.
+├── service/                # ⚙️ 메인 비즈니스 로직.
+│   └── Kiosk.java          #   - 상태 머신 역할을 하는 키오스크의 메인 실행 루프.
+├── ui/                     # 🖥️ 사용자 인터페이스(CLI) 관련 클래스.
+│   ├── KioskUI.java        #   - 🎭 UI 컴포넌트들을 모아 외부에 단일 창구를 제공하는 파사드(Facade).
+│   ├── choice/             #   - ⌨️ 사용자에게 선택지를 제공하고 입력을 받는 UI.
+│   ├── display/            #   - 📢 단순 정보를 화면에 출력하는 UI.
+│   └── common/             #   - 📜 공통 UI 인터페이스 (Displayable, Choiceable).
+└── util/                   # 🛠️ 유틸리티 클래스.
+    ├── IntScanner.java     #   - 필터링 기능이 포함된 정수 입력 스캐너.
+    └── validator/          #   - 입력값 검증 로직.
 ```
