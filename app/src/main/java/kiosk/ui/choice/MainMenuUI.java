@@ -19,15 +19,14 @@ public class MainMenuUI extends AbstractChoiceable {
     }
 
     /**
-     * MainMenuUI의 인스턴스를 생성하는 팩토리 메서드.
-     * 
-     * @param parameter
-     * @return MainMenuUI 인스턴스
+     * 지정된 메뉴 카테고리와 주문 가능 여부로 {@link MainMenuUI}의 새 인스턴스를 생성
+     *
+     * @param categories 사용 가능한 메뉴 카테고리의 {@link MenuCategory} 배열
+     * @param canOrder   주문이 가능한지 여부를 나타내는 boolean 값
+     * @return 주어진 파라미터로 구성된 새로운 {@link MainMenuUI} 인스턴스
      */
-    public static MainMenuUI withParameter(ParameterDto parameter) {
-        return new MainMenuUI(
-                parameter.categories(),
-                parameter.canOrder());
+    public static MainMenuUI withParameter(MenuCategory[] categories, boolean canOrder) {
+        return new MainMenuUI(categories, canOrder);
     }
 
     /**
@@ -76,16 +75,5 @@ public class MainMenuUI extends AbstractChoiceable {
         System.out.println("[ ORDER MENU ]");
         System.out.println(orderIndex + ". Order");
         System.out.println(cancelIndex + ". Cancel");
-    }
-
-    /**
-     * MainMenuUI의 파라미터 DTO 클래스.
-     * 
-     * @param categories 메뉴 카테고리 배열
-     * @param canOrder   주문 가능 여부
-     */
-    public static record ParameterDto(
-            MenuCategory[] categories,
-            boolean canOrder) {
     }
 }

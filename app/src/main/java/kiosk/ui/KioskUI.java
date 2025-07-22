@@ -31,8 +31,7 @@ public class KioskUI {
     }
 
     public MainMenuChoice mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
-        var params = new MainMenuUI.ParameterDto(categories, canOrder);
-        var ui = MainMenuUI.withParameter(params);
+        var ui = MainMenuUI.withParameter(categories, canOrder);
         ui.display();
         return (MainMenuChoice) ui.getChoice();
     }
