@@ -20,15 +20,14 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
     }
 
     /**
-     * CartCheckBeforeOrderUI의 인스턴스를 생성하는 팩토리 메서드.
-     * 
-     * @param parameter
-     * @return CartCheckBeforeOrderUI 인스턴스
+     * 지정된 장바구니 항목과 총 금액으로 {@code CartCheckBeforeOrderUI}의 새 인스턴스를 생성
+     *
+     * @param cartItems  각 {@link MenuItem}과 해당 수량이 포함된 엔트리의 리스트
+     * @param totalPrice 장바구니에 담긴 상품의 총 금액
+     * @return 주어진 파라미터로 초기화된 {@code CartCheckBeforeOrderUI} 인스턴스
      */
-    public static CartCheckBeforeOrderUI withParameter(ParameterDto parameter) {
-        return new CartCheckBeforeOrderUI(
-                parameter.cartItems(),
-                parameter.totalPrice());
+    public static CartCheckBeforeOrderUI withParameter(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
+        return new CartCheckBeforeOrderUI(cartItems, totalPrice);
     }
 
     /**
@@ -58,16 +57,5 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
                 choice = new CartCheckBeforeOrderChoice.GoBack();
                 break;
         }
-    }
-
-    /**
-     * CartCheckBeforeOrderUI의 파라미터 DTO 클래스.
-     * 
-     * @param cartItems  장바구니 아이템 목록
-     * @param totalPrice 총 주문 금액
-     */
-    public static record ParameterDto(
-            List<Map.Entry<MenuItem, Integer>> cartItems,
-            BigDecimal totalPrice) {
     }
 }

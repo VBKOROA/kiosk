@@ -55,8 +55,7 @@ public class KioskUI {
     }
 
     public CartCheckBeforeOrderChoice cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
-        var params = new CartCheckBeforeOrderUI.ParameterDto(cartItems, totalPrice);
-        var ui = CartCheckBeforeOrderUI.withParameter(params);
+        var ui = CartCheckBeforeOrderUI.withParameter(cartItems, totalPrice);
         ui.display();
         return (CartCheckBeforeOrderChoice) ui.getChoice();
     }
