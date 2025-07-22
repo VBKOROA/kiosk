@@ -1,5 +1,10 @@
 package kiosk.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
+import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
 import kiosk.manager.MenuManager;
 import kiosk.model.KioskAction;
@@ -9,11 +14,20 @@ public class HandlerFactory {
     private final KioskUI kioskUI;
     private final CartManager cartManager;
     private final MenuManager menuManager;
+    /**
+     * handlers 맵은 KioskAction 클래스의 서브클래스와 해당 ActionHandler를 매핑하는 역할
+     * 각 KioskAction에 대해 적절한 ActionHandler를 생성하는 팩토리 메서드를 제공
+     * 이 맵은 KioskAction의 서브클래스 타입을 키로 하고, 
+     * 해당 KioskAction을 처리하는 ActionHandler를 생성하는 함수를 값으로 가짐
+     * 이를 통해 KioskAction에 따라 적절한 ActionHandler를 동적으로 생성 가능
+     */
+    private final Map<Class<? extends KioskAction>, Function<KioskAction, ActionHandler>> handlers = new HashMap<>();
 
     private HandlerFactory(KioskUI kioskUI, CartManager cartManager, MenuManager menuManager) {
         this.kioskUI = kioskUI;
         this.cartManager = cartManager;
         this.menuManager = menuManager;
+        handlerMapInit();
     }
 
     /**
@@ -43,66 +57,70 @@ public class HandlerFactory {
     }
 
     /**
-     * KioskAction에 따라 적절한 ActionHandler를 생성하여 반환.
-     * 애플리케이션의 모든 분기 로직이 이 메서드에 중앙 집중화되어 있음.
-     * 
-     * @param action 현재 키오스크의 상태를 나타내는 액션 객체
-     * @return action에 매핑되는 ActionHandler 인스턴스
+     * ActionHandler를 생성하기 전에 handlers 맵을 초기화한다.
+     * 이 메서드는 HandlerFactory의 생성자에서 호출되어야 함.
      */
-    public ActionHandler createHandler(KioskAction action) {
-        // switch 문을 사용하는 또 다른 방법
-        // sealed interface를 사용하여 각 액션을 처리
-        // 각 액션에 대한 처리를 switch 문으로 분기
-        return switch (action) {
-            case KioskAction.MainMenu mainMenu ->
-                // MainMenuHandler를 사용하여 메인 메뉴를 처리
-                MainMenuHandler.withParameter(kioskUI, cartManager);
+    private void handlerMapInit() {
+        handlers.put(KioskAction.MainMenu.class,
+                action -> MainMenuHandler.withParameter(kioskUI, cartManager));
+                
+        handlers.put(KioskAction.ProgramExit.class,
+                action -> ProgramExitHandler.withParameter(kioskUI));
 
-            case KioskAction.ProgramExit programExit ->
-                // ProgramExitHandler를 사용하여 프로그램 종료를 처리
-                ProgramExitHandler.withParameter(kioskUI);
+        handlers.put(KioskAction.CancelItems.class,
+                action -> CancelItemsHandler.withParameter(cartManager, kioskUI));
 
-            case KioskAction.CancelItems cancelItems ->
-                // CancelItemsHandler를 사용하여 장바구니 아이템 취소를 처리
-                CancelItemsHandler.withParameter(cartManager, kioskUI);
+        handlers.put(KioskAction.MenuSelectMenu.class,
+                action -> {
+                    var rawAction = (KioskAction.MenuSelectMenu) action;
+                    var parameter = new MenuSelectMenuHandler.ParameterDto(
+                            menuManager,
+                            kioskUI,
+                            rawAction.category());
+                    return MenuSelectMenuHandler.withParameter(parameter);
+                });
 
-            case KioskAction.MenuSelectMenu menuSelectMenu -> {
-                // MenuSelectMenuHandler를 사용하여 메뉴 선택을 처리
-                // ParameterDto를 생성하여 필요한 매개변수를 전달
-                var parameter = new MenuSelectMenuHandler.ParameterDto(
-                        menuManager,
-                        kioskUI,
-                        menuSelectMenu.category());
-                yield MenuSelectMenuHandler.withParameter(parameter);
-            }
+        handlers.put(KioskAction.AddItemToCartMenu.class,
+                action -> {
+                    var rawAction = (KioskAction.AddItemToCartMenu) action;
+                    var parameter = new AddItemToCartMenuHandler.ParameterDto(
+                            kioskUI,
+                            rawAction.item(),
+                            cartManager);
+                    return AddItemToCartMenuHandler.withParameter(parameter);
+                });
 
-            case KioskAction.AddItemToCartMenu addItemToCartMenu -> {
-                // AddItemToCartMenuHandler를 사용하여 아이템을 장바구니에 추가
-                // ParameterDto를 생성하여 필요한 매개변수를 전달
-                var parameter = new AddItemToCartMenuHandler.ParameterDto(
-                        kioskUI,
-                        addItemToCartMenu.item(),
-                        cartManager);
-                yield AddItemToCartMenuHandler.withParameter(parameter);
-            }
+        handlers.put(KioskAction.CartCheckBeforeOrder.class,
+                action -> CartCheckBeforeOrderHandler.withParameter(kioskUI, cartManager));
 
-            case KioskAction.CartCheckBeforeOrder cartCheckBeforeOrder ->
-                // CartCheckBeforeOrderHandler를 사용하여 주문 전 장바구니 확인
-                CartCheckBeforeOrderHandler.withParameter(kioskUI, cartManager);
+        handlers.put(KioskAction.DiscountMenu.class,
+                action -> DiscountMenuHandler.withParameter(kioskUI));
 
-            case KioskAction.DiscountMenu discountMenu ->
-                // DiscountMenuHandler를 사용하여 할인 선택 메뉴를 처리
-                DiscountMenuHandler.withParameter(kioskUI);
+        handlers.put(KioskAction.ProcessingOrder.class,
+                action -> {
+                    var rawAction = (KioskAction.ProcessingOrder) action;
+                    var parameter = new ProcessingOrderHandler.ParameterDto(
+                            rawAction.category(),
+                            cartManager,
+                            kioskUI);
+                    return ProcessingOrderHandler.withParameter(parameter);
+                });
+    }
 
-            case KioskAction.ProcessingOrder processingOrder -> {
-                // ProcessingOrderHandler를 사용하여 주문 처리
-                // ParameterDto를 생성하여 필요한 매개변수를 전달
-                var parameter = new ProcessingOrderHandler.ParameterDto(
-                        processingOrder.category(),
-                        cartManager,
-                        kioskUI);
-                yield ProcessingOrderHandler.withParameter(parameter);
-            }
-        };
+    /**
+     * ActionHandler를 생성하는 메서드.
+     * 이 메서드는 KioskAction에 따라 적절한 ActionHandler를 반환한다.
+     * 
+     * @param action {@link KioskAction} 객체
+     * @return {@link ActionHandler} 객체
+     * @throws RidiculousException 핸들러가 존재하지 않을 경우 발생
+     */
+    public ActionHandler createHandler(KioskAction action) throws RidiculousException {
+        // 핸들러 맵이 초기화 되었다고 가정.
+        var ret = handlers.get(action.getClass()).apply(action);
+        if (ret == null) {
+            throw new RidiculousException();
+        }
+        return ret;
     }
 }
