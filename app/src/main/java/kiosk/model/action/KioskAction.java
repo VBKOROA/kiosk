@@ -4,8 +4,7 @@ import kiosk.handler.HandlerDependencies;
 
 public sealed interface KioskAction 
     permits MainMenuAction, ProgramExitAction, CancelItemsAction,
-        MenuSelectMenuAction, AddItemToCartMenuAction {
-    // record CartCheckBeforeOrder() implements KioskAction {}
+        MenuSelectMenuAction, AddItemToCartMenuAction, CartCheckBeforeOrderAction {
     // record DiscountMenu() implements KioskAction {}
     // record ProcessingOrder(SaleCategory category) implements KioskAction {}
 
