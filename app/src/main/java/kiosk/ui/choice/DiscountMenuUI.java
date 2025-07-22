@@ -1,7 +1,5 @@
 package kiosk.ui.choice;
 
-import java.util.Scanner;
-
 import kiosk.category.SaleCategory;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.util.IntScanner;
@@ -11,21 +9,18 @@ import kiosk.util.validator.XToYFilter;
 public class DiscountMenuUI extends AbstractChoiceable {
     private final SaleCategory[] saleCategories;
 
-    private DiscountMenuUI(Scanner sc, SaleCategory[] saleCategories) {
-        super(sc);
+    private DiscountMenuUI(SaleCategory[] saleCategories) {
         this.saleCategories = saleCategories;
     }
 
     /**
      * DiscountMenuUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param sc
      * @param saleCategories 할인 카테고리 목록
      * @return DiscountMenuUI 인스턴스
      */
-    public static DiscountMenuUI withParameter(Scanner sc,
-            SaleCategory[] saleCategories) {
-        return new DiscountMenuUI(sc, saleCategories);
+    public static DiscountMenuUI withParameter(SaleCategory[] saleCategories) {
+        return new DiscountMenuUI(saleCategories);
     }
 
     /**
@@ -38,15 +33,15 @@ public class DiscountMenuUI extends AbstractChoiceable {
 
         System.out.println();
         System.out.println("할인 정보를 입력해주세요.");
-        
+
         for (int i = saleCategoriesStartIndex; i <= saleCategories.length; i++) {
             System.out.println(i + ". " + saleCategories[i - saleCategoriesStartIndex]);
         }
         System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
-        int index = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(filter);
 
-        if(index == 0) {
+        if (index == 0) {
             choice = new DiscountMenuChoice.GoBack();
         } else {
             choice = new DiscountMenuChoice.DiscountWithThis(saleCategories[index - saleCategoriesStartIndex]);

@@ -1,7 +1,6 @@
 package kiosk.ui.choice;
 
 import java.util.List;
-import java.util.Scanner;
 
 import kiosk.exception.RidiculousException;
 import kiosk.model.MenuItem;
@@ -13,8 +12,7 @@ import kiosk.util.validator.XToYFilter;
 public class MenuSelectUI extends AbstractChoiceable {
     private final List<MenuItem> items;
 
-    private MenuSelectUI(List<MenuItem> items, Scanner sc) {
-        super(sc);
+    private MenuSelectUI(List<MenuItem> items) {
         this.items = items;
     }
 
@@ -26,8 +24,7 @@ public class MenuSelectUI extends AbstractChoiceable {
      */
     public static MenuSelectUI withParameter(ParameterDto parameter) {
         return new MenuSelectUI(
-                parameter.items(),
-                parameter.sc());
+                parameter.items());
     }
 
     /**
@@ -47,7 +44,7 @@ public class MenuSelectUI extends AbstractChoiceable {
 
         System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
-        int index = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(filter);
         if (index == 0) {
             choice = new MenuSelectChoice.GoBack();
         } else if (index >= menuItemStartIndex && index <= lastIndex) {
@@ -61,10 +58,8 @@ public class MenuSelectUI extends AbstractChoiceable {
     /**
      * MenuSelectUI의 파라미터 DTO 클래스.
      * 
-     * @param items  메뉴 아이템 목록
-     * @param sc
+     * @param items 메뉴 아이템 목록
      */
-    public static record ParameterDto(
-            List<MenuItem> items,
-            Scanner sc) {}
+    public static record ParameterDto(List<MenuItem> items) {
+    }
 }

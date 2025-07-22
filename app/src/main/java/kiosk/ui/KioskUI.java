@@ -3,7 +3,6 @@ package kiosk.ui;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
@@ -27,28 +26,26 @@ import kiosk.ui.display.ItemAddedToCartUI;
 import kiosk.ui.display.RidiculousExceptionUI;
 
 public class KioskUI {
-    private final Scanner sc = new Scanner(System.in);
-
     public void exitUi() {
         new ExitUI().display();
     }
 
     public MainMenuChoice mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
-        var params = new MainMenuUI.ParameterDto(sc, categories, canOrder);
+        var params = new MainMenuUI.ParameterDto(categories, canOrder);
         var ui = MainMenuUI.withParameter(params);
         ui.display();
         return (MainMenuChoice) ui.getChoice();
     }
 
     public MenuSelectChoice menuSelectUi(List<MenuItem> items) throws RidiculousException {
-        var params = new MenuSelectUI.ParameterDto(items, sc);
+        var params = new MenuSelectUI.ParameterDto(items);
         var ui = MenuSelectUI.withParameter(params);
         ui.display();
         return (MenuSelectChoice) ui.getChoice();
     }
 
     public AddItemToCartChoice addItemToCartUi(MenuItem item) {
-        var ui = AddItemToCartUI.withParameter(sc, item);
+        var ui = AddItemToCartUI.withParameter(item);
         ui.display();
         return (AddItemToCartChoice) ui.getChoice();
     }
@@ -58,24 +55,24 @@ public class KioskUI {
     }
 
     public CartCheckBeforeOrderChoice cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
-        var params = new CartCheckBeforeOrderUI.ParameterDto(sc, cartItems, totalPrice);
+        var params = new CartCheckBeforeOrderUI.ParameterDto(cartItems, totalPrice);
         var ui = CartCheckBeforeOrderUI.withParameter(params);
         ui.display();
         return (CartCheckBeforeOrderChoice) ui.getChoice();
     }
 
     public DiscountMenuChoice discountMenuUi(SaleCategory[] saleCategories) {
-        var ui = DiscountMenuUI.withParameter(sc, saleCategories);
+        var ui = DiscountMenuUI.withParameter(saleCategories);
         ui.display();
         return (DiscountMenuChoice) ui.getChoice();
     }
 
     public void completeOrderUi(BigDecimal totalPrice) {
-        CompleteOrderUI.withParameter(sc, totalPrice).display();
+        CompleteOrderUI.withParameter(totalPrice).display();
     }
 
     public CancelItemsChoice cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
-        var ui = CancelItemsUI.withParameter(sc, cartItems);
+        var ui = CancelItemsUI.withParameter(cartItems);
         ui.display();
         return (CancelItemsChoice) ui.getChoice();
     }

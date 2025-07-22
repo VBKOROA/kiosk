@@ -1,6 +1,5 @@
 package kiosk.ui.choice;
 
-import java.util.Scanner;
 import java.util.stream.IntStream;
 
 import kiosk.category.MenuCategory;
@@ -14,8 +13,7 @@ public class MainMenuUI extends AbstractChoiceable {
     private final MenuCategory[] categories;
     private final boolean canOrder;
 
-    private MainMenuUI(Scanner sc, MenuCategory[] categories, boolean canOrder) {
-        super(sc);
+    private MainMenuUI(MenuCategory[] categories, boolean canOrder) {
         this.categories = categories;
         this.canOrder = canOrder;
     }
@@ -28,7 +26,6 @@ public class MainMenuUI extends AbstractChoiceable {
      */
     public static MainMenuUI withParameter(ParameterDto parameter) {
         return new MainMenuUI(
-                parameter.sc(),
                 parameter.categories(),
                 parameter.canOrder());
     }
@@ -39,15 +36,14 @@ public class MainMenuUI extends AbstractChoiceable {
     @Override
     public void display() throws RidiculousException {
         final int menuCategoriesStartIndex = 1;
-        final int orderIndex = categories.length+1;
-        final int cancelIndex = categories.length+2;
+        final int orderIndex = categories.length + 1;
+        final int cancelIndex = categories.length + 2;
 
         System.out.println();
         System.out.println("[ MAIN MENU ]");
 
-        IntStream.rangeClosed(menuCategoriesStartIndex, categories.length).forEach(idx -> 
-            System.out.println(idx + ". " + categories[idx - menuCategoriesStartIndex])
-        );
+        IntStream.rangeClosed(menuCategoriesStartIndex, categories.length)
+                .forEach(idx -> System.out.println(idx + ". " + categories[idx - menuCategoriesStartIndex]));
 
         int lastIndex = categories.length;
 
@@ -58,17 +54,15 @@ public class MainMenuUI extends AbstractChoiceable {
 
         System.out.println("0. 종료");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
-        int index = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(filter);
         if (index == 0) {
             choice = new MainMenuChoice.Exit();
-        }
-        else if (index <= categories.length) {
+        } else if (index <= categories.length) {
             choice = new MainMenuChoice.GoToCategory(categories[index - menuCategoriesStartIndex]);
-        }
-        else if(index == orderIndex) {
+        } else if (index == orderIndex) {
             // Order를 선택했다면
             choice = new MainMenuChoice.Order();
-        } else if(index == cancelIndex) {
+        } else if (index == cancelIndex) {
             // Cancel을 선택했다면
             choice = new MainMenuChoice.CancelCartItems();
         } else {
@@ -87,12 +81,10 @@ public class MainMenuUI extends AbstractChoiceable {
     /**
      * MainMenuUI의 파라미터 DTO 클래스.
      * 
-     * @param sc
      * @param categories 메뉴 카테고리 배열
      * @param canOrder   주문 가능 여부
      */
     public static record ParameterDto(
-            Scanner sc,
             MenuCategory[] categories,
             boolean canOrder) {
     }

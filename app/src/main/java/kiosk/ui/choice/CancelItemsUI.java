@@ -2,7 +2,6 @@ package kiosk.ui.choice;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import kiosk.model.MenuItem;
 import kiosk.model.choice.CancelItemsChoice;
@@ -14,21 +13,18 @@ import kiosk.util.validator.XToYFilter;
 public class CancelItemsUI extends AbstractChoiceable {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
 
-    private CancelItemsUI(Scanner sc, List<Map.Entry<MenuItem, Integer>> cartItems) {
-        super(sc);
+    private CancelItemsUI(List<Map.Entry<MenuItem, Integer>> cartItems) {
         this.cartItems = cartItems;
     }
 
     /**
      * CancelItemsUI의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param sc
      * @param cartItems 장바구니 아이템 목록
      * @return CancelItemsUI 인스턴스
      */
-    public static CancelItemsUI withParameter(Scanner sc,
-            List<Map.Entry<MenuItem, Integer>> cartItems) {
-        return new CancelItemsUI(sc, cartItems);
+    public static CancelItemsUI withParameter(List<Map.Entry<MenuItem, Integer>> cartItems) {
+        return new CancelItemsUI(cartItems);
     }
 
     /**
@@ -49,7 +45,7 @@ public class CancelItemsUI extends AbstractChoiceable {
         System.out.println("0. 돌아가기");
         System.out.println();
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
-        int index = IntScanner.withFilter(sc, filter);
+        int index = IntScanner.withFilter(filter);
         if (index == 0) {
             choice = new CancelItemsChoice.GoBack();
         } else if (index == allCancelIndex) {
