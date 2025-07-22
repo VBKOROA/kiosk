@@ -92,28 +92,24 @@
 
 코드베이스는 역할과 책임에 따라 명확하게 분리되어 있어, 탐색과 확장이 용이하도록 설계되었습니다.
 
-```
-kiosk/
-├── App.java                # 🏁 애플리케이션의 메인 진입점. 의존성 설정 및 주입 담당.
-├── category/               # 🏷️ 메뉴(MenuCategory) 및 할인(SaleCategory) 종류를 정의하는 Enum.
-├── exception/              # ❗ 사용자 정의 예외 클래스 (InvalidInputException, RidiculousException).
-├── handler/                # 🔄 각 사용자 액션(상태)을 처리하는 핸들러 클래스. (Strategy Pattern)
-│   └── HandlerFactory.java #   - KioskAction에 따라 적절한 핸들러를 생성하는 팩토리.
-├── manager/                # 🧠 핵심 데이터와 비즈니스 로직을 관리하는 클래스.
-│   ├── CartManager.java    #   - 장바구니 상태 관리 (추가, 삭제, 총액 계산).
-│   └── MenuManager.java    #   - 전체 메뉴 아이템 관리.
-├── model/                  # 📦 애플리케이션의 데이터 모델.
-│   ├── KioskAction.java    #   - 시스템의 모든 상태를 정의하는 sealed interface. (State Pattern)
-│   ├── MenuItem.java       #   - 메뉴 아이템을 정의하는 record. (Builder Pattern)
-│   └── choice/             #   - 각 UI에서 사용자의 선택 결과를 나타내는 sealed interface.
-├── service/                # ⚙️ 메인 비즈니스 로직.
-│   └── Kiosk.java          #   - 상태 머신 역할을 하는 키오스크의 메인 실행 루프.
-├── ui/                     # 🖥️ 사용자 인터페이스(CLI) 관련 클래스.
-│   ├── KioskUI.java        #   - 🎭 UI 컴포넌트들을 모아 외부에 단일 창구를 제공하는 파사드(Facade).
-│   ├── choice/             #   - ⌨️ 사용자에게 선택지를 제공하고 입력을 받는 UI.
-│   ├── display/            #   - 📢 단순 정보를 화면에 출력하는 UI.
-│   └── common/             #   - 📜 공통 UI 인터페이스 (Displayable, Choiceable).
-└── util/                   # 🛠️ 유틸리티 클래스.
-    ├── IntScanner.java     #   - 필터링 기능이 포함된 정수 입력 스캐너.
-    └── validator/          #   - 입력값 검증 로직.
-```
+- `kiosk/`: 애플리케이션의 루트 패키지입니다.
+  - `App.java`: 🏁 애플리케이션의 메인 진입점입니다. 의존성을 설정하고 `Kiosk` 서비스를 실행합니다.
+  - `category/`: 🏷️ 메뉴(`MenuCategory`) 및 할인(`SaleCategory`)과 같이 분류에 사용되는 열거형(Enum)을 정의합니다.
+  - `exception/`: ❗ `InvalidInputException`, `RidiculousException` 등 애플리케이션 전용 사용자 정의 예외를 정의합니다.
+  - `handler/`: 🔄 사용자의 특정 액션(상태)을 처리하는 핸들러 클래스들을 포함합니다. 각 핸들러는 `ActionHandler` 인터페이스를 구현합니다. (Strategy Pattern)
+    - `HandlerDependencies.java`: 모든 핸들러가 공유하는 의존성(UI, 매니저 등)을 묶어서 전달하기 위한 `record`입니다.
+  - `manager/`: 🧠 `MenuManager`, `CartManager` 등 핵심 데이터와 관련된 상태 및 비즈니스 로직을 관리합니다.
+  - `model/`: 📦 애플리케이션의 데이터 모델(DTO, 비즈니스 객체)을 정의합니다.
+    - `MenuItem.java`: 메뉴 항목을 나타내는 핵심 데이터 클래스입니다. (Builder Pattern 적용)
+    - `action/`: `KioskAction`을 상속받아 시스템의 모든 가능한 상태(동작)를 정의하는 `sealed interface`와 구현체 `record`들입니다. (State Pattern)
+    - `choice/`: `Choice`를 상속받아 사용자의 각 메뉴 선택 결과를 나타내는 `sealed interface`와 구현체 `record`들입니다.
+  - `service/`: ⚙️ 핵심 비즈니스 로직을 포함합니다.
+    - `Kiosk.java`: 상태 머신(State Machine) 역할을 하며, 현재 `KioskAction`에 따라 적절한 핸들러를 호출하여 전체 애플리케이션 흐름을 제어합니다.
+  - `ui/`: 🖥️ 사용자 인터페이스(CLI)와 관련된 모든 클래스를 포함합니다.
+    - `KioskUI.java`: 🎭 다양한 UI 컴포넌트들을 감싸고 단순화된 인터페이스를 제공하는 파사드(Facade)입니다.
+    - `choice/`: 사용자에게 선택지를 보여주고 입력을 받는 UI 컴포넌트들입니다. (`AbstractChoiceable`을 상속하여 공통 로직 처리)
+    - `display/`: 특정 정보를 화면에 출력하는 단순 UI 컴포넌트들입니다.
+    - `common/`: `Displayable`, `Choiceable` 등 UI에서 공통으로 사용되는 인터페이스를 정의합니다.
+  - `util/`: 🛠️ 애플리케이션 전반에서 사용되는 유틸리티 클래스들을 포함합니다.
+    - `ScannerProvider.java`, `IntScanner.java`: 사용자 입력을 안전하고 편리하게 받기 위한 클래스입니다.
+    - `validator/`: `XToYFilter` 등 입력값의 유효성을 검증하는 필터 클래스들입니다.
