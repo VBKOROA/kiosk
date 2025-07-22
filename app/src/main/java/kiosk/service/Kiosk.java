@@ -1,7 +1,7 @@
 package kiosk.service;
 
 import kiosk.handler.HandlerFactory;
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 
 public class Kiosk {
     private final HandlerFactory handlerFactory;

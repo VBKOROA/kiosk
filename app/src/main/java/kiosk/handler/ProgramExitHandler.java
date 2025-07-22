@@ -1,6 +1,6 @@
 package kiosk.handler;
 
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 import kiosk.ui.KioskUI;
 
 public class ProgramExitHandler implements ActionHandler {

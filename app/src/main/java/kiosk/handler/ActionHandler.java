@@ -1,6 +1,6 @@
 package kiosk.handler;
 
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 
 public interface ActionHandler {
     /**

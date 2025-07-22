@@ -7,7 +7,7 @@ import java.util.function.Function;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
 import kiosk.manager.MenuManager;
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 import kiosk.ui.KioskUI;
 
 public class HandlerFactory {

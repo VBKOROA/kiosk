@@ -1,7 +1,7 @@
 package kiosk.handler;
 
 import kiosk.category.SaleCategory;
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.KioskUI;
 

@@ -1,7 +1,8 @@
-package kiosk.model;
+package kiosk.model.action;
 
 import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
+import kiosk.model.MenuItem;
 
 public sealed interface KioskAction {
     record MainMenu() implements KioskAction {}

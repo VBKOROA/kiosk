@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import kiosk.category.SaleCategory;
 import kiosk.manager.CartManager;
-import kiosk.model.KioskAction;
+import kiosk.model.action.KioskAction;
 import kiosk.ui.KioskUI;
 
 public class ProcessingOrderHandler implements ActionHandler {
