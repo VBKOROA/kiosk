@@ -1,6 +1,7 @@
 package kiosk.ui.choice;
 
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 import kiosk.category.MenuCategory;
 import kiosk.model.choice.MainMenuChoice;
@@ -43,9 +44,9 @@ public class MainMenuUI extends AbstractChoiceable {
         System.out.println();
         System.out.println("[ MAIN MENU ]");
 
-        for (int i = menuCategoriesStartIndex; i <= categories.length; i++) {
-            System.out.println(i + ". " + categories[i - menuCategoriesStartIndex]);
-        }
+        IntStream.rangeClosed(menuCategoriesStartIndex, categories.length).forEach(idx -> 
+            System.out.println(idx + ". " + categories[idx - menuCategoriesStartIndex])
+        );
 
         int lastIndex = categories.length;
 
