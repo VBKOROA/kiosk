@@ -3,6 +3,7 @@ package kiosk.ui.choice;
 import java.util.List;
 import java.util.Scanner;
 
+import kiosk.exception.RidiculousException;
 import kiosk.model.MenuItem;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.util.IntScanner;
@@ -33,7 +34,7 @@ public class MenuSelectUI extends AbstractChoiceable {
      * 가능한 음식 메뉴들을 표시하고 사용자의 선택을 입력 받음.
      */
     @Override
-    public void display() {
+    public void display() throws RidiculousException {
         final int menuItemStartIndex = 1;
         final int lastIndex = items.size();
 
@@ -52,8 +53,8 @@ public class MenuSelectUI extends AbstractChoiceable {
         } else if (index >= menuItemStartIndex && index <= lastIndex) {
             choice = new MenuSelectChoice.SelectThis(items.get(index - menuItemStartIndex));
         } else {
-            // TODO: 비정상적인 입력 (filter에서 처리 되지 않은 비정상적인 상황)
-            choice = new MenuSelectChoice.GoBack();
+            // 비정상적인 입력 (filter에서 처리 되지 않은 비정상적인 상황)
+            throw new RidiculousException();
         }
     }
 

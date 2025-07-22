@@ -1,6 +1,7 @@
 package kiosk.handler;
 
 import kiosk.category.MenuCategory;
+import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
 import kiosk.model.KioskAction;
 import kiosk.model.MenuItem;
@@ -39,7 +40,13 @@ public class MenuSelectMenuHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var items = menuManager.getMenuItemsByCategory(category);
-        MenuSelectChoice choice = kioskUI.menuSelectUi(items);
+        MenuSelectChoice choice = null;
+
+        try {
+            choice = kioskUI.menuSelectUi(items);
+        } catch (RidiculousException e) {
+            e.display();
+        }
 
         return switch(choice) {
             case MenuSelectChoice.GoBack() -> new KioskAction.MainMenu();

@@ -1,6 +1,7 @@
 package kiosk.handler;
 
 import kiosk.category.MenuCategory;
+import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
 import kiosk.model.KioskAction;
 import kiosk.model.choice.MainMenuChoice;
@@ -34,9 +35,14 @@ public class MainMenuHandler implements ActionHandler {
     public KioskAction handle() {
         var categories = MenuCategory.values();
         boolean canOrder = !cartManager.isEmpty();
+        MainMenuChoice choice = null;
 
-        MainMenuChoice choice = kioskUI.mainMenuUi(categories, canOrder);
-
+        try {
+            choice = kioskUI.mainMenuUi(categories, canOrder);
+        } catch (RidiculousException e) {
+            e.display();
+        }
+        
         return switch(choice) {
             case MainMenuChoice.Exit() -> new KioskAction.ProgramExit();
             case MainMenuChoice.GoToCategory(MenuCategory category) -> new KioskAction.MenuSelectMenu(category);

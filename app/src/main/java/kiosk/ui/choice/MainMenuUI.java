@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 import kiosk.category.MenuCategory;
+import kiosk.exception.RidiculousException;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
@@ -36,7 +37,7 @@ public class MainMenuUI extends AbstractChoiceable {
      * 메인 메뉴를 표시하고 사용자의 선택을 처리한다.
      */
     @Override
-    public void display() {
+    public void display() throws RidiculousException {
         final int menuCategoriesStartIndex = 1;
         final int orderIndex = categories.length+1;
         final int cancelIndex = categories.length+2;
@@ -72,8 +73,7 @@ public class MainMenuUI extends AbstractChoiceable {
             choice = new MainMenuChoice.CancelCartItems();
         } else {
             // 비정상적인 상황임
-            // TODO: 올바른 예외처리 추가
-            choice = new MainMenuChoice.Exit();
+            throw new RidiculousException();
         }
     }
 

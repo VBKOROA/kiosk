@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import kiosk.category.MenuCategory;
 import kiosk.category.SaleCategory;
+import kiosk.exception.RidiculousException;
 import kiosk.model.MenuItem;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.model.choice.CancelItemsChoice;
@@ -31,14 +32,14 @@ public class KioskUI {
         new ExitUI().display();
     }
 
-    public MainMenuChoice mainMenuUi(MenuCategory[] categories, boolean canOrder) {
+    public MainMenuChoice mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
         var params = new MainMenuUI.ParameterDto(sc, categories, canOrder);
         var ui = MainMenuUI.withParameter(params);
         ui.display();
         return (MainMenuChoice) ui.getChoice();
     }
 
-    public MenuSelectChoice menuSelectUi(List<MenuItem> items) {
+    public MenuSelectChoice menuSelectUi(List<MenuItem> items) throws RidiculousException {
         var params = new MenuSelectUI.ParameterDto(items, sc);
         var ui = MenuSelectUI.withParameter(params);
         ui.display();
