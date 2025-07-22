@@ -17,14 +17,13 @@ public class MenuSelectUI extends AbstractChoiceable {
     }
 
     /**
-     * MenuSelectUI의 인스턴스를 생성하는 팩토리 메서드.
-     * 
-     * @param parameter
-     * @return MenuSelectUI 인스턴스
+     * 주어진 메뉴 아이템 목록으로 MenuSelectUI 인스턴스를 생성
+     *
+     * @param items 메뉴 아이템 목록
+     * @return MenuSelectUI의 새 인스턴스
      */
-    public static MenuSelectUI withParameter(ParameterDto parameter) {
-        return new MenuSelectUI(
-                parameter.items());
+    public static MenuSelectUI withParameter(List<MenuItem> items) {
+        return new MenuSelectUI(items);
     }
 
     /**
@@ -53,13 +52,5 @@ public class MenuSelectUI extends AbstractChoiceable {
             // 비정상적인 입력 (filter에서 처리 되지 않은 비정상적인 상황)
             throw new RidiculousException();
         }
-    }
-
-    /**
-     * MenuSelectUI의 파라미터 DTO 클래스.
-     * 
-     * @param items 메뉴 아이템 목록
-     */
-    public static record ParameterDto(List<MenuItem> items) {
     }
 }

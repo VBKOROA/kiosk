@@ -37,8 +37,7 @@ public class KioskUI {
     }
 
     public MenuSelectChoice menuSelectUi(List<MenuItem> items) throws RidiculousException {
-        var params = new MenuSelectUI.ParameterDto(items);
-        var ui = MenuSelectUI.withParameter(params);
+        var ui = MenuSelectUI.withParameter(items);
         ui.display();
         return (MenuSelectChoice) ui.getChoice();
     }
