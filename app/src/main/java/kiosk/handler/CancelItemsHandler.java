@@ -2,7 +2,9 @@ package kiosk.handler;
 
 import kiosk.manager.CartManager;
 import kiosk.model.MenuItem;
+import kiosk.model.action.CancelItemsAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CancelItemsChoice;
 import kiosk.ui.KioskUI;
 
@@ -40,7 +42,7 @@ public class CancelItemsHandler implements ActionHandler {
             case CancelItemsChoice.CancelAll() 
                 -> clearCart();
             case CancelItemsChoice.GoBack() 
-                -> new KioskAction.MainMenu();
+                -> new MainMenuAction();
             case CancelItemsChoice.CancelThis cancelThis 
                 -> removeItemFromCart(cancelThis.item());
         };
@@ -53,7 +55,7 @@ public class CancelItemsHandler implements ActionHandler {
      */
     private KioskAction clearCart() {
         cartManager.clearCart();
-        return new KioskAction.MainMenu();
+        return new MainMenuAction();
     }
 
     /**
@@ -65,9 +67,9 @@ public class CancelItemsHandler implements ActionHandler {
     private KioskAction removeItemFromCart(MenuItem item) {
         cartManager.removeItem(item);
         if (cartManager.isEmpty()) {
-            return new KioskAction.MainMenu();
+            return new MainMenuAction();
         } else {
-            return new KioskAction.CancelItems();
+            return new CancelItemsAction();
         }
     }
 }

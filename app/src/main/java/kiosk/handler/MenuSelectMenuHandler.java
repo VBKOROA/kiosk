@@ -4,7 +4,9 @@ import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
 import kiosk.model.MenuItem;
+import kiosk.model.action.AddItemToCartMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.KioskUI;
 
@@ -49,8 +51,8 @@ public class MenuSelectMenuHandler implements ActionHandler {
         }
 
         return switch(choice) {
-            case MenuSelectChoice.GoBack() -> new KioskAction.MainMenu();
-            case MenuSelectChoice.SelectThis(MenuItem item) -> new KioskAction.AddItemToCartMenu(item);
+            case MenuSelectChoice.GoBack() -> new MainMenuAction();
+            case MenuSelectChoice.SelectThis(MenuItem item) -> new AddItemToCartMenuAction(item);
         };
     }
 

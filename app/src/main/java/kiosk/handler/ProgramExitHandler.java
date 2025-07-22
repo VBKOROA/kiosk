@@ -1,6 +1,7 @@
 package kiosk.handler;
 
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.ProgramExitAction;
 import kiosk.ui.KioskUI;
 
 public class ProgramExitHandler implements ActionHandler {
@@ -27,6 +28,6 @@ public class ProgramExitHandler implements ActionHandler {
         // 프로그램 종료
         kioskUI.exitUi();
         System.exit(0);
-        return new KioskAction.ProgramExit();
+        return new ProgramExitAction();
     }
 }

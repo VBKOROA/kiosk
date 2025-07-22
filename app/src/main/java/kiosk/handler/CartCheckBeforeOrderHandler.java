@@ -1,7 +1,9 @@
 package kiosk.handler;
 
 import kiosk.manager.CartManager;
+import kiosk.model.action.DiscountMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.KioskUI;
 
@@ -36,8 +38,8 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
                 cartManager.getTotalPrice());
 
         return switch (choice) {
-            case CartCheckBeforeOrderChoice.Order() -> new KioskAction.DiscountMenu();
-            case CartCheckBeforeOrderChoice.GoBack() -> new KioskAction.MainMenu();
+            case CartCheckBeforeOrderChoice.Order() -> new DiscountMenuAction();
+            case CartCheckBeforeOrderChoice.GoBack() -> new MainMenuAction();
         };
     }
 }

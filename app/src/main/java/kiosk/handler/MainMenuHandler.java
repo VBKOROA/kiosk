@@ -3,7 +3,11 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
+import kiosk.model.action.CancelItemsAction;
+import kiosk.model.action.CartCheckBeforeOrderAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MenuSelectMenuAction;
+import kiosk.model.action.ProgramExitAction;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.KioskUI;
 
@@ -44,10 +48,10 @@ public class MainMenuHandler implements ActionHandler {
         }
         
         return switch(choice) {
-            case MainMenuChoice.Exit() -> new KioskAction.ProgramExit();
-            case MainMenuChoice.GoToCategory(MenuCategory category) -> new KioskAction.MenuSelectMenu(category);
-            case MainMenuChoice.Order() -> new KioskAction.CartCheckBeforeOrder();
-            case MainMenuChoice.CancelCartItems() -> new KioskAction.CancelItems();
+            case MainMenuChoice.Exit() -> new ProgramExitAction();
+            case MainMenuChoice.GoToCategory(MenuCategory category) -> new MenuSelectMenuAction(category);
+            case MainMenuChoice.Order() -> new CartCheckBeforeOrderAction();
+            case MainMenuChoice.CancelCartItems() -> new CancelItemsAction();
         };
     }
 }

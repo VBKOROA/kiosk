@@ -2,6 +2,8 @@ package kiosk.handler;
 
 import kiosk.category.SaleCategory;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
+import kiosk.model.action.ProcessingOrderAction;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.KioskUI;
 
@@ -33,9 +35,9 @@ public class DiscountMenuHandler implements ActionHandler {
         DiscountMenuChoice choice = kioskUI.discountMenuUi(saleCategories);
 
         return switch(choice) {
-            case DiscountMenuChoice.GoBack() -> new KioskAction.MainMenu();
+            case DiscountMenuChoice.GoBack() -> new MainMenuAction();
             case DiscountMenuChoice.DiscountWithThis(SaleCategory category) 
-                -> new KioskAction.ProcessingOrder(category);
+                -> new ProcessingOrderAction(category);
         };
     }
 }

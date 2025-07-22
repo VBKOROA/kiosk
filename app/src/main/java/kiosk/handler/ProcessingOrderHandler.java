@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import kiosk.category.SaleCategory;
 import kiosk.manager.CartManager;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.ui.KioskUI;
 
 public class ProcessingOrderHandler implements ActionHandler {
@@ -41,7 +42,7 @@ public class ProcessingOrderHandler implements ActionHandler {
         BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
         cartManager.clearCart();
         kioskUI.completeOrderUi(finalPrice);
-        return new KioskAction.MainMenu();
+        return new MainMenuAction();
     }
 
     /**

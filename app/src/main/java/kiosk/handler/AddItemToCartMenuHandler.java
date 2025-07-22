@@ -3,6 +3,7 @@ package kiosk.handler;
 import kiosk.manager.CartManager;
 import kiosk.model.MenuItem;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.ui.KioskUI;
 
@@ -47,7 +48,7 @@ public class AddItemToCartMenuHandler implements ActionHandler {
         }
 
         // 메인 메뉴로 돌아가기
-        return new KioskAction.MainMenu();
+        return new MainMenuAction();
     }
 
     /**
