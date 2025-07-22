@@ -1,7 +1,7 @@
 package kiosk.category;
 
 public enum MenuCategory {
-    BUGER("버거"),
+    BURGER("버거"),
     DRINK("음료"),
     SIDE("사이드");
 
