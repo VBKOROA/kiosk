@@ -25,6 +25,14 @@ import kiosk.ui.display.ExitUI;
 import kiosk.ui.display.ItemAddedToCartUI;
 import kiosk.ui.display.RidiculousExceptionUI;
 
+/**
+ * 키오스크 애플리케이션의 다양한 UI 화면을 제어하는 역할
+ * 각 메서드는 특정 UI 화면을 표시하고,
+ * 사용자 입력을 받아 적절한 선택 객체를 반환하거나
+ * 단순히 정보를 표시함
+ * 이 클래스는 UI 흐름을 관리하며, 메뉴 선택, 장바구니 관리,
+ * 할인 적용, 주문 완료 등 주요 사용자 인터페이스 기능을 제공
+ */
 public class KioskUI {
     public void exitUi() {
         new ExitUI().display();
@@ -52,7 +60,8 @@ public class KioskUI {
         ItemAddedToCartUI.withParameter(item).display();
     }
 
-    public CartCheckBeforeOrderChoice cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems, BigDecimal totalPrice) {
+    public CartCheckBeforeOrderChoice cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems,
+            BigDecimal totalPrice) {
         var ui = CartCheckBeforeOrderUI.withParameter(cartItems, totalPrice);
         ui.display();
         return (CartCheckBeforeOrderChoice) ui.getChoice();

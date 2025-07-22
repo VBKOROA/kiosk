@@ -12,9 +12,12 @@ public class Kiosk {
     }
 
     /**
-     * 키오스크의 메인 실행 루프를 시작.
-     * 현재 상태(KioskAction)를 핸들러 팩토리에 전달하여 다음 핸들러를 가져오고,
-     * 이를 실행하는 과정을 프로그램이 종료될 때까지 반복.
+     * 키오스크 애플리케이션의 메인 루프
+     * 
+     * 이 메서드는 현재 액션을 메인 메뉴 액션으로 초기화한 후,
+     * 무한 루프에 진입하여 사용자 입력이나 시스템 상태에 따라
+     * 다음 액션을 계속 처리함. 
+     * 각 액션은 주어진 dependencies와 함께 처리
      */
     public void run() {
         KioskAction curAction = new MainMenuAction()
