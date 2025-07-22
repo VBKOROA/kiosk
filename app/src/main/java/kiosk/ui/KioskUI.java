@@ -24,6 +24,7 @@ import kiosk.ui.choice.MenuSelectUI;
 import kiosk.ui.display.CompleteOrderUI;
 import kiosk.ui.display.ExitUI;
 import kiosk.ui.display.ItemAddedToCartUI;
+import kiosk.ui.display.RidiculousExceptionUI;
 
 public class KioskUI {
     private final Scanner sc = new Scanner(System.in);
@@ -77,5 +78,9 @@ public class KioskUI {
         var ui = CancelItemsUI.withParameter(sc, cartItems);
         ui.display();
         return (CancelItemsChoice) ui.getChoice();
+    }
+
+    public void ridiculousExceptionUI() {
+        new RidiculousExceptionUI().display();
     }
 }

@@ -40,7 +40,7 @@ public class MainMenuHandler implements ActionHandler {
         try {
             choice = kioskUI.mainMenuUi(categories, canOrder);
         } catch (RidiculousException e) {
-            e.display();
+            kioskUI.ridiculousExceptionUI();
         }
         
         return switch(choice) {

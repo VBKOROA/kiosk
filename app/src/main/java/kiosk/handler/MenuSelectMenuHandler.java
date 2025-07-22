@@ -45,7 +45,7 @@ public class MenuSelectMenuHandler implements ActionHandler {
         try {
             choice = kioskUI.menuSelectUi(items);
         } catch (RidiculousException e) {
-            e.display();
+            kioskUI.ridiculousExceptionUI();
         }
 
         return switch(choice) {
