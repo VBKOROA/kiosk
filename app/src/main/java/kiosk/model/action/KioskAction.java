@@ -1,16 +1,15 @@
 package kiosk.model.action;
+import kiosk.handler.ActionHandler;
+import kiosk.handler.HandlerDependencies;
 
-import kiosk.category.MenuCategory;
-import kiosk.category.SaleCategory;
-import kiosk.model.MenuItem;
+public sealed interface KioskAction permits MainMenuAction {
+    // record ProgramExit() implements KioskAction {}
+    // record CancelItems() implements KioskAction {}
+    // record MenuSelectMenu(MenuCategory category) implements KioskAction {}
+    // record AddItemToCartMenu(MenuItem item) implements KioskAction {}
+    // record CartCheckBeforeOrder() implements KioskAction {}
+    // record DiscountMenu() implements KioskAction {}
+    // record ProcessingOrder(SaleCategory category) implements KioskAction {}
 
-public sealed interface KioskAction {
-    record MainMenu() implements KioskAction {}
-    record ProgramExit() implements KioskAction {}
-    record CancelItems() implements KioskAction {}
-    record MenuSelectMenu(MenuCategory category) implements KioskAction {}
-    record AddItemToCartMenu(MenuItem item) implements KioskAction {}
-    record CartCheckBeforeOrder() implements KioskAction {}
-    record DiscountMenu() implements KioskAction {}
-    record ProcessingOrder(SaleCategory category) implements KioskAction {}
+    ActionHandler handler(HandlerDependencies dependencies);
 }
