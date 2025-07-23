@@ -3,10 +3,7 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
-import kiosk.model.MenuItem;
-import kiosk.model.action.AddItemToCartMenuAction;
 import kiosk.model.action.KioskAction;
-import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.KioskUI;
 
