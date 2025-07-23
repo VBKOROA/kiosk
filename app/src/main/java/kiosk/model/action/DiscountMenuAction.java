@@ -11,6 +11,6 @@ import kiosk.handler.HandlerDependencies;
 public final record DiscountMenuAction() implements KioskAction {
     @Override
     public ActionHandler handler(HandlerDependencies dependencies) {
-        return DiscountMenuHandler.withParameter(dependencies.kioskUI());
+        return DiscountMenuHandler.withParameter(dependencies.uiFactory());
     }
 }
