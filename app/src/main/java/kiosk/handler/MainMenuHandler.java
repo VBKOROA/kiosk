@@ -3,11 +3,7 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
-import kiosk.model.action.CancelItemsAction;
-import kiosk.model.action.CartCheckBeforeOrderAction;
 import kiosk.model.action.KioskAction;
-import kiosk.model.action.MenuSelectMenuAction;
-import kiosk.model.action.ProgramExitAction;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.UIFactory;
 
@@ -26,7 +22,8 @@ public class MainMenuHandler implements ActionHandler {
 
     /**
      * {@link MainMenuHandler}의 인스턴스를 생성하는 팩토리 메서드.
-     * @param uiFactory {@link UIFactory} 인스턴스
+     * 
+     * @param uiFactory   {@link UIFactory} 인스턴스
      * @param cartManager {@link CartManager} 인스턴스
      * @return {@link MainMenuHandler} 인스턴스
      */
@@ -51,13 +48,9 @@ public class MainMenuHandler implements ActionHandler {
         } catch (RidiculousException e) {
             uiFactory.ridiculousExceptionUI().display();
         }
-        
-        return switch (choice) {
-            case MainMenuChoice.Exit __ -> new ProgramExitAction();
-            case MainMenuChoice.GoToCategory c -> new MenuSelectMenuAction(c.category());
-            case MainMenuChoice.Order __ -> new CartCheckBeforeOrderAction();
-            case MainMenuChoice.CancelCartItems __ -> new CancelItemsAction();
-            case null -> throw new IllegalStateException("MainMenuChoice cannot be null here.");
-        };
+
+        // choice가 null일 경우 RidiculousExceptionUI에 의해 프로그램이 종료되므로
+        // NullPointerException이 발생하지 않음
+        return choice.process(this);
     }
 }
