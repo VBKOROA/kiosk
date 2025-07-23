@@ -10,7 +10,7 @@ import kiosk.handler.HandlerDependencies;
  */
 public final record CancelItemsAction() implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         return CancelItemsHandler.withParameter(dependencies.cartManager(), dependencies.uiFactory());
     }
 }

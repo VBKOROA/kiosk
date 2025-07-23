@@ -10,7 +10,7 @@ import kiosk.handler.ProgramExitHandler;
  */
 public record ProgramExitAction() implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         return ProgramExitHandler.withParameter(dependencies.uiFactory());
     }
 }

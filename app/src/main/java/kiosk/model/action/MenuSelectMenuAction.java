@@ -11,7 +11,7 @@ import kiosk.handler.MenuSelectMenuHandler;
  */
 public final record MenuSelectMenuAction(MenuCategory category) implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         var params = new MenuSelectMenuHandler.ParameterDto(dependencies.menuManager(),
                 dependencies.uiFactory(),
                 category);

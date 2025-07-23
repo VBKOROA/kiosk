@@ -11,7 +11,7 @@ import kiosk.model.MenuItem;
  */
 public final record AddItemToCartMenuAction(MenuItem item) implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         var params = new AddItemToCartMenuHandler.ParameterDto(
                 dependencies.uiFactory(),
                 item,

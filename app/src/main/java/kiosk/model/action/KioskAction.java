@@ -11,5 +11,5 @@ public sealed interface KioskAction
         MenuSelectMenuAction, AddItemToCartMenuAction, CartCheckBeforeOrderAction,
         DiscountMenuAction, ProcessingOrderAction {
 
-    ActionHandler handler(HandlerDependencies dependencies);
+    ActionHandler handlerWithDependencies(HandlerDependencies dependencies);
 }

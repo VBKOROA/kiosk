@@ -10,7 +10,7 @@ import kiosk.handler.MainMenuHandler;
  */
 public record MainMenuAction() implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         return MainMenuHandler.withParameter(dependencies.uiFactory(), dependencies.cartManager());
     }
 }

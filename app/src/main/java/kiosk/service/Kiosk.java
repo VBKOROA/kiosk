@@ -21,10 +21,10 @@ public class Kiosk {
      */
     public void run() {
         KioskAction curAction = new MainMenuAction()
-            .handler(dependencies)
+            .handlerWithDependencies(dependencies)
             .handle();
         while (true) {
-            curAction = curAction.handler(dependencies).handle();
+            curAction = curAction.handlerWithDependencies(dependencies).handle();
         }
     }
 }

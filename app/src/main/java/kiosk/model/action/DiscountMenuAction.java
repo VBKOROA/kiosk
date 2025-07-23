@@ -10,7 +10,7 @@ import kiosk.handler.HandlerDependencies;
  */
 public final record DiscountMenuAction() implements KioskAction {
     @Override
-    public ActionHandler handler(HandlerDependencies dependencies) {
+    public ActionHandler handlerWithDependencies(HandlerDependencies dependencies) {
         return DiscountMenuHandler.withParameter(dependencies.uiFactory());
     }
 }
