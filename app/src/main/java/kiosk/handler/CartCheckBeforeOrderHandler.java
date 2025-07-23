@@ -1,7 +1,9 @@
 package kiosk.handler;
 
 import kiosk.manager.CartManager;
+import kiosk.model.action.DiscountMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.UIFactory;
 
@@ -37,8 +39,11 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var ui = uiFactory.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
-        ui.display();
-        CartCheckBeforeOrderChoice choice = (CartCheckBeforeOrderChoice) ui.getChoice();
-        return choice.getAction();
+        CartCheckBeforeOrderChoice choice = ui.prompt();
+        
+        return switch (choice) {
+            case CartCheckBeforeOrderChoice.Order __ -> new DiscountMenuAction();
+            case CartCheckBeforeOrderChoice.GoBack __ -> new MainMenuAction();
+        };
     }
 }

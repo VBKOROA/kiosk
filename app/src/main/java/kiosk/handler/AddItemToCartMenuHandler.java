@@ -6,7 +6,6 @@ import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.ui.UIFactory;
-import kiosk.ui.common.Choiceable;
 
 /**
  * 장바구니에 아이템을 추가하는 메뉴를 처리하는 핸들러 클래스
@@ -44,15 +43,12 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     @Override
     public KioskAction handle() {
-        Choiceable ui = uiFactory.addItemToCartUi(item);
-        ui.display();
-        AddItemToCartChoice choice = (AddItemToCartChoice) ui.getChoice();
+        var ui = uiFactory.addItemToCartUi(item);
+        AddItemToCartChoice choice = ui.prompt();
 
         switch(choice) {
-            case AddItemToCartChoice.Yes() -> {
-                addToCart();
-            }
-            case AddItemToCartChoice.No() -> {}
+            case AddItemToCartChoice.Yes __ -> addToCart();
+            case AddItemToCartChoice.No __ -> {}
         }
 
         // 메인 메뉴로 돌아가기
@@ -61,8 +57,6 @@ public class AddItemToCartMenuHandler implements ActionHandler {
 
     /**
      * 장바구니에 아이템을 추가하고 UI에 알린다.
-     * 
-     * @param item 추가할 메뉴 아이템
      */
     private void addToCart() {
         cartManager.addItem(item, 1);

@@ -14,7 +14,6 @@ import kiosk.ui.choice.CartCheckBeforeOrderUI;
 import kiosk.ui.choice.DiscountMenuUI;
 import kiosk.ui.choice.MainMenuUI;
 import kiosk.ui.choice.MenuSelectUI;
-import kiosk.ui.common.Choiceable;
 import kiosk.ui.common.Displayable;
 import kiosk.ui.display.CompleteOrderUI;
 import kiosk.ui.display.ExitUI;
@@ -30,15 +29,15 @@ public class UIFactory {
         new ExitUI().display();
     }
 
-    public Choiceable mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
+    public MainMenuUI mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
         return MainMenuUI.withParameter(categories, canOrder);
     }
 
-    public Choiceable menuSelectUi(List<MenuItem> items) throws RidiculousException {
+    public MenuSelectUI menuSelectUi(List<MenuItem> items) throws RidiculousException {
         return MenuSelectUI.withParameter(items);
     }
 
-    public Choiceable addItemToCartUi(MenuItem item) {
+    public AddItemToCartUI addItemToCartUi(MenuItem item) {
         return AddItemToCartUI.withParameter(item);
     }
 
@@ -46,12 +45,12 @@ public class UIFactory {
         return ItemAddedToCartUI.withParameter(item);
     }
 
-    public Choiceable cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems,
+    public CartCheckBeforeOrderUI cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems,
             BigDecimal totalPrice) {
         return CartCheckBeforeOrderUI.withParameter(cartItems, totalPrice);
     }
 
-    public Choiceable discountMenuUi(SaleCategory[] saleCategories) {
+    public DiscountMenuUI discountMenuUi(SaleCategory[] saleCategories) {
         return DiscountMenuUI.withParameter(saleCategories);
     }
 
@@ -59,7 +58,7 @@ public class UIFactory {
         return CompleteOrderUI.withParameter(totalPrice);
     }
 
-    public Choiceable cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
+    public CancelItemsUI cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
         return CancelItemsUI.withParameter(cartItems);
     }
 

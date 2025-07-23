@@ -3,7 +3,9 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
+import kiosk.model.action.AddItemToCartMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.UIFactory;
 
@@ -46,15 +48,17 @@ public class MenuSelectMenuHandler implements ActionHandler {
         MenuSelectChoice choice = null;
         var ui = uiFactory.menuSelectUi(items);
 
-        ui.display();
-
         try {
-            choice = (MenuSelectChoice) ui.getChoice();
+            choice = ui.prompt();
         } catch (RidiculousException e) {
             uiFactory.ridiculousExceptionUI().display();
         }
 
-        return choice.getAction();
+        return switch (choice) {
+            case MenuSelectChoice.GoBack __ -> new MainMenuAction();
+            case MenuSelectChoice.SelectThis s -> new AddItemToCartMenuAction(s.item());
+            case null -> throw new IllegalStateException("MenuSelectChoice cannot be null here.");
+        };
     }
 
     /**

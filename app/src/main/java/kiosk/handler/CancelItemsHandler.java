@@ -41,8 +41,7 @@ public class CancelItemsHandler implements ActionHandler {
     public KioskAction handle() {
         var cartItems = cartManager.getCartItemAsList();
         var ui = uiFactory.cancelItemsUi(cartItems);
-        ui.display();
-        CancelItemsChoice choice = (CancelItemsChoice) ui.getChoice();
+        CancelItemsChoice choice = ui.prompt();
         return processCancelChoice(choice);
     }
 
@@ -54,9 +53,9 @@ public class CancelItemsHandler implements ActionHandler {
      */
     private KioskAction processCancelChoice(CancelItemsChoice choice) {
         return switch (choice) {
-            case CancelItemsChoice.CancelAll() 
+            case CancelItemsChoice.CancelAll __ 
                 -> clearCart();
-            case CancelItemsChoice.GoBack() 
+            case CancelItemsChoice.GoBack __ 
                 -> new MainMenuAction();
             case CancelItemsChoice.CancelThis cancelThis 
                 -> removeItemFromCart(cancelThis.item());
