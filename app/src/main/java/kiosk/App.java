@@ -86,7 +86,6 @@ public class App {
         );
 
         MenuManager menuManager = new MenuManager(menuItems);
-        KioskUI kioskUI = new KioskUI();
         CartManager cartManager = new CartManager();
         UIFactory uiFactory = new UIFactory();
         var dependencies = new HandlerDependencies(uiFactory, cartManager, menuManager);
