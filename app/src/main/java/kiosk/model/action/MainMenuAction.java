@@ -11,6 +11,6 @@ import kiosk.handler.MainMenuHandler;
 public record MainMenuAction() implements KioskAction {
     @Override
     public ActionHandler handler(HandlerDependencies dependencies) {
-        return MainMenuHandler.withParameter(dependencies.kioskUI(), dependencies.cartManager());
+        return MainMenuHandler.withParameter(dependencies.uiFactory(), dependencies.cartManager());
     }
 }
