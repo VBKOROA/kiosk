@@ -54,10 +54,7 @@ public class MenuSelectMenuHandler implements ActionHandler {
             kioskUI.ridiculousExceptionUI();
         }
 
-        return switch(choice) {
-            case MenuSelectChoice.GoBack() -> new MainMenuAction();
-            case MenuSelectChoice.SelectThis(MenuItem item) -> new AddItemToCartMenuAction(item);
-        };
+        return choice.getAction();
     }
 
     /**
