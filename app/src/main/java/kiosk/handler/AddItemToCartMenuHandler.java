@@ -5,7 +5,8 @@ import kiosk.model.MenuItem;
 import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.AddItemToCartChoice;
-import kiosk.ui.KioskUI;
+import kiosk.ui.UIFactory;
+import kiosk.ui.common.Choiceable;
 
 /**
  * 장바구니에 아이템을 추가하는 메뉴를 처리하는 핸들러 클래스
@@ -13,12 +14,12 @@ import kiosk.ui.KioskUI;
  * 선택에 따라 장바구니에 아이템을 추가하는 역할
  */
 public class AddItemToCartMenuHandler implements ActionHandler {
-    private final KioskUI kioskUI;
+    private final UIFactory uiFactory;
     private final MenuItem item;
     private final CartManager cartManager;
 
-    private AddItemToCartMenuHandler(KioskUI kioskUI, MenuItem item, CartManager cartManager) {
-        this.kioskUI = kioskUI;
+    private AddItemToCartMenuHandler(UIFactory uiFactory, MenuItem item, CartManager cartManager) {
+        this.uiFactory = uiFactory;
         this.item = item;
         this.cartManager = cartManager;
     }
@@ -31,7 +32,7 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     public static AddItemToCartMenuHandler withParameter(ParameterDto parameter) {
         return new AddItemToCartMenuHandler(
-                parameter.kioskUI(),
+                parameter.uiFactory(),
                 parameter.item(),
                 parameter.cartManager());
     }
@@ -43,7 +44,9 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     @Override
     public KioskAction handle() {
-        AddItemToCartChoice choice = kioskUI.addItemToCartUi(item);
+        Choiceable ui = uiFactory.addItemToCartUi(item);
+        ui.display();
+        AddItemToCartChoice choice = (AddItemToCartChoice) ui.getChoice();
 
         switch(choice) {
             case AddItemToCartChoice.Yes() -> {
@@ -63,18 +66,18 @@ public class AddItemToCartMenuHandler implements ActionHandler {
      */
     private void addToCart() {
         cartManager.addItem(item, 1);
-        kioskUI.itemAddedToCartUi(item);
+        uiFactory.itemAddedToCartUi(item).display();
     }
 
     /**
      * AddItemToCartMenuHandler의 파라미터 DTO 클래스.
      * 
-     * @param kioskUI Kiosk UI
+     * @param uiFactory UI 팩토리
      * @param item 선택한 메뉴 아이템
      * @param cartManager 장바구니 매니저
      */
     public static record ParameterDto(
-            KioskUI kioskUI,
+            UIFactory uiFactory,
             MenuItem item,
             CartManager cartManager) {
     }
