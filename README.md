@@ -64,15 +64,15 @@
 
 이 프로젝트는 역할과 책임에 따라 코드를 분리하고, 디자인 패턴을 적용하여 유연하고 확장 가능한 구조를 지향합니다.
 
-### 1. 아키텍처 개요
+### 1. 아키텍처 개요: 상태 기반 흐름 제어
 
-애플리케이션은 명확한 관심사 분리(Separation of Concerns) 원칙에 따라 여러 계층으로 구성됩니다.
+애플리케이션은 명확한 **관심사 분리(Separation of Concerns)** 원칙에 따라 여러 계층으로 구성됩니다. 핵심 아키텍처는 **상태 머신(State Machine)**과 유사하게 동작하며, UI와 비즈니스 로직이 철저하게 분리되어 있습니다.
 
--   **`service.Kiosk`**: 애플리케이션의 메인 로직을 관장하는 중앙 컨트롤러입니다. 사용자의 상태(`KioskAction`)를 기반으로 적절한 `Handler`를 호출하며, 전체 흐름을 관리하는 **상태 머신(State Machine)** 역할을 합니다.
--   **`handler` 패키지**: 사용자의 각기 다른 액션(메인 메뉴, 주문, 취소 등)을 처리하는 구체적인 로직을 캡슐화합니다. **(Strategy Pattern)**
--   **`ui` 패키지**: 사용자 인터페이스(CLI)를 담당하며, 사용자에게 정보를 표시하고 입력을 받습니다. `KioskUI`는 UI 관련 복잡성을 숨기는 **파사드(Facade)** 역할을 합니다.
--   **`manager` 패키지**: `MenuManager`, `CartManager` 등 핵심 데이터(메뉴, 장바구니)와 관련된 상태 및 비즈니스 로직을 관리합니다.
--   **`model` 패키지**: `MenuItem`, `KioskAction` 등 애플리케이션의 핵심 데이터 구조를 정의합니다.
+1.  **`service.Kiosk` (중앙 컨트롤러)**: 애플리케이션의 메인 루프를 실행합니다. 현재 상태를 나타내는 `KioskAction` 객체를 관리하며, 이 `Action`에 맞는 `Handler`를 동적으로 찾아 실행합니다.
+2.  **`handler` 패키지 (로직 계층)**: 모든 비즈니스 로직과 흐름 제어를 담당합니다. UI로부터 사용자의 선택(`Choice` 객체)을 전달받아, 이를 해석하고 다음에 수행할 `KioskAction`을 결정하여 반환합니다.
+3.  **`ui` 패키지 (표현 계층)**: 사용자 인터페이스(CLI)를 전담합니다. 오직 사용자에게 정보를 **보여주고**, 사용자의 입력을 받아 약속된 데이터 객체(`Choice`)로 만들어 **반환**하는 역할만 수행합니다. 비즈니스 로직에 대해서는 전혀 알지 못합니다.
+4.  **`model` 패키지 (데이터 계층)**: 애플리케이션의 모든 데이터 구조를 정의합니다. `KioskAction` (상태), `Choice` (선택), `MenuItem` (메뉴) 등 순수한 데이터 객체들이 위치합니다.
+5.  **`manager` 패키지 (상태 관리)**: `CartManager`, `MenuManager` 등 장바구니나 메뉴 목록처럼 여러 곳에서 공유되어야 하는 애플리케이션의 상태를 관리합니다.
 
 ### 2. 주요 디자인 패턴
 
@@ -80,11 +80,9 @@
 |---|---|---|
 | **전략 (Strategy)** | `ActionHandler` 및 구현체 | 각 사용자 액션을 독립적인 `Handler` 객체로 캡슐화하여, `Kiosk` 서비스가 동적으로 액션을 선택하고 실행할 수 있게 합니다. |
 | **상태 (State)** | `KioskAction` (Sealed Interface) | 애플리케이션의 현재 상태를 객체로 표현하고, 상태에 따라 행동이 결정되도록 하여 복잡한 흐름을 체계적으로 관리합니다. |
-| **팩토리 메서드 (Factory Method)** | `*.withParameter(...)` | 객체 생성 로직을 별도의 정적 메서드로 캡슐화하여, 생성자의 복잡성을 숨기고 일관된 방식으로 객체를 생성합니다. |
+| **DTO (Data Transfer Object)** | `...Choice` (Sealed Records) | UI 계층과 로직 계층 간에 데이터를 전송하기 위해 사용됩니다. `record`를 사용하여 불변의 순수 데이터 객체를 정의합니다. |
+| **팩토리 (Factory)** | `UIFactory` | 다양한 UI 컴포넌트들을 생성하는 책임을 한 곳에 집중시켜, 클라이언트 코드(`Handler`)와 UI 구현체의 결합도를 낮춥니다. |
 | **빌더 (Builder)** | `MenuItem.Builder` | `MenuItem`처럼 여러 속성을 가진 복잡한 객체를 단계적으로 생성하여 가독성과 유연성을 높입니다. |
-| **파사드 (Facade)** | `KioskUI` | 다양한 UI 컴포넌트들을 감싸고 단순화된 인터페이스를 제공하여, 서비스 계층과의 결합도를 낮춥니다. |
-| **DTO (Data Transfer Object)** | `*ParameterDto` (Records) | 계층 간 데이터 전송을 위해 `record`를 사용하여 불변의 데이터 객체를 정의하고, 파라미터를 체계적으로 관리합니다. |
-| **템플릿 메서드 (Template Method)** | `AbstractChoiceable` | UI 로직의 공통적인 흐름(템플릿)은 슈퍼클래스에 정의하고, 구체적인 내용만 서브클래스에서 구현하도록 하여 코드 중복을 줄입니다. |
 
 ---
 
@@ -93,23 +91,26 @@
 코드베이스는 역할과 책임에 따라 명확하게 분리되어 있어, 탐색과 확장이 용이하도록 설계되었습니다.
 
 - `kiosk/`: 애플리케이션의 루트 패키지입니다.
-  - `App.java`: 🏁 애플리케이션의 메인 진입점입니다. 의존성을 설정하고 `Kiosk` 서비스를 실행합니다.
-  - `category/`: 🏷️ 메뉴(`MenuCategory`) 및 할인(`SaleCategory`)과 같이 분류에 사용되는 열거형(Enum)을 정의합니다.
-  - `exception/`: ❗ `InvalidInputException`, `RidiculousException` 등 애플리케이션 전용 사용자 정의 예외를 정의합니다.
-  - `handler/`: 🔄 사용자의 특정 액션(상태)을 처리하는 핸들러 클래스들을 포함합니다. 각 핸들러는 `ActionHandler` 인터페이스를 구현합니다. (Strategy Pattern)
-    - `HandlerDependencies.java`: 모든 핸들러가 공유하는 의존성(UI, 매니저 등)을 묶어서 전달하기 위한 `record`입니다.
-  - `manager/`: 🧠 `MenuManager`, `CartManager` 등 핵심 데이터와 관련된 상태 및 비즈니스 로직을 관리합니다.
-  - `model/`: 📦 애플리케이션의 데이터 모델(DTO, 비즈니스 객체)을 정의합니다.
-    - `MenuItem.java`: 메뉴 항목을 나타내는 핵심 데이터 클래스입니다. (Builder Pattern 적용)
-    - `action/`: `KioskAction`을 상속받아 시스템의 모든 가능한 상태(동작)를 정의하는 `sealed interface`와 구현체 `record`들입니다. (State Pattern)
-    - `choice/`: `Choice`를 상속받아 사용자의 각 메뉴 선택 결과를 나타내는 `sealed interface`와 구현체 `record`들입니다.
-  - `service/`: ⚙️ 핵심 비즈니스 로직을 포함합니다.
-    - `Kiosk.java`: 상태 머신(State Machine) 역할을 하며, 현재 `KioskAction`에 따라 적절한 핸들러를 호출하여 전체 애플리케이션 흐름을 제어합니다.
-  - `ui/`: 🖥️ 사용자 인터페이스(CLI)와 관련된 모든 클래스를 포함합니다.
-    - `KioskUI.java`: 🎭 다양한 UI 컴포넌트들을 감싸고 단순화된 인터페이스를 제공하는 파사드(Facade)입니다.
-    - `choice/`: 사용자에게 선택지를 보여주고 입력을 받는 UI 컴포넌트들입니다. (`AbstractChoiceable`을 상속하여 공통 로직 처리)
-    - `display/`: 특정 정보를 화면에 출력하는 단순 UI 컴포넌트들입니다.
-    - `common/`: `Displayable`, `Choiceable` 등 UI에서 공통으로 사용되는 인터페이스를 정의합니다.
-  - `util/`: 🛠️ 애플리케이션 전반에서 사용되는 유틸리티 클래스들을 포함합니다.
+  - `App.java`: 🏁 **애플리케이션 진입점**. 의존성(매니저, UI 팩토리 등)을 설정하고 `Kiosk` 서비스를 실행합니다.
+  - `service/`: ⚙️ **핵심 서비스 계층**.
+    - `Kiosk.java`: **상태 머신** 역할을 하며, 현재 `KioskAction`에 따라 적절한 핸들러를 호출하여 전체 애플리케이션 흐름을 제어합니다.
+  - `handler/`: 🔄 **비즈니스 로직 및 흐름 제어 계층**.
+    - 각 `Handler`는 `ActionHandler` 인터페이스를 구현하며, 특정 `KioskAction`에 대한 처리를 담당합니다.
+    - UI로부터 `Choice` 객체를 받아, 다음에 수행할 `KioskAction`을 결정하고 반환합니다.
+    - `HandlerDependencies.java`: 모든 핸들러가 공유하는 의존성(UI 팩토리, 매니저 등)을 묶어서 전달하기 위한 `record`입니다.
+  - `ui/`: 🖥️ **사용자 인터페이스(표현) 계층**.
+    - `UIFactory.java`: UI 컴포넌트 생성을 전담하는 팩토리 클래스입니다.
+    - `choice/`: **양방향 UI**. 사용자에게 선택지를 보여주고 입력을 받아, 그 결과를 `Choice` 데이터 객체로 반환합니다. (e.g., `MainMenuUI`)
+    - `display/`: **단방향 UI**. 사용자에게 특정 정보를 화면에 보여주기만 합니다. (e.g., `CompleteOrderUI`)
+    - `common/`: `Displayable` 등 UI에서 공통으로 사용되는 인터페이스를 정의합니다.
+  - `model/`: 📦 **데이터 모델 계층**.
+    - `action/`: 시스템의 모든 가능한 **상태(State)**를 정의하는 `KioskAction` `sealed interface`와 구현체 `record`들이 위치합니다.
+    - `choice/`: UI와 Handler 간에 주고받는 **데이터(DTO)**인 `Choice` `sealed interface`와 구현체 `record`들이 위치합니다.
+    - `MenuItem.java`: 메뉴 항목을 나타내는 핵심 데이터 `record`입니다. (Builder Pattern 적용)
+  - `manager/`: 🧠 **상태 관리 계층**.
+    - `MenuManager`, `CartManager` 등 애플리케이션 전역에서 사용되는 상태를 관리합니다.
+  - `category/`: 🏷️ 메뉴(`MenuCategory`) 및 할인(`SaleCategory`)과 같이 분류에 사용되는 `enum`을 정의합니다.
+  - `exception/`: ❗ `InvalidInputException`, `RidiculousException` 등 사용자 정의 예외를 정의합니다.
+  - `util/`: 🛠️ **유틸리티 계층**.
     - `ScannerProvider.java`, `IntScanner.java`: 사용자 입력을 안전하고 편리하게 받기 위한 클래스입니다.
     - `validator/`: `XToYFilter` 등 입력값의 유효성을 검증하는 필터 클래스들입니다.
