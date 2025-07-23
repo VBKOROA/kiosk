@@ -47,7 +47,7 @@ public class ProcessingOrderHandler implements ActionHandler {
         BigDecimal totalPrice = cartManager.getTotalPrice();
         BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
         cartManager.clearCart();
-        uiFactory.completeOrderUi(finalPrice);
+        uiFactory.completeOrderUi(finalPrice).display();
         return new MainMenuAction();
     }
 
