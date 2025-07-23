@@ -27,3 +27,6 @@ Thumbs.db
 *.log
 
 app/bin
+app/build
+
+personal_todo.md
