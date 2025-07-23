@@ -41,9 +41,6 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
         CartCheckBeforeOrderChoice choice = kioskUI.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(),
                 cartManager.getTotalPrice());
 
-        return switch (choice) {
-            case CartCheckBeforeOrderChoice.Order() -> new DiscountMenuAction();
-            case CartCheckBeforeOrderChoice.GoBack() -> new MainMenuAction();
-        };
+        return choice.getAction();
     }
 }
