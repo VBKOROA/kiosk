@@ -11,6 +11,10 @@ import kiosk.model.action.ProgramExitAction;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 메인 메뉴에서 사용자의 입력을 처리하는 핸들러 클래스
+ * KioskUI와 CartManager를 이용하여 메인 메뉴의 동작을 제어
+ */
 public class MainMenuHandler implements ActionHandler {
     private final KioskUI kioskUI;
     private final CartManager cartManager;

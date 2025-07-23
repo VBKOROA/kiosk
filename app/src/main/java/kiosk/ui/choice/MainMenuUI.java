@@ -9,6 +9,11 @@ import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
 
+/**
+ * 메인 메뉴 UI를 담당하는 클래스
+ * 사용 가능한 메뉴 카테고리와 주문 가능 여부를 기반으로
+ * 메인 메뉴를 표시하고 사용자의 선택을 처리
+ */
 public class MainMenuUI extends AbstractChoiceable {
     private final MenuCategory[] categories;
     private final boolean canOrder;

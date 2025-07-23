@@ -3,6 +3,9 @@ package kiosk.ui.display;
 import kiosk.model.MenuItem;
 import kiosk.ui.common.Displayable;
 
+/**
+ * 장바구니에 아이템이 추가되었음을 사용자에게 알리는 UI 클래스
+ */
 public class ItemAddedToCartUI implements Displayable {
     private final MenuItem item;
 

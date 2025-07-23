@@ -10,6 +10,10 @@ import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
 
+/**
+ * 장바구니에서 아이템을 취소하는 UI를 제공하는 클래스
+ * 사용자가 취소할 아이템을 선택하거나 전체 취소, 돌아가기를 선택할 수 있음
+ */
 public class CancelItemsUI extends AbstractChoiceable {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
 

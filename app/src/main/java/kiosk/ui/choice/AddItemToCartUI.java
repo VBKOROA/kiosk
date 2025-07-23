@@ -5,6 +5,10 @@ import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.OneOrTwoFilter;
 
+/**
+ * 사용자가 메뉴 아이템을 장바구니에 추가할지 선택할 수 있는 UI 클래스
+ * 선택한 메뉴 아이템 정보를 표시하고, 장바구니에 추가 여부를 입력받음
+ */
 public class AddItemToCartUI extends AbstractChoiceable {
     private final MenuItem item;
 

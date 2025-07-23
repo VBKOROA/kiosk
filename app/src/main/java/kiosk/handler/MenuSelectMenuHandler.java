@@ -10,6 +10,10 @@ import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 메뉴 선택 메뉴를 처리하는 핸들러 클래스
+ * 사용자가 특정 카테고리의 메뉴를 선택하고 장바구니에 추가할 수 있도록 함
+ */
 public class MenuSelectMenuHandler implements ActionHandler {
     private final MenuManager menuManager;
     private final KioskUI kioskUI;

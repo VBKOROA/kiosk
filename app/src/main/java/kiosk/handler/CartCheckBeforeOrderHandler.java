@@ -7,6 +7,10 @@ import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 주문 전 장바구니를 확인하는 핸들러 클래스
+ * 사용자의 장바구니 상태를 확인하고, 주문 또는 이전 메뉴로 이동하는 동작을 처리
+ */
 public class CartCheckBeforeOrderHandler implements ActionHandler {
     private final KioskUI kioskUI;
     private final CartManager cartManager;

@@ -5,6 +5,12 @@ import java.util.Random;
 import kiosk.exception.RidiculousException;
 import kiosk.ui.common.Displayable;
 
+/**
+ * 예측 불가능하고 불규칙한 방식으로 예외 메시지를 출력하는 UI 클래스
+ * 
+ * 콘솔에 다양한 ANSI 효과와 랜덤한 지연, 글리치, 깜빡임 등을 적용하여
+ * 혼란스러운 예외 메시지 화면을 연출
+ */
 public class RidiculousExceptionUI implements Displayable {
     private final Random RNG = new Random();
 

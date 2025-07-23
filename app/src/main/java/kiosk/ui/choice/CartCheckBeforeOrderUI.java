@@ -10,6 +10,9 @@ import kiosk.ui.display.CartItemsUI;
 import kiosk.util.IntScanner;
 import kiosk.util.validator.OneOrTwoFilter;
 
+/**
+ * 주문 전 장바구니 내역을 확인하고 주문 또는 이전 단계로 돌아갈 수 있는 UI 클래스
+ */
 public class CartCheckBeforeOrderUI extends AbstractChoiceable {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
     private final BigDecimal totalPrice;

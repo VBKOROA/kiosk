@@ -7,6 +7,11 @@ import kiosk.model.action.ProcessingOrderAction;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 할인 메뉴를 처리하는 핸들러 클래스
+ * 
+ * 할인 카테고리 메뉴를 표시하고, 사용자의 선택에 따라 적절한 액션을 반환함
+ */
 public class DiscountMenuHandler implements ActionHandler {
     private final KioskUI kioskUI;
 

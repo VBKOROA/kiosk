@@ -6,6 +6,10 @@ import java.util.Map;
 import kiosk.model.MenuItem;
 import kiosk.ui.common.Displayable;
 
+/**
+ * 장바구니 아이템 목록을 출력하는 UI 클래스
+ * 사용자가 장바구니에 담긴 아이템들을 확인할 수 있도록 목록을 표시
+ */
 public class CartItemsUI implements Displayable {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
 

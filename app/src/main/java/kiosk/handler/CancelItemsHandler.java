@@ -8,6 +8,10 @@ import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CancelItemsChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 장바구니에 담긴 아이템을 취소하는 기능을 담당하는 핸들러 클래스
+ * 사용자의 선택에 따라 장바구니 아이템 전체 또는 일부를 취소하거나, 이전 메뉴로 돌아갈 수 있음
+ */
 public class CancelItemsHandler implements ActionHandler {
     private final CartManager cartManager;
     private final KioskUI kioskUI;

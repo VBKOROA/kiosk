@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import kiosk.ui.common.Displayable;
 import kiosk.util.ScannerProvider;
 
+/**
+ * 주문 완료 화면을 담당하는 UI 클래스
+ * 총 결제 금액을 출력하고, 주문 완료 메시지를 표시
+ */
 public class CompleteOrderUI implements Displayable {
     private final BigDecimal totalPrice;
 

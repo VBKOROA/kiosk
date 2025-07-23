@@ -9,6 +9,10 @@ import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
 
+/**
+ * 메뉴 선택 UI를 담당하는 클래스
+ * 주어진 메뉴 아이템 목록을 표시하고, 사용자의 선택을 받아 처리
+ */
 public class MenuSelectUI extends AbstractChoiceable {
     private final List<MenuItem> items;
 

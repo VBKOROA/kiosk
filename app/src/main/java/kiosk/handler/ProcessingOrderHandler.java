@@ -8,6 +8,12 @@ import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
 import kiosk.ui.KioskUI;
 
+/**
+ * 주문 처리 핸들러 클래스
+ * 
+ * 이 클래스는 장바구니의 총 금액에 할인율을 적용하여 최종 결제 금액을 계산하고,
+ * 주문 완료 UI를 표시한 후 메인 메뉴로 이동하는 역할
+ */
 public class ProcessingOrderHandler implements ActionHandler {
     private final SaleCategory saleCategory;
     private final CartManager cartManager;

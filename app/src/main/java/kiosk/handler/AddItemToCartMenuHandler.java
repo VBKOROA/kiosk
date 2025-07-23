@@ -7,6 +7,11 @@ import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.AddItemToCartChoice;
 import kiosk.ui.KioskUI;
 
+/**
+ * 장바구니에 아이템을 추가하는 메뉴를 처리하는 핸들러 클래스
+ * 사용자가 메뉴 아이템을 장바구니에 추가할지 여부를 선택할 수 있도록 UI를 표시하고,
+ * 선택에 따라 장바구니에 아이템을 추가하는 역할
+ */
 public class AddItemToCartMenuHandler implements ActionHandler {
     private final KioskUI kioskUI;
     private final MenuItem item;

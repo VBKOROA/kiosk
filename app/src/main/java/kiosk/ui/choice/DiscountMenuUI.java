@@ -6,6 +6,10 @@ import kiosk.util.IntScanner;
 import kiosk.util.validator.ValidationFilter;
 import kiosk.util.validator.XToYFilter;
 
+/**
+ * 할인 메뉴 UI를 담당하는 클래스
+ * 사용자가 할인 카테고리를 선택할 수 있도록 화면을 표시하고 선택을 처리
+ */
 public class DiscountMenuUI extends AbstractChoiceable {
     private final SaleCategory[] saleCategories;
 
