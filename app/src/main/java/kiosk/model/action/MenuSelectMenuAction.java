@@ -13,7 +13,7 @@ public final record MenuSelectMenuAction(MenuCategory category) implements Kiosk
     @Override
     public ActionHandler handler(HandlerDependencies dependencies) {
         var params = new MenuSelectMenuHandler.ParameterDto(dependencies.menuManager(),
-                dependencies.kioskUI(),
+                dependencies.uiFactory(),
                 category);
         return MenuSelectMenuHandler.withParameter(params);
     }
