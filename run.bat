@@ -1,1 +1,5 @@
-.\gradlew run --console=plain
+@echo off
+echo build
+CALL .\gradlew clean build
+echo run
+java -jar app/build/libs/app.jar
