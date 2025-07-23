@@ -12,7 +12,6 @@ import kiosk.manager.CartManager;
 import kiosk.manager.MenuManager;
 import kiosk.model.MenuItem;
 import kiosk.service.Kiosk;
-import kiosk.ui.KioskUI;
 import kiosk.ui.UIFactory;
 
 public class App {
