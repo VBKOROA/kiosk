@@ -3,9 +3,7 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
-import kiosk.model.action.AddItemToCartMenuAction;
 import kiosk.model.action.KioskAction;
-import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.UIFactory;
 
@@ -54,11 +52,9 @@ public class MenuSelectMenuHandler implements ActionHandler {
             uiFactory.ridiculousExceptionUI().display();
         }
 
-        return switch (choice) {
-            case MenuSelectChoice.GoBack __ -> new MainMenuAction();
-            case MenuSelectChoice.SelectThis s -> new AddItemToCartMenuAction(s.item());
-            case null -> throw new IllegalStateException("MenuSelectChoice cannot be null here.");
-        };
+        // choice가 null일 경우 RidiculousExceptionUI에 의해 프로그램이 종료되므로
+        // NullPointerException이 발생하지 않음
+        return choice.process(this);
     }
 
     /**
