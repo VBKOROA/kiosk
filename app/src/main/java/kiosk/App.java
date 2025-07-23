@@ -13,6 +13,7 @@ import kiosk.manager.MenuManager;
 import kiosk.model.MenuItem;
 import kiosk.service.Kiosk;
 import kiosk.ui.KioskUI;
+import kiosk.ui.UIFactory;
 
 public class App {
     public static void main(String[] args) {
@@ -87,7 +88,8 @@ public class App {
         MenuManager menuManager = new MenuManager(menuItems);
         KioskUI kioskUI = new KioskUI();
         CartManager cartManager = new CartManager();
-        var dependencies = new HandlerDependencies(kioskUI, cartManager, menuManager);
+        UIFactory uiFactory = new UIFactory();
+        var dependencies = new HandlerDependencies(uiFactory, cartManager, menuManager);
         Kiosk kiosk = new Kiosk(dependencies);
         kiosk.run();
     }
