@@ -6,7 +6,7 @@ import kiosk.category.SaleCategory;
 import kiosk.manager.CartManager;
 import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
-import kiosk.ui.KioskUI;
+import kiosk.ui.UIFactory;
 
 /**
  * 주문 처리 핸들러 클래스
@@ -17,24 +17,24 @@ import kiosk.ui.KioskUI;
 public class ProcessingOrderHandler implements ActionHandler {
     private final SaleCategory saleCategory;
     private final CartManager cartManager;
-    private final KioskUI kioskUI;
+    private final UIFactory uiFactory;
 
-    private ProcessingOrderHandler(SaleCategory saleCategory, CartManager cartManager, KioskUI kioskUI) {
+    private ProcessingOrderHandler(SaleCategory saleCategory, CartManager cartManager, UIFactory uiFactory) {
         this.saleCategory = saleCategory;
         this.cartManager = cartManager;
-        this.kioskUI = kioskUI;
+        this.uiFactory = uiFactory;
     }
 
     /**
-     * ProcessingOrderHandler의 인스턴스를 생성하는 팩토리 메서드.
-     * @param parameter
-     * @return ProcessingOrderHandler 인스턴스
+     * {@link ProcessingOrderHandler}의 인스턴스를 생성하는 팩토리 메서드.
+     * @param parameter {@link ParameterDto} 인스턴스
+     * @return {@link ProcessingOrderHandler} 인스턴스
      */
     public static ProcessingOrderHandler withParameter(ParameterDto parameter) {
         return new ProcessingOrderHandler(
                 parameter.saleCategory(),
                 parameter.cartManager(),
-                parameter.kioskUI());
+                parameter.uiFactory());
     }
 
     /**
@@ -47,20 +47,20 @@ public class ProcessingOrderHandler implements ActionHandler {
         BigDecimal totalPrice = cartManager.getTotalPrice();
         BigDecimal finalPrice = totalPrice.subtract(totalPrice.multiply(saleCategory.getDiscountRate()));
         cartManager.clearCart();
-        kioskUI.completeOrderUi(finalPrice);
+        uiFactory.completeOrderUi(finalPrice);
         return new MainMenuAction();
     }
 
     /**
-     * ProcessingOrderHandler의 파라미터 DTO 레코드
+     * {@link ProcessingOrderHandler}의 파라미터 DTO 레코드
      * 
-     * @param saleCategory 할인 카테고리
-     * @param cartManager  장바구니 매니저
-     * @param kioskUI      키오스크 UI
+     * @param saleCategory {@link SaleCategory} 할인 카테고리
+     * @param cartManager  {@link CartManager} 장바구니 매니저
+     * @param uiFactory    {@link UIFactory} UI 팩토리
      */
     public static record ParameterDto(
             SaleCategory saleCategory,
             CartManager cartManager,
-            KioskUI kioskUI) {
+            UIFactory uiFactory) {
     }
 }

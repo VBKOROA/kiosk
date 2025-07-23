@@ -14,7 +14,7 @@ public final record ProcessingOrderAction(SaleCategory category) implements Kios
     public ActionHandler handler(HandlerDependencies dependencies) {
         var params = new ProcessingOrderHandler.ParameterDto(category,
                 dependencies.cartManager(),
-                dependencies.kioskUI());
+                dependencies.uiFactory());
         return ProcessingOrderHandler.withParameter(params);
     }
 }
