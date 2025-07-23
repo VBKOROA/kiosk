@@ -13,7 +13,7 @@ public final record AddItemToCartMenuAction(MenuItem item) implements KioskActio
     @Override
     public ActionHandler handler(HandlerDependencies dependencies) {
         var params = new AddItemToCartMenuHandler.ParameterDto(
-                dependencies.kioskUI(),
+                dependencies.uiFactory(),
                 item,
                 dependencies.cartManager());
         return AddItemToCartMenuHandler.withParameter(params);

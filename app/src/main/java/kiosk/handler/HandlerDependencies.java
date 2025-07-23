@@ -2,10 +2,10 @@ package kiosk.handler;
 
 import kiosk.manager.CartManager;
 import kiosk.manager.MenuManager;
-import kiosk.ui.KioskUI;
+import kiosk.ui.UIFactory;
 
 public record HandlerDependencies(
-        KioskUI kioskUI,
+        UIFactory uiFactory,
         CartManager cartManager,
         MenuManager menuManager) {
 }
