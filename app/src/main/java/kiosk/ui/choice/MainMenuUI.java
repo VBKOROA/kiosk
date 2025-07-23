@@ -14,7 +14,7 @@ import kiosk.util.validator.XToYFilter;
  * 사용 가능한 메뉴 카테고리와 주문 가능 여부를 기반으로
  * 메인 메뉴를 표시하고 사용자의 선택을 처리
  */
-public class MainMenuUI extends AbstractChoiceable {
+public class MainMenuUI {
     private final MenuCategory[] categories;
     private final boolean canOrder;
 
@@ -35,10 +35,9 @@ public class MainMenuUI extends AbstractChoiceable {
     }
 
     /**
-     * 메인 메뉴를 표시하고 사용자의 선택을 처리한다.
+     * 메인 메뉴를 표시하고 사용자의 선택을 반환한다.
      */
-    @Override
-    public void display() throws RidiculousException {
+    public MainMenuChoice prompt() throws RidiculousException {
         final int GO_BACK = 0;
         final int menuCategoriesStartIndex = 1;
         final int orderIndex = categories.length + 1;
@@ -60,17 +59,17 @@ public class MainMenuUI extends AbstractChoiceable {
         System.out.println("0. 종료");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
-        boolean isSelectedCategory = index <= categories.length;
+        boolean isSelectedCategory = index >= menuCategoriesStartIndex && index <= categories.length;
         if (index == GO_BACK) {
-            choice = new MainMenuChoice.Exit();
+            return new MainMenuChoice.Exit();
         } else if (isSelectedCategory) {
-            choice = new MainMenuChoice.GoToCategory(categories[index - menuCategoriesStartIndex]);
+            return new MainMenuChoice.GoToCategory(categories[index - menuCategoriesStartIndex]);
         } else if (index == orderIndex) {
             // Order를 선택했다면
-            choice = new MainMenuChoice.Order();
+            return new MainMenuChoice.Order();
         } else if (index == cancelIndex) {
             // Cancel을 선택했다면
-            choice = new MainMenuChoice.CancelCartItems();
+            return new MainMenuChoice.CancelCartItems();
         } else {
             // 비정상적인 상황임
             throw new RidiculousException();

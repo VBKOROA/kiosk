@@ -14,7 +14,7 @@ import kiosk.util.validator.XToYFilter;
  * 장바구니에서 아이템을 취소하는 UI를 제공하는 클래스
  * 사용자가 취소할 아이템을 선택하거나 전체 취소, 돌아가기를 선택할 수 있음
  */
-public class CancelItemsUI extends AbstractChoiceable {
+public class CancelItemsUI {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
 
     private CancelItemsUI(List<Map.Entry<MenuItem, Integer>> cartItems) {
@@ -32,10 +32,9 @@ public class CancelItemsUI extends AbstractChoiceable {
     }
 
     /**
-     * 취소할 아이템 목록을 표시하고 사용자의 선택을 처리한다.
+     * 취소할 아이템 목록을 표시하고 사용자의 선택을 반환한다.
      */
-    @Override
-    public void display() {
+    public CancelItemsChoice prompt() {
         final int GO_BACK = 0;
         final int cartItemsStartIndex = 1;
         final int allCancelIndex = cartItems.size() + 1;
@@ -52,11 +51,11 @@ public class CancelItemsUI extends AbstractChoiceable {
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
         if (index == GO_BACK) {
-            choice = new CancelItemsChoice.GoBack();
+            return new CancelItemsChoice.GoBack();
         } else if (index == allCancelIndex) {
-            choice = new CancelItemsChoice.CancelAll();
+            return new CancelItemsChoice.CancelAll();
         } else {
-            choice = new CancelItemsChoice.CancelThis(cartItems.get(index - cartItemsStartIndex).getKey());
+            return new CancelItemsChoice.CancelThis(cartItems.get(index - cartItemsStartIndex).getKey());
         }
     }
 }

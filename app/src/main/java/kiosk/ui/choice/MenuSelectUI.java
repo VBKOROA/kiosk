@@ -13,7 +13,7 @@ import kiosk.util.validator.XToYFilter;
  * 메뉴 선택 UI를 담당하는 클래스
  * 주어진 메뉴 아이템 목록을 표시하고, 사용자의 선택을 받아 처리
  */
-public class MenuSelectUI extends AbstractChoiceable {
+public class MenuSelectUI {
     private final List<MenuItem> items;
 
     private MenuSelectUI(List<MenuItem> items) {
@@ -31,10 +31,9 @@ public class MenuSelectUI extends AbstractChoiceable {
     }
 
     /**
-     * 가능한 음식 메뉴들을 표시하고 사용자의 선택을 입력 받음.
+     * 가능한 음식 메뉴들을 표시하고 사용자의 선택을 반환한다.
      */
-    @Override
-    public void display() throws RidiculousException {
+    public MenuSelectChoice prompt() throws RidiculousException {
         final int GO_BACK = 0;
         final int menuItemStartIndex = 1;
         final int lastIndex = items.size();
@@ -50,9 +49,9 @@ public class MenuSelectUI extends AbstractChoiceable {
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
         if (index == GO_BACK) {
-            choice = new MenuSelectChoice.GoBack();
+            return new MenuSelectChoice.GoBack();
         } else if (index >= menuItemStartIndex && index <= lastIndex) {
-            choice = new MenuSelectChoice.SelectThis(items.get(index - menuItemStartIndex));
+            return new MenuSelectChoice.SelectThis(items.get(index - menuItemStartIndex));
         } else {
             // 비정상적인 입력 (filter에서 처리 되지 않은 비정상적인 상황)
             throw new RidiculousException();

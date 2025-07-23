@@ -9,7 +9,7 @@ import kiosk.util.validator.OneOrTwoFilter;
  * 사용자가 메뉴 아이템을 장바구니에 추가할지 선택할 수 있는 UI 클래스
  * 선택한 메뉴 아이템 정보를 표시하고, 장바구니에 추가 여부를 입력받음
  */
-public class AddItemToCartUI extends AbstractChoiceable {
+public class AddItemToCartUI {
     private final MenuItem item;
 
     private AddItemToCartUI(MenuItem item) {
@@ -27,10 +27,9 @@ public class AddItemToCartUI extends AbstractChoiceable {
     }
 
     /**
-     * 선택한 메뉴를 장바구니에 추가할지 확인하는 UI를 표시하고 사용자의 선택을 처리한다.
+     * 선택한 메뉴를 장바구니에 추가할지 확인하는 UI를 표시하고 사용자의 선택을 반환한다.
      */
-    @Override
-    public void display() {
+    public AddItemToCartChoice prompt() {
         final int YES = 1;
 
         System.out.println();
@@ -38,9 +37,9 @@ public class AddItemToCartUI extends AbstractChoiceable {
         System.out.println("장바구니에 추가하시겠습니까? (1: 예, 2: 아니오)");
         int index = IntScanner.withFilter(new OneOrTwoFilter());
         if (index == YES) {
-            choice = new AddItemToCartChoice.Yes();
+            return new AddItemToCartChoice.Yes();
         } else {
-            choice = new AddItemToCartChoice.No();
+            return new AddItemToCartChoice.No();
         }
     }
 }

@@ -13,7 +13,7 @@ import kiosk.util.validator.OneOrTwoFilter;
 /**
  * 주문 전 장바구니 내역을 확인하고 주문 또는 이전 단계로 돌아갈 수 있는 UI 클래스
  */
-public class CartCheckBeforeOrderUI extends AbstractChoiceable {
+public class CartCheckBeforeOrderUI {
     private final List<Map.Entry<MenuItem, Integer>> cartItems;
     private final BigDecimal totalPrice;
 
@@ -34,10 +34,9 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
     }
 
     /**
-     * 주문 전 장바구니 내역을 확인하고 사용자의 선택을 처리한다.
+     * 주문 전 장바구니 내역을 확인하고 사용자의 선택을 반환한다.
      */
-    @Override
-    public void display() {
+    public CartCheckBeforeOrderChoice prompt() {
         final int ORDER = 1;
         final int GO_BACK = 2;
 
@@ -56,12 +55,10 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         int index = IntScanner.withFilter(new OneOrTwoFilter());
         switch (index) {
             case ORDER:
-                choice = new CartCheckBeforeOrderChoice.Order();
-                break;
+                return new CartCheckBeforeOrderChoice.Order();
             case GO_BACK:
             default:
-                choice = new CartCheckBeforeOrderChoice.GoBack();
-                break;
+                return new CartCheckBeforeOrderChoice.GoBack();
         }
     }
 }
