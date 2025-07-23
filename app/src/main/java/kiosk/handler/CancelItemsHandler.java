@@ -42,43 +42,19 @@ public class CancelItemsHandler implements ActionHandler {
         var cartItems = cartManager.getCartItemAsList();
         var ui = uiFactory.cancelItemsUi(cartItems);
         CancelItemsChoice choice = ui.prompt();
-        return processCancelChoice(choice);
+        return choice.process(this);
     }
 
-    /**
-     * CancelItemsChoice에 따라 적절한 KioskAction을 반환함
-     *
-     * @param choice {@link CancelItemsChoice} 사용자가 선택한 취소 항목 옵션
-     * @return 선택에 따라 수행할 {@link KioskAction} 객체
-     */
-    private KioskAction processCancelChoice(CancelItemsChoice choice) {
-        return switch (choice) {
-            case CancelItemsChoice.CancelAll __ 
-                -> clearCart();
-            case CancelItemsChoice.GoBack __ 
-                -> new MainMenuAction();
-            case CancelItemsChoice.CancelThis cancelThis 
-                -> removeItemFromCart(cancelThis.item());
-        };
-    }
-
-    /**
-     * 장바구니를 비우고 메인 메뉴로 돌아간다.
-     * 
-     * @return {@link KioskAction} 객체
-     */
-    private KioskAction clearCart() {
+    public KioskAction processCancelAll() {
         cartManager.clearCart();
         return new MainMenuAction();
     }
 
-    /**
-     * 장바구니에서 아이템을 제거하고 메인 메뉴 혹은 취소 메뉴로 돌아간다.
-     * 
-     * @param item {@link MenuItem} 제거할 메뉴 아이템
-     * @return {@link KioskAction} 객체
-     */
-    private KioskAction removeItemFromCart(MenuItem item) {
+    public KioskAction processGoBack() {
+        return new MainMenuAction();
+    }
+
+    public KioskAction processCancelThis(MenuItem item) {
         cartManager.removeItem(item);
         if (cartManager.isEmpty()) {
             return new MainMenuAction();
