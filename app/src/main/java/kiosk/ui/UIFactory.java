@@ -1,0 +1,76 @@
+package kiosk.ui;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+
+import kiosk.category.MenuCategory;
+import kiosk.category.SaleCategory;
+import kiosk.exception.RidiculousException;
+import kiosk.model.MenuItem;
+import kiosk.model.choice.AddItemToCartChoice;
+import kiosk.model.choice.CancelItemsChoice;
+import kiosk.model.choice.CartCheckBeforeOrderChoice;
+import kiosk.model.choice.Choice;
+import kiosk.model.choice.DiscountMenuChoice;
+import kiosk.model.choice.MainMenuChoice;
+import kiosk.model.choice.MenuSelectChoice;
+import kiosk.ui.choice.AddItemToCartUI;
+import kiosk.ui.choice.CancelItemsUI;
+import kiosk.ui.choice.CartCheckBeforeOrderUI;
+import kiosk.ui.choice.DiscountMenuUI;
+import kiosk.ui.choice.MainMenuUI;
+import kiosk.ui.choice.MenuSelectUI;
+import kiosk.ui.common.Choiceable;
+import kiosk.ui.common.Displayable;
+import kiosk.ui.display.CompleteOrderUI;
+import kiosk.ui.display.ExitUI;
+import kiosk.ui.display.ItemAddedToCartUI;
+import kiosk.ui.display.RidiculousExceptionUI;
+
+/**
+ * 다양한 UI 화면 생성을 담당하는 팩토리 클래스
+ * 각종 UI 컴포넌트의 인스턴스를 생성하여 반환
+ */
+public class UIFactory {
+    public void exitUi() {
+        new ExitUI().display();
+    }
+
+    public Choiceable mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {
+        return MainMenuUI.withParameter(categories, canOrder);
+    }
+
+    public Choiceable menuSelectUi(List<MenuItem> items) throws RidiculousException {
+        return MenuSelectUI.withParameter(items);
+    }
+
+    public Choiceable addItemToCartUi(MenuItem item) {
+        return AddItemToCartUI.withParameter(item);
+    }
+
+    public Displayable itemAddedToCartUi(MenuItem item) {
+        return ItemAddedToCartUI.withParameter(item);
+    }
+
+    public Choiceable cartCheckBeforeOrderUi(List<Map.Entry<MenuItem, Integer>> cartItems,
+            BigDecimal totalPrice) {
+        return CartCheckBeforeOrderUI.withParameter(cartItems, totalPrice);
+    }
+
+    public Choiceable discountMenuUi(SaleCategory[] saleCategories) {
+        return DiscountMenuUI.withParameter(saleCategories);
+    }
+
+    public Displayable completeOrderUi(BigDecimal totalPrice) {
+        return CompleteOrderUI.withParameter(totalPrice);
+    }
+
+    public Choiceable cancelItemsUi(List<Map.Entry<MenuItem, Integer>> cartItems) {
+        return CancelItemsUI.withParameter(cartItems);
+    }
+
+    public Displayable ridiculousExceptionUI() {
+        return new RidiculousExceptionUI();
+    }
+}
