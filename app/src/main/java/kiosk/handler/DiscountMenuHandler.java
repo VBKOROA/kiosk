@@ -39,10 +39,6 @@ public class DiscountMenuHandler implements ActionHandler {
         var saleCategories = SaleCategory.values();
         DiscountMenuChoice choice = kioskUI.discountMenuUi(saleCategories);
 
-        return switch(choice) {
-            case DiscountMenuChoice.GoBack() -> new MainMenuAction();
-            case DiscountMenuChoice.DiscountWithThis(SaleCategory category) 
-                -> new ProcessingOrderAction(category);
-        };
+        return choice.getAction();
     }
 }
