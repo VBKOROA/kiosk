@@ -31,11 +31,13 @@ public class AddItemToCartUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int YES = 1;
+
         System.out.println();
         System.out.println("선택한 메뉴: " + item);
         System.out.println("장바구니에 추가하시겠습니까? (1: 예, 2: 아니오)");
         int index = IntScanner.withFilter(new OneOrTwoFilter());
-        if (index == 1) {
+        if (index == YES) {
             choice = new AddItemToCartChoice.Yes();
         } else {
             choice = new AddItemToCartChoice.No();

@@ -32,6 +32,7 @@ public class DiscountMenuUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int GO_BACK = 0;
         final int saleCategoriesStartIndex = 1;
         final int lastIndex = saleCategories.length;
 
@@ -45,7 +46,7 @@ public class DiscountMenuUI extends AbstractChoiceable {
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
 
-        if (index == 0) {
+        if (index == GO_BACK) {
             choice = new DiscountMenuChoice.GoBack();
         } else {
             choice = new DiscountMenuChoice.DiscountWithThis(saleCategories[index - saleCategoriesStartIndex]);

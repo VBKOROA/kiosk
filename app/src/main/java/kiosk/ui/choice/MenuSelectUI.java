@@ -35,6 +35,7 @@ public class MenuSelectUI extends AbstractChoiceable {
      */
     @Override
     public void display() throws RidiculousException {
+        final int GO_BACK = 0;
         final int menuItemStartIndex = 1;
         final int lastIndex = items.size();
 
@@ -48,7 +49,7 @@ public class MenuSelectUI extends AbstractChoiceable {
         System.out.println("0. 돌아가기");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
-        if (index == 0) {
+        if (index == GO_BACK) {
             choice = new MenuSelectChoice.GoBack();
         } else if (index >= menuItemStartIndex && index <= lastIndex) {
             choice = new MenuSelectChoice.SelectThis(items.get(index - menuItemStartIndex));

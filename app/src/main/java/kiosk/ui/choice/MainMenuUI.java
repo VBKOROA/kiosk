@@ -39,6 +39,7 @@ public class MainMenuUI extends AbstractChoiceable {
      */
     @Override
     public void display() throws RidiculousException {
+        final int GO_BACK = 0;
         final int menuCategoriesStartIndex = 1;
         final int orderIndex = categories.length + 1;
         final int cancelIndex = categories.length + 2;
@@ -59,9 +60,10 @@ public class MainMenuUI extends AbstractChoiceable {
         System.out.println("0. 종료");
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
-        if (index == 0) {
+        boolean isSelectedCategory = index <= categories.length;
+        if (index == GO_BACK) {
             choice = new MainMenuChoice.Exit();
-        } else if (index <= categories.length) {
+        } else if (isSelectedCategory) {
             choice = new MainMenuChoice.GoToCategory(categories[index - menuCategoriesStartIndex]);
         } else if (index == orderIndex) {
             // Order를 선택했다면

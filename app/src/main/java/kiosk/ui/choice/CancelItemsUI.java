@@ -36,6 +36,7 @@ public class CancelItemsUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int GO_BACK = 0;
         final int cartItemsStartIndex = 1;
         final int allCancelIndex = cartItems.size() + 1;
         final int lastIndex = allCancelIndex;
@@ -50,7 +51,7 @@ public class CancelItemsUI extends AbstractChoiceable {
         System.out.println();
         ValidationFilter filter = XToYFilter.range(0, lastIndex);
         int index = IntScanner.withFilter(filter);
-        if (index == 0) {
+        if (index == GO_BACK) {
             choice = new CancelItemsChoice.GoBack();
         } else if (index == allCancelIndex) {
             choice = new CancelItemsChoice.CancelAll();

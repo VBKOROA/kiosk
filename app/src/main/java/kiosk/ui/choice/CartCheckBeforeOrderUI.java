@@ -38,6 +38,9 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
      */
     @Override
     public void display() {
+        final int ORDER = 1;
+        final int GO_BACK = 2;
+
         System.out.println();
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println();
@@ -52,10 +55,10 @@ public class CartCheckBeforeOrderUI extends AbstractChoiceable {
         System.out.println("1. 주문     2. 돌아가기");
         int index = IntScanner.withFilter(new OneOrTwoFilter());
         switch (index) {
-            case 1:
+            case ORDER:
                 choice = new CartCheckBeforeOrderChoice.Order();
                 break;
-            case 2:
+            case GO_BACK:
             default:
                 choice = new CartCheckBeforeOrderChoice.GoBack();
                 break;
