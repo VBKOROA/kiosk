@@ -37,6 +37,7 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var ui = uiFactory.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
+        ui.display();
         CartCheckBeforeOrderChoice choice = (CartCheckBeforeOrderChoice) ui.getChoice();
         return choice.getAction();
     }
