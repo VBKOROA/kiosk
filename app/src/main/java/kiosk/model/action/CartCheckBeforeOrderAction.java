@@ -11,6 +11,6 @@ import kiosk.handler.HandlerDependencies;
 public final record CartCheckBeforeOrderAction() implements KioskAction {
     @Override
     public ActionHandler handler(HandlerDependencies dependencies) {
-        return CartCheckBeforeOrderHandler.withParameter(dependencies.kioskUI(), dependencies.cartManager());
+        return CartCheckBeforeOrderHandler.withParameter(dependencies.uiFactory(), dependencies.cartManager());
     }
 }
