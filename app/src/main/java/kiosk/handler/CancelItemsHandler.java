@@ -6,7 +6,7 @@ import kiosk.model.action.CancelItemsAction;
 import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CancelItemsChoice;
-import kiosk.ui.KioskUI;
+import kiosk.ui.UIFactory;
 
 /**
  * 장바구니에 담긴 아이템을 취소하는 기능을 담당하는 핸들러 클래스
@@ -14,34 +14,45 @@ import kiosk.ui.KioskUI;
  */
 public class CancelItemsHandler implements ActionHandler {
     private final CartManager cartManager;
-    private final KioskUI kioskUI;
+    private final UIFactory uiFactory;
 
-    private CancelItemsHandler(CartManager cartManager, KioskUI kioskUI) {
+    private CancelItemsHandler(CartManager cartManager, UIFactory uiFactory) {
         this.cartManager = cartManager;
-        this.kioskUI = kioskUI;
+        this.uiFactory = uiFactory;
     }
 
     /**
      * CancelItemsHandler의 인스턴스를 생성하는 팩토리 메서드.
      * 
-     * @param cartManager
-     * @param kioskUI
-     * @return CancelItemsHandler 인스턴스
+     * @param cartManager {@link CartManager} 인스턴스
+     * @param uiFactory {@link UIFactory} 인스턴스
+     * @return {@link CancelItemsHandler} 인스턴스
      */
-    public static CancelItemsHandler withParameter(CartManager cartManager, KioskUI kioskUI) {
-        return new CancelItemsHandler(cartManager, kioskUI);
+    public static CancelItemsHandler withParameter(CartManager cartManager, UIFactory uiFactory) {
+        return new CancelItemsHandler(cartManager, uiFactory);
     }
 
     /**
      * 장바구니에 담긴 아이템을 취소하는 메뉴를 표시하고 사용자의 선택을 처리한다.
      * 
-     * @return KioskAction 객체
+     * @return {@link KioskAction} 객체
      */
     @Override
     public KioskAction handle() {
         var cartItems = cartManager.getCartItemAsList();
-        CancelItemsChoice choice = kioskUI.cancelItemsUi(cartItems);
+        var ui = uiFactory.cancelItemsUi(cartItems);
+        ui.display();
+        CancelItemsChoice choice = (CancelItemsChoice) ui.getChoice();
+        return processCancelChoice(choice);
+    }
 
+    /**
+     * CancelItemsChoice에 따라 적절한 KioskAction을 반환함
+     *
+     * @param choice {@link CancelItemsChoice} 사용자가 선택한 취소 항목 옵션
+     * @return 선택에 따라 수행할 {@link KioskAction} 객체
+     */
+    private KioskAction processCancelChoice(CancelItemsChoice choice) {
         return switch (choice) {
             case CancelItemsChoice.CancelAll() 
                 -> clearCart();
@@ -55,7 +66,7 @@ public class CancelItemsHandler implements ActionHandler {
     /**
      * 장바구니를 비우고 메인 메뉴로 돌아간다.
      * 
-     * @return KioskAction 객체
+     * @return {@link KioskAction} 객체
      */
     private KioskAction clearCart() {
         cartManager.clearCart();
@@ -65,8 +76,8 @@ public class CancelItemsHandler implements ActionHandler {
     /**
      * 장바구니에서 아이템을 제거하고 메인 메뉴 혹은 취소 메뉴로 돌아간다.
      * 
-     * @param item 제거할 메뉴 아이템
-     * @return KioskAction 객체
+     * @param item {@link MenuItem} 제거할 메뉴 아이템
+     * @return {@link KioskAction} 객체
      */
     private KioskAction removeItemFromCart(MenuItem item) {
         cartManager.removeItem(item);
