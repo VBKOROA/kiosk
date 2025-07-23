@@ -45,14 +45,7 @@ public class AddItemToCartMenuHandler implements ActionHandler {
     public KioskAction handle() {
         var ui = uiFactory.addItemToCartUi(item);
         AddItemToCartChoice choice = ui.prompt();
-
-        switch(choice) {
-            case AddItemToCartChoice.Yes __ -> addToCart();
-            case AddItemToCartChoice.No __ -> {}
-        }
-
-        // 메인 메뉴로 돌아가기
-        return new MainMenuAction();
+        return choice.process(this);
     }
 
     /**
@@ -63,11 +56,20 @@ public class AddItemToCartMenuHandler implements ActionHandler {
         uiFactory.itemAddedToCartUi(item).display();
     }
 
+    public KioskAction processYes() {
+        addToCart();
+        return new MainMenuAction();
+    }
+
+    public KioskAction processNo() {
+        return new MainMenuAction();
+    }
+
     /**
      * AddItemToCartMenuHandler의 파라미터 DTO 클래스.
      * 
-     * @param uiFactory UI 팩토리
-     * @param item 선택한 메뉴 아이템
+     * @param uiFactory   UI 팩토리
+     * @param item        선택한 메뉴 아이템
      * @param cartManager 장바구니 매니저
      */
     public static record ParameterDto(
