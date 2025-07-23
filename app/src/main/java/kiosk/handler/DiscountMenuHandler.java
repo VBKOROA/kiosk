@@ -2,8 +2,6 @@ package kiosk.handler;
 
 import kiosk.category.SaleCategory;
 import kiosk.model.action.KioskAction;
-import kiosk.model.action.MainMenuAction;
-import kiosk.model.action.ProcessingOrderAction;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.UIFactory;
 
@@ -40,9 +38,6 @@ public class DiscountMenuHandler implements ActionHandler {
         var ui = uiFactory.discountMenuUi(saleCategories);
         DiscountMenuChoice choice = ui.prompt();
 
-        return switch (choice) {
-            case DiscountMenuChoice.GoBack __ -> new MainMenuAction();
-            case DiscountMenuChoice.DiscountWithThis c -> new ProcessingOrderAction(c.category());
-        };
+        return choice.process(this);
     }
 }
