@@ -51,11 +51,6 @@ public class MainMenuHandler implements ActionHandler {
             kioskUI.ridiculousExceptionUI();
         }
         
-        return switch(choice) {
-            case MainMenuChoice.Exit() -> new ProgramExitAction();
-            case MainMenuChoice.GoToCategory(MenuCategory category) -> new MenuSelectMenuAction(category);
-            case MainMenuChoice.Order() -> new CartCheckBeforeOrderAction();
-            case MainMenuChoice.CancelCartItems() -> new CancelItemsAction();
-        };
+        return choice.getAction();
     }
 }
