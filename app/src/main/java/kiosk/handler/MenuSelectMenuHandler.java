@@ -43,18 +43,16 @@ public class MenuSelectMenuHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         var items = menuManager.getMenuItemsByCategory(category);
-        MenuSelectChoice choice = null;
         var ui = uiFactory.menuSelectUi(items);
 
-        try {
-            choice = ui.prompt();
-        } catch (RidiculousException e) {
-            uiFactory.ridiculousExceptionUI().display();
+        while (true) {
+            try {
+                MenuSelectChoice choice = ui.prompt();
+                return choice.process(this);
+            } catch (RidiculousException e) {
+                uiFactory.ridiculousExceptionUI().display();
+            }
         }
-
-        // choice가 null일 경우 RidiculousExceptionUI에 의해 프로그램이 종료되므로
-        // NullPointerException이 발생하지 않음
-        return choice.process(this);
     }
 
     /**
