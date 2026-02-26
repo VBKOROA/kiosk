@@ -25,8 +25,8 @@ import kiosk.ui.display.RidiculousExceptionUI;
  * 각종 UI 컴포넌트의 인스턴스를 생성하여 반환
  */
 public class UIFactory {
-    public void exitUi() {
-        new ExitUI().display();
+    public Displayable exitUi() {
+        return new ExitUI();
     }
 
     public MainMenuUI mainMenuUi(MenuCategory[] categories, boolean canOrder) throws RidiculousException {

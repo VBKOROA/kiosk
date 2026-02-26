@@ -30,7 +30,7 @@ public class ProgramExitHandler implements ActionHandler {
     @Override
     public KioskAction handle() {
         // 프로그램 종료
-        uiFactory.exitUi();
+        uiFactory.exitUi().display();
         return new ProgramExitAction();
     }
 }
