@@ -31,7 +31,6 @@ public class ProgramExitHandler implements ActionHandler {
     public KioskAction handle() {
         // 프로그램 종료
         uiFactory.exitUi();
-        System.exit(0);
         return new ProgramExitAction();
     }
 }

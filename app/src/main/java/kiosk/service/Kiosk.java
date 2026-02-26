@@ -3,6 +3,7 @@ package kiosk.service;
 import kiosk.handler.HandlerDependencies;
 import kiosk.model.action.KioskAction;
 import kiosk.model.action.MainMenuAction;
+import kiosk.model.action.ProgramExitAction;
 
 public class Kiosk {
     private final HandlerDependencies dependencies;
@@ -25,6 +26,9 @@ public class Kiosk {
             .handle();
         while (true) {
             curAction = curAction.handlerWithDependencies(dependencies).handle();
+            if (curAction instanceof ProgramExitAction) {
+                break;
+            }
         }
     }
 }
