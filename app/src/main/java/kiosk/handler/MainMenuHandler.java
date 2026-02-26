@@ -4,6 +4,10 @@ import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.CartManager;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.CancelItemsAction;
+import kiosk.model.action.CartCheckBeforeOrderAction;
+import kiosk.model.action.MenuSelectMenuAction;
+import kiosk.model.action.ProgramExitAction;
 import kiosk.model.choice.MainMenuChoice;
 import kiosk.ui.UIFactory;
 
@@ -45,10 +49,26 @@ public class MainMenuHandler implements ActionHandler {
         while (true) {
             try {
                 MainMenuChoice choice = ui.prompt();
-                return choice.process(this);
+                return toAction(choice);
             } catch (RidiculousException e) {
                 uiFactory.ridiculousExceptionUI().display();
             }
         }
+    }
+
+    private KioskAction toAction(MainMenuChoice choice) {
+        if (choice instanceof MainMenuChoice.Exit) {
+            return new ProgramExitAction();
+        }
+        if (choice instanceof MainMenuChoice.GoToCategory goToCategory) {
+            return new MenuSelectMenuAction(goToCategory.category());
+        }
+        if (choice instanceof MainMenuChoice.Order) {
+            return new CartCheckBeforeOrderAction();
+        }
+        if (choice instanceof MainMenuChoice.CancelCartItems) {
+            return new CancelItemsAction();
+        }
+        throw new IllegalStateException("Unknown main menu choice: " + choice);
     }
 }

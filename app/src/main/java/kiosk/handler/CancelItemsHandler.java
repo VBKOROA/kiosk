@@ -42,7 +42,20 @@ public class CancelItemsHandler implements ActionHandler {
         var cartItems = cartManager.getCartItemAsList();
         var ui = uiFactory.cancelItemsUi(cartItems);
         CancelItemsChoice choice = ui.prompt();
-        return choice.process(this);
+        return toAction(choice);
+    }
+
+    private KioskAction toAction(CancelItemsChoice choice) {
+        if (choice instanceof CancelItemsChoice.CancelAll) {
+            return processCancelAll();
+        }
+        if (choice instanceof CancelItemsChoice.GoBack) {
+            return processGoBack();
+        }
+        if (choice instanceof CancelItemsChoice.CancelThis cancelThis) {
+            return processCancelThis(cancelThis.item());
+        }
+        throw new IllegalStateException("Unknown cancel items choice: " + choice);
     }
 
     public KioskAction processCancelAll() {

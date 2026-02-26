@@ -2,6 +2,8 @@ package kiosk.handler;
 
 import kiosk.category.SaleCategory;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
+import kiosk.model.action.ProcessingOrderAction;
 import kiosk.model.choice.DiscountMenuChoice;
 import kiosk.ui.UIFactory;
 
@@ -38,6 +40,16 @@ public class DiscountMenuHandler implements ActionHandler {
         var ui = uiFactory.discountMenuUi(saleCategories);
         DiscountMenuChoice choice = ui.prompt();
 
-        return choice.process(this);
+        return toAction(choice);
+    }
+
+    private KioskAction toAction(DiscountMenuChoice choice) {
+        if (choice instanceof DiscountMenuChoice.GoBack) {
+            return new MainMenuAction();
+        }
+        if (choice instanceof DiscountMenuChoice.DiscountWithThis discountWithThis) {
+            return new ProcessingOrderAction(discountWithThis.category());
+        }
+        throw new IllegalStateException("Unknown discount menu choice: " + choice);
     }
 }

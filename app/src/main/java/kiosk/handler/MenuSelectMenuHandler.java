@@ -3,7 +3,9 @@ package kiosk.handler;
 import kiosk.category.MenuCategory;
 import kiosk.exception.RidiculousException;
 import kiosk.manager.MenuManager;
+import kiosk.model.action.AddItemToCartMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.MenuSelectChoice;
 import kiosk.ui.UIFactory;
 
@@ -48,11 +50,21 @@ public class MenuSelectMenuHandler implements ActionHandler {
         while (true) {
             try {
                 MenuSelectChoice choice = ui.prompt();
-                return choice.process(this);
+                return toAction(choice);
             } catch (RidiculousException e) {
                 uiFactory.ridiculousExceptionUI().display();
             }
         }
+    }
+
+    private KioskAction toAction(MenuSelectChoice choice) {
+        if (choice instanceof MenuSelectChoice.GoBack) {
+            return new MainMenuAction();
+        }
+        if (choice instanceof MenuSelectChoice.SelectThis selectThis) {
+            return new AddItemToCartMenuAction(selectThis.item());
+        }
+        throw new IllegalStateException("Unknown menu select choice: " + choice);
     }
 
     /**

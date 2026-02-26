@@ -45,7 +45,17 @@ public class AddItemToCartMenuHandler implements ActionHandler {
     public KioskAction handle() {
         var ui = uiFactory.addItemToCartUi(item);
         AddItemToCartChoice choice = ui.prompt();
-        return choice.process(this);
+        return toAction(choice);
+    }
+
+    private KioskAction toAction(AddItemToCartChoice choice) {
+        if (choice instanceof AddItemToCartChoice.Yes) {
+            return processYes();
+        }
+        if (choice instanceof AddItemToCartChoice.No) {
+            return processNo();
+        }
+        throw new IllegalStateException("Unknown add-to-cart choice: " + choice);
     }
 
     /**

@@ -1,7 +1,9 @@
 package kiosk.handler;
 
 import kiosk.manager.CartManager;
+import kiosk.model.action.DiscountMenuAction;
 import kiosk.model.action.KioskAction;
+import kiosk.model.action.MainMenuAction;
 import kiosk.model.choice.CartCheckBeforeOrderChoice;
 import kiosk.ui.UIFactory;
 
@@ -38,7 +40,17 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
     public KioskAction handle() {
         var ui = uiFactory.cartCheckBeforeOrderUi(cartManager.getCartItemAsList(), cartManager.getTotalPrice());
         CartCheckBeforeOrderChoice choice = ui.prompt();
-        
-        return choice.process(this);
+
+        return toAction(choice);
+    }
+
+    private KioskAction toAction(CartCheckBeforeOrderChoice choice) {
+        if (choice instanceof CartCheckBeforeOrderChoice.Order) {
+            return new DiscountMenuAction();
+        }
+        if (choice instanceof CartCheckBeforeOrderChoice.GoBack) {
+            return new MainMenuAction();
+        }
+        throw new IllegalStateException("Unknown cart-check choice: " + choice);
     }
 }
