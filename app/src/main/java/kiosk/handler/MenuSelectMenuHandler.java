@@ -58,13 +58,10 @@ public class MenuSelectMenuHandler implements ActionHandler {
     }
 
     private KioskAction toAction(MenuSelectChoice choice) {
-        if (choice instanceof MenuSelectChoice.GoBack) {
-            return new MainMenuAction();
-        }
-        if (choice instanceof MenuSelectChoice.SelectThis selectThis) {
-            return new AddItemToCartMenuAction(selectThis.item());
-        }
-        throw new IllegalStateException("Unknown menu select choice: " + choice);
+        return switch (choice) {
+            case MenuSelectChoice.GoBack goBack -> new MainMenuAction();
+            case MenuSelectChoice.SelectThis selectThis -> new AddItemToCartMenuAction(selectThis.item());
+        };
     }
 
     /**

@@ -44,12 +44,9 @@ public class DiscountMenuHandler implements ActionHandler {
     }
 
     private KioskAction toAction(DiscountMenuChoice choice) {
-        if (choice instanceof DiscountMenuChoice.GoBack) {
-            return new MainMenuAction();
-        }
-        if (choice instanceof DiscountMenuChoice.DiscountWithThis discountWithThis) {
-            return new ProcessingOrderAction(discountWithThis.category());
-        }
-        throw new IllegalStateException("Unknown discount menu choice: " + choice);
+        return switch (choice) {
+            case DiscountMenuChoice.GoBack goBack -> new MainMenuAction();
+            case DiscountMenuChoice.DiscountWithThis discountWithThis -> new ProcessingOrderAction(discountWithThis.category());
+        };
     }
 }

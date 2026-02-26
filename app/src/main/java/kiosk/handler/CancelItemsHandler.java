@@ -46,16 +46,11 @@ public class CancelItemsHandler implements ActionHandler {
     }
 
     private KioskAction toAction(CancelItemsChoice choice) {
-        if (choice instanceof CancelItemsChoice.CancelAll) {
-            return processCancelAll();
-        }
-        if (choice instanceof CancelItemsChoice.GoBack) {
-            return processGoBack();
-        }
-        if (choice instanceof CancelItemsChoice.CancelThis cancelThis) {
-            return processCancelThis(cancelThis.item());
-        }
-        throw new IllegalStateException("Unknown cancel items choice: " + choice);
+        return switch (choice) {
+            case CancelItemsChoice.CancelAll cancelAll -> processCancelAll();
+            case CancelItemsChoice.GoBack goBack -> processGoBack();
+            case CancelItemsChoice.CancelThis cancelThis -> processCancelThis(cancelThis.item());
+        };
     }
 
     public KioskAction processCancelAll() {

@@ -49,13 +49,10 @@ public class AddItemToCartMenuHandler implements ActionHandler {
     }
 
     private KioskAction toAction(AddItemToCartChoice choice) {
-        if (choice instanceof AddItemToCartChoice.Yes) {
-            return processYes();
-        }
-        if (choice instanceof AddItemToCartChoice.No) {
-            return processNo();
-        }
-        throw new IllegalStateException("Unknown add-to-cart choice: " + choice);
+        return switch (choice) {
+            case AddItemToCartChoice.Yes yes -> processYes();
+            case AddItemToCartChoice.No no -> processNo();
+        };
     }
 
     /**

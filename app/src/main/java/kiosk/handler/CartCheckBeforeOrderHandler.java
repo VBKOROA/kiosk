@@ -45,12 +45,9 @@ public class CartCheckBeforeOrderHandler implements ActionHandler {
     }
 
     private KioskAction toAction(CartCheckBeforeOrderChoice choice) {
-        if (choice instanceof CartCheckBeforeOrderChoice.Order) {
-            return new DiscountMenuAction();
-        }
-        if (choice instanceof CartCheckBeforeOrderChoice.GoBack) {
-            return new MainMenuAction();
-        }
-        throw new IllegalStateException("Unknown cart-check choice: " + choice);
+        return switch (choice) {
+            case CartCheckBeforeOrderChoice.Order order -> new DiscountMenuAction();
+            case CartCheckBeforeOrderChoice.GoBack goBack -> new MainMenuAction();
+        };
     }
 }

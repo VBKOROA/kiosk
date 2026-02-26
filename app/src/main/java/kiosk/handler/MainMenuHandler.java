@@ -57,18 +57,11 @@ public class MainMenuHandler implements ActionHandler {
     }
 
     private KioskAction toAction(MainMenuChoice choice) {
-        if (choice instanceof MainMenuChoice.Exit) {
-            return new ProgramExitAction();
-        }
-        if (choice instanceof MainMenuChoice.GoToCategory goToCategory) {
-            return new MenuSelectMenuAction(goToCategory.category());
-        }
-        if (choice instanceof MainMenuChoice.Order) {
-            return new CartCheckBeforeOrderAction();
-        }
-        if (choice instanceof MainMenuChoice.CancelCartItems) {
-            return new CancelItemsAction();
-        }
-        throw new IllegalStateException("Unknown main menu choice: " + choice);
+        return switch (choice) {
+            case MainMenuChoice.Exit exit -> new ProgramExitAction();
+            case MainMenuChoice.GoToCategory goToCategory -> new MenuSelectMenuAction(goToCategory.category());
+            case MainMenuChoice.Order order -> new CartCheckBeforeOrderAction();
+            case MainMenuChoice.CancelCartItems cancelCartItems -> new CancelItemsAction();
+        };
     }
 }
